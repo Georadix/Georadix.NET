@@ -12,14 +12,6 @@
     public abstract class ContinuousRange<T> : Range<T> where T : struct, IComparable<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContinuousRange{T}"/> class.
-        /// </summary>
-        protected ContinuousRange()
-            : base()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ContinuousRange{T}"/> class with specified start and end
         /// values.
         /// </summary>

@@ -12,14 +12,6 @@
         : IComparable, IComparable<Range<T>>, IEquatable<Range<T>> where T : struct, IComparable<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Range{T}"/> class.
-        /// </summary>
-        protected Range()
-            : this(default(T), default(T))
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Range{T}"/> class with specified start and end values.
         /// </summary>
         /// <param name="start">The start value.</param>

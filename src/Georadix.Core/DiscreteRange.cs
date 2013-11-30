@@ -14,14 +14,6 @@
     public abstract class DiscreteRange<T> : Range<T>, IEnumerable<T> where T : struct, IComparable<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiscreteRange{T}"/> class.
-        /// </summary>
-        protected DiscreteRange()
-            : base()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DiscreteRange{T}"/> class with specified start and end values.
         /// </summary>
         /// <param name="start">The start value.</param>
