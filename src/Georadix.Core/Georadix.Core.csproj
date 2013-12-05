@@ -44,6 +44,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
+    <Compile Include="DateTimeRange.cs" />
     <Compile Include="LinqExtensions.cs" />
     <Compile Include="ContinuousRange.cs" />
     <Compile Include="DateTimeOffsetRange.cs" />

@@ -48,6 +48,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DateTimeOffsetRangeFixture.cs" />
+    <Compile Include="DateTimeRangeFixture.cs" />
     <Compile Include="DoubleRangeFixture.cs" />
     <Compile Include="IntRangeFixture.cs" />
     <Compile Include="MathHelperFixture.cs" />
