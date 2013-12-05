@@ -52,7 +52,7 @@
         {
             ranges.AssertNotNull("ranges", true);
 
-            ranges.OrderBy(r => r);
+            ranges = ranges.OrderBy(r => r);
 
             if (!IsContiguous(ranges))
             {
@@ -60,7 +60,7 @@
             }
 
             return (ranges.Count() > 0) ?
-                new TRange() { Start = ranges.First().Start, End = ranges.Last().End } : null;
+                new TRange() { Start = ranges.First().Start, End = ranges.Last().End } : new TRange();
         }
 
         /// <summary>
@@ -79,20 +79,17 @@
         {
             ranges.AssertNotNull("ranges", true);
 
-            ranges.OrderBy(r => r);
-
-            var returnValue = false;
+            ranges = ranges.OrderBy(r => r);
 
             for (var i = 0; i < ranges.Count() - 1; i++)
             {
-                if (!ranges.ElementAt(i).Overlaps(ranges.ElementAt(i + 1)))
+                if (ranges.ElementAt(i).Overlaps(ranges.ElementAt(i + 1)))
                 {
-                    returnValue = true;
-                    break;
+                    return true;
                 }
             }
 
-            return returnValue;
+            return false;
         }
 
         /// <summary>
@@ -109,20 +106,17 @@
         {
             ranges.AssertNotNull("ranges", true);
 
-            ranges.OrderBy(r => r);
-
-            var returnValue = true;
+            ranges = ranges.OrderBy(r => r);
 
             for (var i = 0; i < ranges.Count() - 1; i++)
             {
                 if (!ranges.ElementAt(i).Abuts(ranges.ElementAt(i + 1)))
                 {
-                    returnValue = false;
-                    break;
+                    return false;
                 }
             }
 
-            return returnValue;
+            return true;
         }
 
         /// <summary>
@@ -238,8 +232,6 @@
         {
             range.AssertNotNull("range");
 
-            var returnValue = this.CreateEmpty<TRange>();
-
             if (!this.Overlaps(range) && !this.IsEmpty && !range.IsEmpty)
             {
                 Range<T> lower, higher;
@@ -255,10 +247,10 @@
                     higher = this;
                 }
 
-                returnValue = this.CreateGap<TRange>(lower.End, higher.Start);
+                return this.CreateGap<TRange>(lower.End, higher.Start);
             }
 
-            return returnValue;
+            return this.CreateEmpty<TRange>();
         }
 
         /// <summary>
@@ -305,7 +297,7 @@
         /// <returns>A <see cref="String"/> that represents the current <see cref="Range{T}"/>.</returns>
         public override string ToString()
         {
-            return this.Start.ToString() + " - " + this.End.ToString();
+            return string.Format("{0} - {1}", this.Start, this.End);
         }
 
         /// <summary>

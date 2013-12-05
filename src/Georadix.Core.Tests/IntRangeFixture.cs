@@ -29,7 +29,104 @@
             var sut = new IntRange();
             IntRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Abuts(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Abuts(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
+        }
+
+        [Fact]
+        public void CombineContiguousRangesReturnsExpectedResult()
+        {
+            var ranges = new List<IntRange>();
+            ranges.Add(new IntRange(2, 5));
+            ranges.Add(new IntRange(1, 1));
+            ranges.Add(new IntRange(-5, 0));
+
+            var expected = new IntRange(-5, 5);
+
+            Assert.Equal(expected, IntRange.Combine(ranges));
+        }
+
+        [Fact]
+        public void CombineNonContiguousRangesThrowsArgumentException()
+        {
+            var ranges = new List<IntRange>();
+            ranges.Add(new IntRange(2, 5));
+            ranges.Add(new IntRange(0, 1));
+            ranges.Add(new IntRange(-5, 0));
+
+            var ex = Assert.Throws<ArgumentException>(() => IntRange.Combine(ranges));
+
+            Assert.Equal("ranges", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void CombineNoRangesReturnsEmptyRange()
+        {
+            var ranges = new List<IntRange>();
+
+            Assert.True(IntRange.Combine(ranges).IsEmpty);
+        }
+
+        [Fact]
+        public void CombineNullRangesThrowsArgumentNullException()
+        {
+            List<IntRange> nullRanges = null;
+
+            var ex = Assert.Throws<ArgumentNullException>(() => IntRange.Combine(nullRanges));
+
+            Assert.Equal("ranges", ex.ParamName);
+        }
+
+        [Fact]
+        public void CombineNullValuesInRangesThrowsArgumentException()
+        {
+            var ranges = new List<IntRange>();
+            ranges.Add(null);
+
+            var ex = Assert.Throws<ArgumentException>(() => IntRange.Combine(ranges));
+
+            Assert.Equal("ranges", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void CompareToNonRangeObjectThrowsArgumentException()
+        {
+            var sut = new IntRange();
+            object obj = 0;
+
+            var ex = Assert.Throws<ArgumentException>(() => sut.CompareTo(obj));
+
+            Assert.Equal("obj", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void CompareToNullObjectThrowsArgumentNullException()
+        {
+            var sut = new IntRange();
+            object obj = null;
+
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.CompareTo(obj));
+
+            Assert.Equal("obj", ex.ParamName);
+        }
+
+        [Theory]
+        [InlineData(0, 5, 0, 5, 0)]
+        [InlineData(0, 5, 0, 4, 1)]
+        [InlineData(0, 5, 0, 6, -1)]
+        [InlineData(0, 5, 1, 5, -1)]
+        [InlineData(0, 5, -1, 5, 1)]
+        public void CompareToRangeObjectReturnsExpectedResult(
+            int start, int end, int otherStart, int otherEnd, int expected)
+        {
+            var sut = new IntRange(start, end);
+            object otherRange = new IntRange(otherStart, otherEnd);
+
+            Assert.Equal(expected, sut.CompareTo(otherRange));
         }
 
         [Theory]
@@ -59,7 +156,9 @@
             var sut = new IntRange();
             IntRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Contains(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Contains(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
         }
 
         [Theory]
@@ -140,6 +239,54 @@
             Assert.True(items.SequenceEqual(sut));
         }
 
+        [Fact]
+        public void EqualsNonRangeObjectReturnsFalse()
+        {
+            var sut = new IntRange();
+            object obj = 0;
+
+            Assert.False(sut.Equals(obj));
+        }
+
+        [Fact]
+        public void EqualsNullObjectReturnsFalse()
+        {
+            var sut = new IntRange();
+            object obj = null;
+
+            Assert.False(sut.Equals(obj));
+        }
+
+        [Fact]
+        public void EqualsNullRangeReturnsFalse()
+        {
+            var sut = new IntRange();
+            IntRange range = null;
+
+            Assert.False(sut.Equals(range));
+        }
+
+        [Theory]
+        [InlineData(0, 5, 0, 5, true)]
+        [InlineData(0, 5, 0, 6, false)]
+        [InlineData(0, 5, 1, 5, false)]
+        public void EqualsRangeReturnsExpectedResult(int start, int end, int otherStart, int otherEnd, bool expected)
+        {
+            var sut = new IntRange(start, end);
+            var otherRange = new IntRange(otherStart, otherEnd);
+
+            Assert.Equal(expected, sut.Equals(otherRange));
+        }
+
+        [Fact]
+        public void EqualsSameObjectReturnsTrue()
+        {
+            var sut = new IntRange(0, 5);
+            object obj = new IntRange(0, 5);
+
+            Assert.True(sut.Equals(obj));
+        }
+
         [Theory]
         [InlineData(1, 1, 1, 1)]
         [InlineData(-5, 10, 11, 12)]
@@ -176,7 +323,63 @@
             var sut = new IntRange();
             IntRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Gap(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Gap(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
+        }
+
+        [Theory]
+        [InlineData(0, 5, 0, 5, true)]
+        [InlineData(0, 5, 0, 6, false)]
+        [InlineData(0, 5, 1, 5, false)]
+        public void GetHashCodeReturnsExpectedResult(int start, int end, int otherStart, int otherEnd, bool expected)
+        {
+            var range = new IntRange(start, end);
+            var otherRange = new IntRange(otherStart, otherEnd);
+
+            Assert.Equal(expected, range.GetHashCode() == otherRange.GetHashCode());
+        }
+
+        [Fact]
+        public void HasOverlapWithNonOverlappingRangesReturnsFalse()
+        {
+            var ranges = new List<IntRange>();
+            ranges.Add(new IntRange(6, 10));
+            ranges.Add(new IntRange(0, 5));
+
+            Assert.False(IntRange.HasOverlap(ranges));
+        }
+
+        [Fact]
+        public void HasOverlapWithNullRangesThrowsArgumentNullException()
+        {
+            List<IntRange> nullRanges = null;
+
+            var ex = Assert.Throws<ArgumentNullException>(() => IntRange.HasOverlap(nullRanges));
+
+            Assert.Equal("ranges", ex.ParamName);
+        }
+
+        [Fact]
+        public void HasOverlapWithNullValuesInRangesThrowsArgumentException()
+        {
+            var ranges = new List<IntRange>();
+            ranges.Add(null);
+
+            var ex = Assert.Throws<ArgumentException>(() => IntRange.HasOverlap(ranges));
+
+            Assert.Equal("ranges", ex.ParamName);
+        }
+
+        [Fact]
+        public void HasOverlapWithOverlappingRangesReturnsTrue()
+        {
+            var ranges = new List<IntRange>();
+            ranges.Add(new IntRange(12, 15));
+            ranges.Add(new IntRange(5, 10));
+            ranges.Add(new IntRange(0, 5));
+
+            Assert.True(IntRange.HasOverlap(ranges));
         }
 
         [Theory]
@@ -195,9 +398,9 @@
         {
             var sut = new IntRange(-5, 5);
             var ranges = new List<IntRange>();
-            ranges.Add(new IntRange(-5, 0));
-            ranges.Add(new IntRange(1, 1));
             ranges.Add(new IntRange(2, 5));
+            ranges.Add(new IntRange(1, 1));
+            ranges.Add(new IntRange(-5, 0));
 
             Assert.True(sut.IsPartitionedBy(ranges));
         }
@@ -207,9 +410,9 @@
         {
             var sut = new IntRange(-5, 5);
             var ranges = new List<IntRange>();
-            ranges.Add(new IntRange(-5, 0));
-            ranges.Add(new IntRange(0, 1));
             ranges.Add(new IntRange(2, 5));
+            ranges.Add(new IntRange(0, 1));
+            ranges.Add(new IntRange(-5, 0));
 
             Assert.False(sut.IsPartitionedBy(ranges));
         }
@@ -220,7 +423,9 @@
             var sut = new IntRange();
             List<IntRange> nullRanges = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.IsPartitionedBy(nullRanges));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.IsPartitionedBy(nullRanges));
+
+            Assert.Equal("ranges", ex.ParamName);
         }
 
         [Fact]
@@ -230,7 +435,9 @@
             var ranges = new List<IntRange>();
             ranges.Add(null);
 
-            Assert.Throws<ArgumentException>(() => sut.IsPartitionedBy(ranges));
+            var ex = Assert.Throws<ArgumentException>(() => sut.IsPartitionedBy(ranges));
+
+            Assert.Equal("ranges", ex.ParamName);
         }
 
         [Theory]
@@ -250,7 +457,9 @@
             var sut = new IntRange();
             IntRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Overlaps(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Overlaps(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
         }
 
         [Theory]
@@ -275,6 +484,14 @@
 
             Assert.Equal(start, sut.Start);
             Assert.Equal(int.MaxValue, sut.End);
+        }
+
+        [Fact]
+        public void ToStringReturnsExpectedResult()
+        {
+            var sut = new IntRange(0, 10);
+
+            Assert.Equal(string.Format("{0} - {1}", sut.Start, sut.End), sut.ToString());
         }
     }
 }

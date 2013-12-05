@@ -28,7 +28,9 @@
             var sut = new DoubleRange();
             DoubleRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Abuts(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Abuts(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
         }
 
         [Fact]
@@ -37,7 +39,9 @@
             var sut = new DoubleRange();
             DoubleRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Contains(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Contains(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
         }
 
         [Theory]
@@ -137,7 +141,9 @@
             var sut = new DoubleRange();
             DoubleRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Gap(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Gap(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
         }
 
         [Theory]
@@ -181,7 +187,9 @@
             var sut = new DoubleRange();
             List<DoubleRange> nullRanges = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.IsPartitionedBy(nullRanges));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.IsPartitionedBy(nullRanges));
+
+            Assert.Equal("ranges", ex.ParamName);
         }
 
         [Fact]
@@ -191,7 +199,9 @@
             var ranges = new List<DoubleRange>();
             ranges.Add(null);
 
-            Assert.Throws<ArgumentException>(() => sut.IsPartitionedBy(ranges));
+            var ex = Assert.Throws<ArgumentException>(() => sut.IsPartitionedBy(ranges));
+
+            Assert.Equal("ranges", ex.ParamName);
         }
 
         [Theory]
@@ -211,7 +221,9 @@
             var sut = new DoubleRange();
             DoubleRange nullRange = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.Overlaps(nullRange));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Overlaps(nullRange));
+
+            Assert.Equal("range", ex.ParamName);
         }
 
         [Theory]

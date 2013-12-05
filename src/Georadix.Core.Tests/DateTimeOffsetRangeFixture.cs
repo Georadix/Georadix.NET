@@ -1,9 +1,7 @@
 ﻿namespace Georadix.Core.Tests
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Xunit;
     using Xunit.Extensions;
 
@@ -107,6 +105,14 @@
             Assert.Equal(end, sut.End);
         }
 
+        [Fact]
+        public void EmptyRangeHasLengthOfZero()
+        {
+            var sut = new DateTimeOffsetRange();
+
+            Assert.Equal(TimeSpan.Zero, sut.Length);
+        }
+
         [Theory]
         [PropertyData("CreateAtScenarios")]
         public void EndingAtIsProperlyInitialized(DateTimeOffset end)
@@ -118,6 +124,15 @@
         }
 
         [Theory]
+        [PropertyData("LengthScenarios")]
+        public void NonEmptyRangeHasExpectedLength(DateTimeOffset start, DateTimeOffset end, TimeSpan expected)
+        {
+            var sut = new DateTimeOffsetRange(start, end);
+
+            Assert.Equal(expected, sut.Length);
+        }
+
+        [Theory]
         [PropertyData("CreateAtScenarios")]
         public void StartingAtIsProperlyInitialized(DateTimeOffset start)
         {
@@ -125,23 +140,6 @@
 
             Assert.Equal(start, sut.Start);
             Assert.Equal(DateTimeOffset.MaxValue, sut.End);
-        }
-
-        [Fact]
-        public void EmptyRangeHasLengthOfZero()
-        {
-            var sut = new DateTimeOffsetRange();
-
-            Assert.Equal(TimeSpan.Zero, sut.Length);
-        }
-
-        [Theory]
-        [PropertyData("LengthScenarios")]
-        public void NonEmptyRangeHasExpectedLength(DateTimeOffset start, DateTimeOffset end, TimeSpan expected)
-        {
-            var sut = new DateTimeOffsetRange(start, end);
-
-            Assert.Equal(expected, sut.Length);
         }
     }
 }
