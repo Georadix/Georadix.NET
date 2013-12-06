@@ -6,6 +6,8 @@
 
     public class SystemExtensionsFixture
     {
+        #region Numeric Types
+
         [Theory]
         [InlineData(0.1, 5.2, 10.3, 5.2)]
         [InlineData(0.1, -10.2, -5.3, -5.3)]
@@ -36,6 +38,10 @@
         public void ClipShortReturnsExpectedResult(short sut, short min, short max, short expected)
         {
             Assert.Equal(expected, sut.Clip(min, max));
+
+            var range = new ShortRange(min, max);
+
+            Assert.Equal(expected, sut.Clip(range));
         }
 
         [Theory]
@@ -47,6 +53,10 @@
         {
             Assert.Equal(expected, sut.IsEqualTo(value, tolerance));
         }
+
+        #endregion Numeric Types
+
+        #region EventHandler Types
 
         [Fact]
         public void RaiseEventHandlerSucceeds()
@@ -82,5 +92,7 @@
 
             Assert.Equal(expected, sender);
         }
+
+        #endregion EventHandler Types
     }
 }

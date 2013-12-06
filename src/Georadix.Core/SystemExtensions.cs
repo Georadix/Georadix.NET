@@ -68,6 +68,17 @@
         }
 
         /// <summary>
+        /// Clips the number to the specified range.
+        /// </summary>
+        /// <param name="value">The number to clip.</param>
+        /// <param name="range">The range.</param>
+        /// <returns>The clipped value.</returns>
+        public static short Clip(this short value, ShortRange range)
+        {
+            return value.Clip(range.Start, range.End);
+        }
+
+        /// <summary>
         /// Returns a value indicating whether this instance and a specified <see cref="Double"/> represent the same
         /// value based on a specified tolerance.
         /// </summary>

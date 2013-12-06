@@ -265,10 +265,26 @@
         /// </exception>
         public static void AssertInRange(this short arg, short min, short max, string paramName)
         {
-            if ((arg < min) || (arg > max))
+            arg.AssertInRange(new ShortRange(min, max), paramName);
+        }
+
+        /// <summary>
+        /// Ensures the numeric argument is within a range of values.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="range">The range.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="arg"/> is not contained by <paramref name="range"/>.
+        /// </exception>
+        public static void AssertInRange(this short arg, ShortRange range, string paramName)
+        {
+            if (!range.Contains(arg))
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, arg, string.Format("The value must be greater than {0} and less than {1}.", min, max));
+                    paramName,
+                    arg,
+                    string.Format("The value must be greater than {0} and less than {1}.", range.Start, range.End));
             }
         }
 

@@ -3,33 +3,33 @@
     using System;
 
     /// <summary>
-    /// Represents an <see cref="int"/> range.
+    /// Represents a <see cref="short"/> range.
     /// </summary>
-    public sealed class IntRange : DiscreteRange<int>
+    public class ShortRange : DiscreteRange<short>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IntRange"/> class.
+        /// Initializes a new instance of the <see cref="ShortRange"/> class.
         /// </summary>
-        public IntRange()
-            : base(int.MaxValue, int.MinValue)
+        public ShortRange()
+            : base(short.MaxValue, short.MinValue)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IntRange"/> class with specified start and end values.
+        /// Initializes a new instance of the <see cref="ShortRange"/> class with specified start and end values.
         /// </summary>
         /// <param name="start">The start value.</param>
         /// <param name="end">The end value.</param>
-        public IntRange(int start, int end)
+        public ShortRange(short start, short end)
             : base(start, end)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IntRange"/> class based on a specified range.
+        /// Initializes a new instance of the <see cref="ShortRange"/> class based on a specified range.
         /// </summary>
         /// <param name="range">The range.</param>
-        public IntRange(Range<int> range)
+        public ShortRange(Range<short> range)
             : this(range.Start, range.End)
         {
         }
@@ -43,23 +43,23 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IntRange"/> class with a specified end value.
+        /// Initializes a new instance of the <see cref="ShortRange"/> class with a specified end value.
         /// </summary>
         /// <param name="end">The end value.</param>
-        /// <returns>An <see cref="IntRange"/> instance.</returns>
-        public static IntRange EndingAt(int end)
+        /// <returns>An <see cref="ShortRange"/> instance.</returns>
+        public static ShortRange EndingAt(short end)
         {
-            return new IntRange(int.MinValue, end);
+            return new ShortRange(short.MinValue, end);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IntRange"/> class with a specified start value.
+        /// Initializes a new instance of the <see cref="ShortRange"/> class with a specified start value.
         /// </summary>
         /// <param name="start">The start value.</param>
-        /// <returns>An <see cref="IntRange"/> instance.</returns>
-        public static IntRange StartingAt(int start)
+        /// <returns>An <see cref="ShortRange"/> instance.</returns>
+        public static ShortRange StartingAt(short start)
         {
-            return new IntRange(start, int.MaxValue);
+            return new ShortRange(start, short.MaxValue);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The value decremented by 1.</returns>
-        protected override int Decrement(int value)
+        protected override short Decrement(short value)
         {
             return Math.Min(value, --value);
         }
@@ -77,7 +77,7 @@
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The value incremented by 1.</returns>
-        protected override int Increment(int value)
+        protected override short Increment(short value)
         {
             return Math.Max(value, ++value);
         }

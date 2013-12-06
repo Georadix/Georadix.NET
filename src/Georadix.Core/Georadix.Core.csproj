@@ -54,6 +54,7 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
+    <Compile Include="ShortRange.cs" />
     <Compile Include="SystemExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

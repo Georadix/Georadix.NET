@@ -420,6 +420,7 @@
         public void AssertInRangeOnShortInRangeDoesNotThrowException(short sut, short min, short max)
         {
             sut.AssertInRange(min, max, "sut");
+            sut.AssertInRange(new ShortRange(min, max), "sut");
         }
 
         [Theory]
@@ -432,6 +433,13 @@
             Assert.Equal("sut", ex.ParamName);
             Assert.Equal(sut, ex.ActualValue);
             Assert.NotNull(ex.Message);
+
+            var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                sut.AssertInRange(new ShortRange(min, max), "sut"));
+
+            Assert.Equal(ex.ParamName, ex2.ParamName);
+            Assert.Equal(ex.ActualValue, ex2.ActualValue);
+            Assert.Equal(ex.Message, ex2.Message);
         }
 
         [Fact]
