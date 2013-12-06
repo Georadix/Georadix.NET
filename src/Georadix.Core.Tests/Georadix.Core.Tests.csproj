@@ -53,6 +53,7 @@
     <Compile Include="IntRangeFixture.cs" />
     <Compile Include="MathHelperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemExtensionsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
