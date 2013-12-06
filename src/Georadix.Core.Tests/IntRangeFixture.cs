@@ -174,6 +174,19 @@
             Assert.Equal(expected, sut.Contains(otherRange));
         }
 
+        [Theory]
+        [InlineData(-1, 1, 0, true)]
+        [InlineData(-1, 1, 1, true)]
+        [InlineData(-1, 1, -1, true)]
+        [InlineData(-1, 1, 2, false)]
+        [InlineData(-1, 1, -2, false)]
+        public void ContainsValueReturnsExpectedResult(int start, int end, int value, bool expected)
+        {
+            var sut = new IntRange(start, end);
+
+            Assert.Equal(expected, sut.Contains(value));
+        }
+
         [Fact]
         public void CreateDefaultIsEmpty()
         {

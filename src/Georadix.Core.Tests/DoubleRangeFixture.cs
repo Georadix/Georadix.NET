@@ -60,6 +60,19 @@
             Assert.Equal(expected, sut.Contains(otherRange));
         }
 
+        [Theory]
+        [InlineData(-1.0, 1.0, 0.0, true)]
+        [InlineData(-1.0, 1.0, 1.0, true)]
+        [InlineData(-1.0, 1.0, -1.0, true)]
+        [InlineData(-1.0, 1.0, 1.1, false)]
+        [InlineData(-1.0, 1.0, -1.1, false)]
+        public void ContainsValueReturnsExpectedResult(double start, double end, double value, bool expected)
+        {
+            var sut = new DoubleRange(start, end);
+
+            Assert.Equal(expected, sut.Contains(value));
+        }
+
         [Fact]
         public void CreateDefaultIsEmpty()
         {
@@ -162,9 +175,9 @@
         {
             var sut = new DoubleRange(-5.02, 5.02);
             var ranges = new List<DoubleRange>();
-            ranges.Add(new DoubleRange(-5.02, 0));
-            ranges.Add(new DoubleRange(0, 1));
             ranges.Add(new DoubleRange(1, 5.02));
+            ranges.Add(new DoubleRange(0, 1));
+            ranges.Add(new DoubleRange(-5.02, 0));
 
             Assert.True(sut.IsPartitionedBy(ranges));
         }
@@ -174,9 +187,9 @@
         {
             var sut = new DoubleRange(-5.02, 5.02);
             var ranges = new List<DoubleRange>();
-            ranges.Add(new DoubleRange(-5.02, 0));
-            ranges.Add(new DoubleRange(0.000001, 1));
             ranges.Add(new DoubleRange(1, 5.02));
+            ranges.Add(new DoubleRange(0.000001, 1));
+            ranges.Add(new DoubleRange(-5.02, 0));
 
             Assert.False(sut.IsPartitionedBy(ranges));
         }

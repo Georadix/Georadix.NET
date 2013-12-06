@@ -1,5 +1,6 @@
 ﻿namespace System
 {
+    using Georadix.Core;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -52,16 +53,16 @@
         /// collection is not <see langword="null"/>.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="assertContentsNotNull">
         /// Whether to check the items in the collection for <see langword="null"/>.
         /// </param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="assertContentsNotNull"/> is <see langword="true"/> and one of the items in the collection
         /// is <see langword="null"/>.
         /// </exception>
-        public static void AssertNotNull(this IEnumerable arg, string paramName, bool assertContentsNotNull)
+        public static void AssertNotNull(this IEnumerable arg, bool assertContentsNotNull, string paramName)
         {
             AssertNotNull(arg, paramName);
 
@@ -83,10 +84,10 @@
         /// </summary>
         /// <typeparam name="T">The type of element in the enumeration.</typeparam>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="assertContentsNotNull">
         /// Whether to check the items in the collection for <see langword="null"/>.
         /// </param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="arg"/> is empty.</exception>
         /// <exception cref="ArgumentException">
@@ -94,13 +95,13 @@
         /// is <see langword="null"/>.
         /// </exception>
         public static void AssertNotNullOrEmpty<T>(
-            this IEnumerable<T> arg, string paramName, bool assertContentsNotNull)
+            this IEnumerable<T> arg, bool assertContentsNotNull, string paramName)
         {
-            AssertNotNull(arg, paramName, assertContentsNotNull);
+            AssertNotNull(arg, assertContentsNotNull, paramName);
 
-            if (arg.Count() < 1)
+            if (!arg.Any())
             {
-                throw new ArgumentException("The enumeration is empty.");
+                throw new ArgumentException("The enumeration is empty.", paramName);
             }
         }
 
@@ -118,7 +119,7 @@
         {
             if (string.IsNullOrEmpty(arg))
             {
-                throw new ArgumentException("The value can not be null or empty.", paramName);
+                throw new ArgumentException("The value cannot be null or empty.", paramName);
             }
         }
 
@@ -136,7 +137,7 @@
             if (string.IsNullOrWhiteSpace(arg))
             {
                 throw new ArgumentException(
-                    "The value can not be null, empty, or consisting only of white-space characters.", paramName);
+                    "The value cannot be null, empty, or consisting only of white-space characters.", paramName);
             }
         }
 
@@ -148,17 +149,17 @@
         /// Ensures the numeric argument is greater than a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than or equal to <paramref name="value"/>.
         /// </exception>
-        public static void AssertGreaterThan(this short arg, string paramName, short value)
+        public static void AssertGreaterThan(this short arg, short value, string paramName)
         {
             if (arg <= value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than {0}.", value));
+                    paramName, arg, string.Format("The value must be greater than {0}.", value));
             }
         }
 
@@ -166,17 +167,17 @@
         /// Ensures the numeric argument is greater than a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than or equal to <paramref name="value"/>.
         /// </exception>
-        public static void AssertGreaterThan(this int arg, string paramName, int value)
+        public static void AssertGreaterThan(this int arg, int value, string paramName)
         {
             if (arg <= value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than {0}.", value));
+                    paramName, arg, string.Format("The value must be greater than {0}.", value));
             }
         }
 
@@ -184,17 +185,17 @@
         /// Ensures the numeric argument is greater than a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than or equal to <paramref name="value"/>.
         /// </exception>
-        public static void AssertGreaterThan(this double arg, string paramName, double value)
+        public static void AssertGreaterThan(this double arg, double value, string paramName)
         {
             if (arg <= value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than {0}.", value));
+                    paramName, arg, string.Format("The value must be greater than {0}.", value));
             }
         }
 
@@ -202,17 +203,17 @@
         /// Ensures the numeric argument is greater than or equal to a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than <paramref name="value"/>.
         /// </exception>
-        public static void AssertGreaterThanOrEqualTo(this short arg, string paramName, short value)
+        public static void AssertGreaterThanOrEqualTo(this short arg, short value, string paramName)
         {
             if (arg < value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than or equal to {0}.", value));
+                    paramName, arg, string.Format("The value must be greater than or equal to {0}.", value));
             }
         }
 
@@ -220,17 +221,17 @@
         /// Ensures the numeric argument is greater than or equal to a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than <paramref name="value"/>.
         /// </exception>
-        public static void AssertGreaterThanOrEqualTo(this int arg, string paramName, int value)
+        public static void AssertGreaterThanOrEqualTo(this int arg, int value, string paramName)
         {
             if (arg < value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than or equal to {0}.", value));
+                    paramName, arg, string.Format("The value must be greater than or equal to {0}.", value));
             }
         }
 
@@ -238,17 +239,17 @@
         /// Ensures the numeric argument is greater than or equal to a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than <paramref name="value"/>.
         /// </exception>
-        public static void AssertGreaterThanOrEqualTo(this double arg, string paramName, double value)
+        public static void AssertGreaterThanOrEqualTo(this double arg, double value, string paramName)
         {
             if (arg < value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than or equal to {0}.", value));
+                    paramName, arg, string.Format("The value must be greater than or equal to {0}.", value));
             }
         }
 
@@ -256,18 +257,18 @@
         /// Ensures the numeric argument is within a range of values.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than <paramref name="min"/> or greater than <paramref name="max"/>.
         /// </exception>
-        public static void AssertInRange(this short arg, string paramName, short min, short max)
+        public static void AssertInRange(this short arg, short min, short max, string paramName)
         {
             if ((arg < min) || (arg > max))
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than {0} and less than {1}.", min, max));
+                    paramName, arg, string.Format("The value must be greater than {0} and less than {1}.", min, max));
             }
         }
 
@@ -275,18 +276,34 @@
         /// Ensures the numeric argument is within a range of values.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than <paramref name="min"/> or greater than <paramref name="max"/>.
         /// </exception>
-        public static void AssertInRange(this int arg, string paramName, int min, int max)
+        public static void AssertInRange(this int arg, int min, int max, string paramName)
         {
-            if ((arg < min) || (arg > max))
+            arg.AssertInRange(new IntRange(min, max), paramName);
+        }
+
+        /// <summary>
+        /// Ensures the numeric argument is within a range of values.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="range">The range.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="arg"/> is not contained by <paramref name="range"/>.
+        /// </exception>
+        public static void AssertInRange(this int arg, IntRange range, string paramName)
+        {
+            if (!range.Contains(arg))
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than {0} and less than {1}.", min, max));
+                    paramName,
+                    arg,
+                    string.Format("The value must be greater than {0} and less than {1}.", range.Start, range.End));
             }
         }
 
@@ -294,18 +311,34 @@
         /// Ensures the numeric argument is within a range of values.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is less than <paramref name="min"/> or greater than <paramref name="max"/>.
         /// </exception>
-        public static void AssertInRange(this double arg, string paramName, double min, double max)
+        public static void AssertInRange(this double arg, double min, double max, string paramName)
         {
-            if ((arg < min) || (arg > max))
+            arg.AssertInRange(new DoubleRange(min, max), paramName);
+        }
+
+        /// <summary>
+        /// Ensures the numeric argument is within a range of values.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="range">The range.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="arg"/> is not contained by <paramref name="range"/>.
+        /// </exception>
+        public static void AssertInRange(this double arg, DoubleRange range, string paramName)
+        {
+            if (!range.Contains(arg))
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be greater than {0} and less than {1}.", min, max));
+                    paramName,
+                    arg,
+                    string.Format("The value must be greater than {0} and less than {1}.", range.Start, range.End));
             }
         }
 
@@ -313,17 +346,17 @@
         /// Ensures the numeric argument is less than a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is greater than or equal to <paramref name="value"/>.
         /// </exception>
-        public static void AssertLessThan(this short arg, string paramName, short value)
+        public static void AssertLessThan(this short arg, short value, string paramName)
         {
             if (arg >= value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be less than {0}.", value));
+                    paramName, arg, string.Format("The value must be less than {0}.", value));
             }
         }
 
@@ -331,17 +364,17 @@
         /// Ensures the numeric argument is less than a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is greater than or equal to <paramref name="value"/>.
         /// </exception>
-        public static void AssertLessThan(this int arg, string paramName, int value)
+        public static void AssertLessThan(this int arg, int value, string paramName)
         {
             if (arg >= value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be less than {0}.", value));
+                    paramName, arg, string.Format("The value must be less than {0}.", value));
             }
         }
 
@@ -349,17 +382,17 @@
         /// Ensures the numeric argument is less than a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is greater than or equal to <paramref name="value"/>.
         /// </exception>
-        public static void AssertLessThan(this double arg, string paramName, double value)
+        public static void AssertLessThan(this double arg, double value, string paramName)
         {
             if (arg >= value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be less than {0}.", value));
+                    paramName, arg, string.Format("The value must be less than {0}.", value));
             }
         }
 
@@ -367,17 +400,17 @@
         /// Ensures the numeric argument is less than or equal to a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is greater than <paramref name="value"/>.
         /// </exception>
-        public static void AssertLessThanOrEqualTo(this short arg, string paramName, short value)
+        public static void AssertLessThanOrEqualTo(this short arg, short value, string paramName)
         {
             if (arg > value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be less than or equal to {0}.", value));
+                    paramName, arg, string.Format("The value must be less than or equal to {0}.", value));
             }
         }
 
@@ -385,17 +418,17 @@
         /// Ensures the numeric argument is less than or equal to a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is greater than <paramref name="value"/>.
         /// </exception>
-        public static void AssertLessThanOrEqualTo(this int arg, string paramName, int value)
+        public static void AssertLessThanOrEqualTo(this int arg, int value, string paramName)
         {
             if (arg > value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be less than or equal to {0}.", value));
+                    paramName, arg, string.Format("The value must be less than or equal to {0}.", value));
             }
         }
 
@@ -403,17 +436,17 @@
         /// Ensures the numeric argument is less than or equal to a specified value.
         /// </summary>
         /// <param name="arg">The argument.</param>
-        /// <param name="paramName">The name of the parameter.</param>
         /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="arg"/> is greater than <paramref name="value"/>.
         /// </exception>
-        public static void AssertLessThanOrEqualTo(this double arg, string paramName, double value)
+        public static void AssertLessThanOrEqualTo(this double arg, double value, string paramName)
         {
             if (arg > value)
             {
                 throw new ArgumentOutOfRangeException(
-                    paramName, string.Format("The value must be less than or equal to {0}.", value));
+                    paramName, arg, string.Format("The value must be less than or equal to {0}.", value));
             }
         }
 

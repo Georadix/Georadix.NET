@@ -50,7 +50,7 @@
         /// <exception cref="ArgumentException">The ranges must be contiguous.</exception>
         public static TRange Combine<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
             ranges = ranges.OrderBy(r => r);
 
@@ -59,7 +59,7 @@
                 throw new ArgumentException("The ranges must be contiguous.", "ranges");
             }
 
-            return (ranges.Count() > 0) ?
+            return ranges.Any() ?
                 new TRange() { Start = ranges.First().Start, End = ranges.Last().End } : new TRange();
         }
 
@@ -77,7 +77,7 @@
         /// </exception>
         public static bool HasOverlap<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
             ranges = ranges.OrderBy(r => r);
 
@@ -104,7 +104,7 @@
         /// </exception>
         public static bool IsContiguous<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
             ranges = ranges.OrderBy(r => r);
 
@@ -276,7 +276,7 @@
         /// </exception>
         public bool IsPartitionedBy<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
             return !IsContiguous(ranges) ? false : this.Equals(Combine(ranges));
         }
