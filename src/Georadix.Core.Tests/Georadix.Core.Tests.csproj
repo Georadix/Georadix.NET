@@ -52,6 +52,7 @@
     <Compile Include="DateTimeRangeFixture.cs" />
     <Compile Include="DoubleRangeFixture.cs" />
     <Compile Include="IntRangeFixture.cs" />
+    <Compile Include="LinqExtensionsFixture.cs" />
     <Compile Include="MathHelperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShortRangeFixture.cs" />
