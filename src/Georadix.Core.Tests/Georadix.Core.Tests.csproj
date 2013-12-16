@@ -4,18 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E2F8D9A-7ADF-404F-B043-5D7136013F97}</ProjectGuid>
+    <ProjectGuid>{9974AA0C-041E-47C9-8999-209E0F5CCA94}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.Core</RootNamespace>
-    <AssemblyName>Georadix.Core</AssemblyName>
+    <RootNamespace>Georadix.Core.Tests</RootNamespace>
+    <AssemblyName>Georadix.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +24,6 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>bin\Debug\Georadix.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,33 +31,44 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>bin\Release\Georadix.Core.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArgumentExtensions.cs" />
-    <Compile Include="DateTimeRange.cs" />
-    <Compile Include="LinqExtensions.cs" />
-    <Compile Include="ContinuousRange.cs" />
-    <Compile Include="DateTimeOffsetRange.cs" />
-    <Compile Include="DiscreteRange.cs" />
-    <Compile Include="DoubleRange.cs" />
-    <Compile Include="IntRange.cs" />
-    <Compile Include="MathHelper.cs" />
+    <Compile Include="ArgumentExtensionsFixture.cs" />
+    <Compile Include="DateTimeOffsetRangeFixture.cs" />
+    <Compile Include="DateTimeRangeFixture.cs" />
+    <Compile Include="DoubleRangeFixture.cs" />
+    <Compile Include="IntRangeFixture.cs" />
+    <Compile Include="LinqExtensionsFixture.cs" />
+    <Compile Include="MathHelperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Range.cs" />
-    <Compile Include="ShortRange.cs" />
-    <Compile Include="SystemExtensions.cs" />
+    <Compile Include="ShortRangeFixture.cs" />
+    <Compile Include="SystemExtensionsFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
+      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
+      <Name>Georadix.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

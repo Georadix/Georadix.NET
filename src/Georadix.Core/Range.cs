@@ -12,14 +12,6 @@
         : IComparable, IComparable<Range<T>>, IEquatable<Range<T>> where T : struct, IComparable<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Range{T}"/> class.
-        /// </summary>
-        protected Range()
-            : this(default(T), default(T))
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Range{T}"/> class with specified start and end values.
         /// </summary>
         /// <param name="start">The start value.</param>
@@ -58,17 +50,17 @@
         /// <exception cref="ArgumentException">The ranges must be contiguous.</exception>
         public static TRange Combine<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
-            ranges.OrderBy(r => r);
+            ranges = ranges.OrderBy(r => r);
 
             if (!IsContiguous(ranges))
             {
                 throw new ArgumentException("The ranges must be contiguous.", "ranges");
             }
 
-            return (ranges.Count() > 0) ?
-                new TRange() { Start = ranges.First().Start, End = ranges.Last().End } : null;
+            return ranges.Any() ?
+                new TRange() { Start = ranges.First().Start, End = ranges.Last().End } : new TRange();
         }
 
         /// <summary>
@@ -85,22 +77,19 @@
         /// </exception>
         public static bool HasOverlap<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
-            ranges.OrderBy(r => r);
-
-            var returnValue = false;
+            ranges = ranges.OrderBy(r => r);
 
             for (var i = 0; i < ranges.Count() - 1; i++)
             {
-                if (!ranges.ElementAt(i).Overlaps(ranges.ElementAt(i + 1)))
+                if (ranges.ElementAt(i).Overlaps(ranges.ElementAt(i + 1)))
                 {
-                    returnValue = true;
-                    break;
+                    return true;
                 }
             }
 
-            return returnValue;
+            return false;
         }
 
         /// <summary>
@@ -115,22 +104,19 @@
         /// </exception>
         public static bool IsContiguous<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
-            ranges.OrderBy(r => r);
-
-            var returnValue = true;
+            ranges = ranges.OrderBy(r => r);
 
             for (var i = 0; i < ranges.Count() - 1; i++)
             {
                 if (!ranges.ElementAt(i).Abuts(ranges.ElementAt(i + 1)))
                 {
-                    returnValue = false;
-                    break;
+                    return false;
                 }
             }
 
-            return returnValue;
+            return true;
         }
 
         /// <summary>
@@ -246,8 +232,6 @@
         {
             range.AssertNotNull("range");
 
-            var returnValue = this.CreateEmpty<TRange>();
-
             if (!this.Overlaps(range) && !this.IsEmpty && !range.IsEmpty)
             {
                 Range<T> lower, higher;
@@ -263,10 +247,10 @@
                     higher = this;
                 }
 
-                returnValue = this.CreateGap<TRange>(lower.End, higher.Start);
+                return this.CreateGap<TRange>(lower.End, higher.Start);
             }
 
-            return returnValue;
+            return this.CreateEmpty<TRange>();
         }
 
         /// <summary>
@@ -292,7 +276,7 @@
         /// </exception>
         public bool IsPartitionedBy<TRange>(IEnumerable<TRange> ranges) where TRange : Range<T>, new()
         {
-            ranges.AssertNotNull("ranges", true);
+            ranges.AssertNotNull(true, "ranges");
 
             return !IsContiguous(ranges) ? false : this.Equals(Combine(ranges));
         }
@@ -313,7 +297,7 @@
         /// <returns>A <see cref="String"/> that represents the current <see cref="Range{T}"/>.</returns>
         public override string ToString()
         {
-            return this.Start.ToString() + " - " + this.End.ToString();
+            return string.Format("{0} - {1}", this.Start, this.End);
         }
 
         /// <summary>
