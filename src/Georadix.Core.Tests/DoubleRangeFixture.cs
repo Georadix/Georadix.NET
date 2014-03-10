@@ -62,7 +62,7 @@
 
         [Theory]
         [InlineData(-1.0, 1.0, 0.0, true)]
-        [InlineData(-1.0, 1.0, 1.0, true)]
+        [InlineData(-1.0, 1.0, 1.0, false)]
         [InlineData(-1.0, 1.0, -1.0, true)]
         [InlineData(-1.0, 1.0, 1.1, false)]
         [InlineData(-1.0, 1.0, -1.1, false)]

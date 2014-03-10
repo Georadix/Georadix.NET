@@ -357,7 +357,7 @@
         [Theory]
         [InlineData(1.0, 1.0, 5.0)]
         [InlineData(3.0, 1.0, 5.0)]
-        [InlineData(5.0, 1.0, 5.0)]
+        [InlineData(4.9, 1.0, 5.0)]
         public void AssertInRangeOnDoubleInRangeDoesNotThrowException(double sut, double min, double max)
         {
             sut.AssertInRange(min, max, "sut");
