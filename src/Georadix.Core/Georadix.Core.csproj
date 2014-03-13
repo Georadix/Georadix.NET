@@ -60,6 +60,7 @@
     <Compile Include="SystemExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Georadix.Core.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
