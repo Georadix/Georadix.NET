@@ -31,6 +31,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Data", "Georadix.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Data.Tests", "Georadix.Data.Tests\Georadix.Data.Tests.csproj", "{6A8D060D-58A1-49C7-A991-38799D27FDBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.WebApi", "Georadix.WebApi\Georadix.WebApi.csproj", "{86092299-8592-4B54-826D-1DD79BB37BEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.WebApi.Tests", "Georadix.WebApi.Tests\Georadix.WebApi.Tests.csproj", "{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.WebApi.Testing", "Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj", "{C591B082-2A19-49FC-BC20-F41D91A54C37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +59,18 @@ Global
 		{6A8D060D-58A1-49C7-A991-38799D27FDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A8D060D-58A1-49C7-A991-38799D27FDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A8D060D-58A1-49C7-A991-38799D27FDBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86092299-8592-4B54-826D-1DD79BB37BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86092299-8592-4B54-826D-1DD79BB37BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86092299-8592-4B54-826D-1DD79BB37BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86092299-8592-4B54-826D-1DD79BB37BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +78,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9974AA0C-041E-47C9-8999-209E0F5CCA94} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{6A8D060D-58A1-49C7-A991-38799D27FDBC} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
+		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 	EndGlobalSection
 EndGlobal
