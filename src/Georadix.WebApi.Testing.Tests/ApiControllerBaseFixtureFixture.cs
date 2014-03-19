@@ -21,7 +21,7 @@
         {
             using (var sut = new TestControllerFixture(null))
             {
-                // More of a placeholder, no idea how we could test this, ideas??
+                // Placeholder until we figure out how to properly test that it disposes dependencies properly.
             }
         }
 
