@@ -8,7 +8,7 @@
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release of Web API Testing libraries.</releaseNotes>
+    <releaseNotes>Initial release of the Georadix Web API Testing library.</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>web api unit testing georadix</tags>
   </metadata>

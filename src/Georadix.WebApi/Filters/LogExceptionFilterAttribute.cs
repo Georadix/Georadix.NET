@@ -7,7 +7,7 @@
     using System.Web.Http.Filters;
 
     /// <summary>
-    /// Logs exception and return a standard HTTP 500 status code.
+    /// Logs exception and returns a standard HTTP 500 status code.
     /// </summary>
     public class LogExceptionFilterAttribute : ExceptionFilterAttribute
     {

@@ -25,7 +25,7 @@
         }
 
         [Fact]
-        public void GetServiceGoesThroughTheContainerAndReturnTheService()
+        public void GetServiceGoesThroughTheContainerAndReturnsTheService()
         {
             var container = new Container();
 
@@ -39,7 +39,7 @@
         }
 
         [Fact]
-        public void GetServicesGoesThroughTheContainerAndReturnServices()
+        public void GetServicesGoesThroughTheContainerAndReturnsServices()
         {
             var container = new Container();
 
