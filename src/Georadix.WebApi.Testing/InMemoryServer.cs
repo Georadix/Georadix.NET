@@ -19,6 +19,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryServer" /> class with a specified container.
         /// </summary>
+        /// <remarks>
+        /// Use the server configuration callback in order to perform configuration usually done
+        /// on application start in a standard Web API project.
+        /// </remarks>
         /// <param name="container">The container.</param>
         /// <param name="serverConfigurationCallback">The server configuration callback.</param>
         /// <exception cref="ArgumentNullException"><paramref name="container" /> is <see langword="null" /></exception>
