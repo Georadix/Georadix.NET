@@ -58,7 +58,9 @@
     <Compile Include="QueryService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Georadix.Services.nuspec" />
+    <None Include="Georadix.Services.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
