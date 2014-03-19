@@ -75,6 +75,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApiControllerBaseFixture.cs" />
     <Compile Include="InMemoryServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +84,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Georadix.Services\Georadix.Services.csproj">
+      <Project>{6d1c0b38-2167-4320-b1b3-1692c44e7323}</Project>
+      <Name>Georadix.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Georadix.WebApi\Georadix.WebApi.csproj">
       <Project>{86092299-8592-4b54-826d-1dd79bb37bee}</Project>
       <Name>Georadix.WebApi</Name>

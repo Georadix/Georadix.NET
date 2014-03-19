@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.WebApi.Tests", "Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.WebApi.Testing", "Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj", "{C591B082-2A19-49FC-BC20-F41D91A54C37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Services", "Georadix.Services\Georadix.Services.csproj", "{6D1C0B38-2167-4320-B1B3-1692C44E7323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Services.Tests", "Georadix.Services.Tests\Georadix.Services.Tests.csproj", "{6292966B-72D4-46F6-8093-C8D05A309EEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,14 @@ Global
 		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C591B082-2A19-49FC-BC20-F41D91A54C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D1C0B38-2167-4320-B1B3-1692C44E7323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D1C0B38-2167-4320-B1B3-1692C44E7323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D1C0B38-2167-4320-B1B3-1692C44E7323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D1C0B38-2167-4320-B1B3-1692C44E7323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6292966B-72D4-46F6-8093-C8D05A309EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6292966B-72D4-46F6-8093-C8D05A309EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6292966B-72D4-46F6-8093-C8D05A309EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6292966B-72D4-46F6-8093-C8D05A309EEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,5 +91,6 @@ Global
 		{9974AA0C-041E-47C9-8999-209E0F5CCA94} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{6A8D060D-58A1-49C7-A991-38799D27FDBC} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
+		{6292966B-72D4-46F6-8093-C8D05A309EEF} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 	EndGlobalSection
 EndGlobal
