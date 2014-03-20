@@ -1,11 +1,27 @@
 ﻿namespace Georadix.Core.Tests
 {
     using System;
+    using System.Linq;
+    using System.Linq.Expressions;
     using Xunit;
     using Xunit.Extensions;
 
     public class SystemExtensionsFixture
     {
+        #region Type
+
+        [Fact]
+        public void GetGenericMethodReturnsMethodInfo()
+        {
+            var methodInfo = typeof(Queryable).GetGenericMethod(
+                "OrderBy", typeof(IQueryable<string>).GetGenericTypeDefinition(), typeof(Expression<>));
+
+            Assert.NotNull(methodInfo);
+            Assert.Equal("OrderBy", methodInfo.Name);
+        }
+
+        #endregion
+
         #region Numeric Types
 
         [Theory]

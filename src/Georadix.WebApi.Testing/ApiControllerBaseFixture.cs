@@ -1,6 +1,6 @@
 ﻿namespace Georadix.WebApi.Testing
 {
-    using Georadix.Services;
+    using Georadix.Cqs;
     using Moq;
     using SimpleInjector;
     using System;
@@ -26,11 +26,11 @@
         {
             this.Server = new InMemoryServer(new Container(), serverConfigurationCallback);
 
-            this.CommandServiceMock = new Mock<ICommandService>(MockBehavior.Strict);
-            this.QueryServiceMock = new Mock<IQueryService>(MockBehavior.Strict);
+            this.CommandProcessorMock = new Mock<ICommandProcessor>(MockBehavior.Strict);
+            this.QueryProcessorMock = new Mock<IQueryProcessor>(MockBehavior.Strict);
 
-            this.Server.Container.RegisterSingle<ICommandService>(this.CommandServiceMock.Object);
-            this.Server.Container.RegisterSingle<IQueryService>(this.QueryServiceMock.Object);
+            this.Server.Container.RegisterSingle<ICommandProcessor>(this.CommandProcessorMock.Object);
+            this.Server.Container.RegisterSingle<IQueryProcessor>(this.QueryProcessorMock.Object);
         }
 
         /// <summary>
@@ -42,20 +42,20 @@
         }
 
         /// <summary>
-        /// Gets the command service mock.
+        /// Gets the command processor mock.
         /// </summary>
         /// <value>
-        /// The command service mock.
+        /// The command processor mock.
         /// </value>
-        protected Mock<ICommandService> CommandServiceMock { get; private set; }
+        protected Mock<ICommandProcessor> CommandProcessorMock { get; private set; }
 
         /// <summary>
-        /// Gets the query service mock.
+        /// Gets the query processor mock.
         /// </summary>
         /// <value>
-        /// The query service mock.
+        /// The query processor mock.
         /// </value>
-        protected Mock<IQueryService> QueryServiceMock { get; private set; }
+        protected Mock<IQueryProcessor> QueryProcessorMock { get; private set; }
 
         /// <summary>
         /// Gets the server hosting the controller in memory.

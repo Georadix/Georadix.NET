@@ -1,12 +1,76 @@
 ﻿namespace System.Linq
 {
     using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// Defines methods that extend LINQ.
     /// </summary>
     public static class LinqExtensions
     {
+        #region IQueryable Extensions
+
+        /// <summary>
+        /// Sorts the elements of a sequence in ascending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the 
+        /// property.
+        /// </returns>
+        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "OrderBy");
+        }
+
+        /// <summary>
+        /// Sorts the elements of a sequence in descending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the property.
+        /// </returns>
+        public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "OrderByDescending");
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in ascending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the property name.
+        /// </returns>
+        public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IOrderedQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "ThenBy");
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in descending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the 
+        /// property.
+        /// </returns>
+        public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IOrderedQueryable<T>, IOrderedQueryable<T>>(
+                source, propertyName, "ThenByDescending");
+        }
+
+        #endregion
+
         /// <summary>
         /// Adds the specified elements to the end of the collection.
         /// </summary>
@@ -189,6 +253,32 @@
 
                 return min;
             }
+        }
+
+        private static TResult BuildExpression<TSource, TResult>(TSource source, string propertyName, string methodName)
+            where TSource : IQueryable
+            where TResult : IQueryable
+        {
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                throw new ArgumentNullException("propertyName");
+            }
+
+            var x = Expression.Parameter(source.ElementType, "x");
+            var keySelector = Expression.Lambda(Expression.PropertyOrField(x, propertyName), x);
+            var sourceType = typeof(TSource);
+
+            if (sourceType.IsGenericType)
+            {
+                sourceType = sourceType.GetGenericTypeDefinition();
+            }
+
+            var methodInfo = typeof(Queryable).GetGenericMethod(methodName, sourceType, typeof(Expression<>));
+
+            return (TResult)source.Provider.CreateQuery((Expression)Expression.Call(
+                (Expression)null,
+                methodInfo.MakeGenericMethod(source.ElementType, keySelector.ReturnType),
+                new Expression[2] { source.Expression, (Expression)Expression.Quote((Expression)keySelector) }));
         }
     }
 }
