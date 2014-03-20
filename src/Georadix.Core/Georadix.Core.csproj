@@ -46,6 +46,8 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
+    <Compile Include="Data\OrderByExpression.cs" />
+    <Compile Include="Data\SortDirection.cs" />
     <Compile Include="DateTimeRange.cs" />
     <Compile Include="LinqExtensions.cs" />
     <Compile Include="ContinuousRange.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
+    <Compile Include="SequentialGuid.cs" />
     <Compile Include="ShortRange.cs" />
     <Compile Include="SystemExtensions.cs" />
   </ItemGroup>
