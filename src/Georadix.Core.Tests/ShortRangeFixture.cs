@@ -1,4 +1,4 @@
-﻿namespace Georadix.Core.Tests
+﻿namespace Georadix.Core
 {
     using System.Linq;
     using Xunit;

@@ -7,7 +7,7 @@
     <ProjectGuid>{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.WebApi.Tests</RootNamespace>
+    <RootNamespace>Georadix.WebApi</RootNamespace>
     <AssemblyName>Georadix.WebApi.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

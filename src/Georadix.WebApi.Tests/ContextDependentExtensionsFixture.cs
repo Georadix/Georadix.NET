@@ -1,4 +1,4 @@
-﻿namespace Georadix.WebApi.Tests
+﻿namespace Georadix.WebApi
 {
     using SimpleInjector;
     using System;

@@ -7,7 +7,7 @@
     <ProjectGuid>{463F4807-F7C1-46E2-B095-BFE3097ED112}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.Cqs.Tests</RootNamespace>
+    <RootNamespace>Georadix.Cqs</RootNamespace>
     <AssemblyName>Georadix.Cqs.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
