@@ -51,8 +51,10 @@
     </Compile>
     <Compile Include="ArgumentExtensionsFixture.cs" />
     <Compile Include="Data\OrderByExpressionFixture.cs" />
+    <Compile Include="Data\StringExtensionsFixture.cs" />
     <Compile Include="DateTimeOffsetRangeFixture.cs" />
     <Compile Include="DateTimeRangeFixture.cs" />
+    <Compile Include="DelegateEqualityComparerFixture.cs" />
     <Compile Include="DoubleRangeFixture.cs" />
     <Compile Include="IntRangeFixture.cs" />
     <Compile Include="LinqExtensionsFixture.cs" />
