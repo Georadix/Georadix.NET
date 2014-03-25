@@ -7,7 +7,7 @@
     <ProjectGuid>{9974AA0C-041E-47C9-8999-209E0F5CCA94}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.Core.Tests</RootNamespace>
+    <RootNamespace>Georadix.Core</RootNamespace>
     <AssemblyName>Georadix.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,8 +51,10 @@
     </Compile>
     <Compile Include="ArgumentExtensionsFixture.cs" />
     <Compile Include="Data\OrderByExpressionFixture.cs" />
+    <Compile Include="Data\StringExtensionsFixture.cs" />
     <Compile Include="DateTimeOffsetRangeFixture.cs" />
     <Compile Include="DateTimeRangeFixture.cs" />
+    <Compile Include="DelegateEqualityComparerFixture.cs" />
     <Compile Include="DoubleRangeFixture.cs" />
     <Compile Include="IntRangeFixture.cs" />
     <Compile Include="LinqExtensionsFixture.cs" />

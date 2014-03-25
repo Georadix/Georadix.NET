@@ -1,6 +1,5 @@
-﻿namespace Georadix.Core.Tests.Data
+﻿namespace Georadix.Core.Data
 {
-    using Georadix.Core.Data;
     using System;
     using Xunit;
     using Xunit.Extensions;

@@ -1,4 +1,4 @@
-﻿namespace Georadix.WebApi.Testing.Tests
+﻿namespace Georadix.WebApi.Testing
 {
     using System;
     using System.Web.Http;

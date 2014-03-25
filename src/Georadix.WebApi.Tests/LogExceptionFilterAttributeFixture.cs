@@ -1,4 +1,4 @@
-﻿namespace Georadix.WebApi.Tests
+﻿namespace Georadix.WebApi
 {
     using Georadix.WebApi.Filters;
     using Georadix.WebApi.Testing;

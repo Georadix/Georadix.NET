@@ -48,7 +48,9 @@
     <Compile Include="ArgumentExtensions.cs" />
     <Compile Include="Data\OrderByExpression.cs" />
     <Compile Include="Data\SortDirection.cs" />
+    <Compile Include="Data\StringExtensions.cs" />
     <Compile Include="DateTimeRange.cs" />
+    <Compile Include="DelegateEqualityComparer.cs" />
     <Compile Include="LinqExtensions.cs" />
     <Compile Include="ContinuousRange.cs" />
     <Compile Include="DateTimeOffsetRange.cs" />

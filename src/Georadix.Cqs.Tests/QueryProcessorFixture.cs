@@ -1,4 +1,4 @@
-﻿namespace Georadix.Cqs.Tests
+﻿namespace Georadix.Cqs
 {
     using Moq;
     using System;
