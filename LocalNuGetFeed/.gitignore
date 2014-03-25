@@ -1,0 +1,2 @@
+# Ignore all local nuget packages
+*.nupkg

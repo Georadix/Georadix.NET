@@ -104,4 +104,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+    <PostBuildEvent>
+      cd $(SolutionDir)
+      .nuget\nuget.exe pack Georadix.Core\Georadix.Core.csproj -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>
