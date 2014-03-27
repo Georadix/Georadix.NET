@@ -17,10 +17,8 @@
         [Fact]
         public async Task ExecuteActionWithInvalidModelReturnsModelState()
         {
-            using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
+            using (var server = this.ServerFactory())
             {
-                server.Container.Register<ValidateModelAttributeFixtureController>();
-
                 var model = new ValidateModelAttributeFixtureModel() { Name = string.Empty };
 
                 var response = await server.Client.PostAsJsonAsync("entities", model);
@@ -36,10 +34,8 @@
         [Fact]
         public async Task ExecuteActionWithValidModelReturnsContent()
         {
-            using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
+            using (var server = this.ServerFactory())
             {
-                server.Container.Register<ValidateModelAttributeFixtureController>();
-
                 var model = new ValidateModelAttributeFixtureModel() { Name = "test" };
 
                 var response = await server.Client.PostAsJsonAsync("entities", model);
@@ -57,6 +53,17 @@
             server.Configuration.Filters.Add(new ValidateModelAttribute());
 
             server.Configuration.MapHttpAttributeRoutes();
+        }
+
+        private InMemoryServer ServerFactory()
+        {
+            var container = new Container();
+
+            container.Register<ValidateModelAttributeFixtureController>();
+
+            var server = new InMemoryServer(container, this.ConfigureServer);
+
+            return server;
         }
     }
 
