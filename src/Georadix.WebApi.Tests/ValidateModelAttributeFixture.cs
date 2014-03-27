@@ -8,7 +8,6 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Xunit;
@@ -16,42 +15,40 @@
     public class ValidateModelAttributeFixture
     {
         [Fact]
-        public async Task ExecuteActionWithValidModelReturnsContent()
-        {
-            using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
-            {
-                server.Container.Register<ValidateModelAttributeFixtureController>();
-
-                var model = new TestModel() { Name = "test" };
-                var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-
-                var response = await server.Client.PostAsync("entities", content);
-
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-                var responseContent = await response.Content.ReadAsStringAsync();
-
-                Assert.Contains(model.Name, responseContent);
-            }
-        }
-
-        [Fact]
         public async Task ExecuteActionWithInvalidModelReturnsModelState()
         {
             using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
             {
                 server.Container.Register<ValidateModelAttributeFixtureController>();
 
-                var model = new TestModel() { Name = string.Empty };
-                var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                var model = new ValidateModelAttributeFixtureModel() { Name = string.Empty };
 
-                var response = await server.Client.PostAsync("entities", content);
+                var response = await server.Client.PostAsJsonAsync("entities", model);
 
                 Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
                 var responseContent = await response.Content.ReadAsStringAsync();
 
                 Assert.Contains("The name cannot be empty", responseContent);
+            }
+        }
+
+        [Fact]
+        public async Task ExecuteActionWithValidModelReturnsContent()
+        {
+            using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
+            {
+                server.Container.Register<ValidateModelAttributeFixtureController>();
+
+                var model = new ValidateModelAttributeFixtureModel() { Name = "test" };
+
+                var response = await server.Client.PostAsJsonAsync("entities", model);
+
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                Assert.Contains(model.Name, responseContent);
             }
         }
 
@@ -69,13 +66,13 @@
     public class ValidateModelAttributeFixtureController : ApiController
     {
         [Route("")]
-        public string Post(TestModel model)
+        public string Post(ValidateModelAttributeFixtureModel model)
         {
             return model.Name;
         }
     }
 
-    public class TestModel
+    public class ValidateModelAttributeFixtureModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "The name cannot be empty.")]
         public string Name { get; set; }
