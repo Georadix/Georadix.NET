@@ -17,7 +17,7 @@
         [Fact]
         public async Task ExecuteActionWithInvalidModelReturnsModelState()
         {
-            using (var server = this.ServerFactory())
+            using (var server = this.CreateServer())
             {
                 var model = new ValidateModelAttributeFixtureModel() { Name = string.Empty };
 
@@ -34,7 +34,7 @@
         [Fact]
         public async Task ExecuteActionWithValidModelReturnsContent()
         {
-            using (var server = this.ServerFactory())
+            using (var server = this.CreateServer())
             {
                 var model = new ValidateModelAttributeFixtureModel() { Name = "test" };
 
@@ -55,7 +55,7 @@
             server.Configuration.MapHttpAttributeRoutes();
         }
 
-        private InMemoryServer ServerFactory()
+        private InMemoryServer CreateServer()
         {
             var container = new Container();
 
