@@ -7,21 +7,11 @@
     public class ApiControllerBaseFixtureFixture
     {
         [Fact]
-        public void CreateWithConfigurationCallbackGetsCalled()
-        {
-            bool wasConfigCalled = false;
-
-            var sut = new TestControllerFixture((InMemoryServer s) => { wasConfigCalled = true; }, () => { });
-
-            Assert.True(wasConfigCalled);
-        }
-
-        [Fact]
         public void DisposesTheInstanceProperly()
         {
             var wasDisposed = false;
 
-            using (var sut = new TestControllerFixture(null, () => { wasDisposed = true; }))
+            using (var sut = new TestControllerFixture(() => { wasDisposed = true; }))
             {
                 // Placeholder until we figure out how to properly test that it disposes dependencies properly.
             }
@@ -37,8 +27,7 @@
         {
             private readonly Action disposedCallback;
 
-            public TestControllerFixture(Action<InMemoryServer> config, Action disposedCallback)
-                : base(config)
+            public TestControllerFixture(Action disposedCallback)
             {
                 this.disposedCallback = disposedCallback;
             }

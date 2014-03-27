@@ -46,6 +46,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
+    <Compile Include="Data\EntityUniqueConstraintException.cs" />
     <Compile Include="Data\OrderByExpression.cs" />
     <Compile Include="Data\SortDirection.cs" />
     <Compile Include="Data\StringExtensions.cs" />
@@ -80,7 +81,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-      <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets'))" />
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets'))" />
   </Target>
   <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
     <PostBuildEvent>

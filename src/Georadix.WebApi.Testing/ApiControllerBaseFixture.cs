@@ -17,14 +17,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiControllerBaseFixture{TController}" /> class.
         /// </summary>
-        /// <remarks>
-        /// Use the server configuration callback in order to perform configuration usually done
-        /// on application start in a standard Web API project.
-        /// </remarks>
-        /// <param name="serverConfigurationCallback">The server configuration callback.</param>
-        public ApiControllerBaseFixture(Action<InMemoryServer> serverConfigurationCallback)
+        public ApiControllerBaseFixture()
         {
-            this.Server = new InMemoryServer(new Container(), serverConfigurationCallback);
+            this.Server = new InMemoryServer(new Container());
 
             this.CommandProcessorMock = new Mock<ICommandProcessor>(MockBehavior.Strict);
             this.QueryProcessorMock = new Mock<IQueryProcessor>(MockBehavior.Strict);

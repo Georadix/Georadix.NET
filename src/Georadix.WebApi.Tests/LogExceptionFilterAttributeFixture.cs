@@ -22,7 +22,7 @@
         [Fact]
         public async Task ExceptionFromControllerLoggedAsError()
         {
-            using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
+            using (var server = this.CreateServer())
             {
                 var response = await server.Client.GetAsync("test/exception");
 
@@ -37,10 +37,8 @@
         [Fact]
         public async Task ExceptionFromControllerLogsInnerException()
         {
-            using (var server = new InMemoryServer(new Container(), this.ConfigureServer))
+            using (var server = this.CreateServer())
             {
-                server.Container.Register<LogExceptionFilterAttributeFixtureController>();
-
                 var response = await server.Client.GetAsync("test/nestedxception");
 
                 Assert.True(server.MockLoggers.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
@@ -51,11 +49,17 @@
             }
         }
 
-        private void ConfigureServer(InMemoryServer server)
+        private InMemoryServer CreateServer()
         {
-            server.Configuration.Filters.Add(new LogExceptionFilterAttribute(server.LoggerFactory));
+            var container = new Container();
+            container.Register<LogExceptionFilterAttributeFixtureController>();
 
+            var server = new InMemoryServer(container);
+
+            server.Configuration.Filters.Add(new LogExceptionFilterAttribute(server.LoggerFactory));
             server.Configuration.MapHttpAttributeRoutes();
+
+            return server;
         }
     }
 
