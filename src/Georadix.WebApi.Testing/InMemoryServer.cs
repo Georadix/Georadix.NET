@@ -24,9 +24,8 @@
         /// on application start in a standard Web API project.
         /// </remarks>
         /// <param name="container">The container.</param>
-        /// <param name="serverConfigurationCallback">The server configuration callback.</param>
         /// <exception cref="ArgumentNullException"><paramref name="container" /> is <see langword="null" /></exception>
-        public InMemoryServer(Container container, Action<InMemoryServer> serverConfigurationCallback = null)
+        public InMemoryServer(Container container)
         {
             if (container == null)
             {
@@ -60,11 +59,6 @@
             this.Container.RegisterSingle<Func<Type, ILog>>(this.LoggerFactory);
 
             this.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(this.Container);
-
-            if (serverConfigurationCallback != null)
-            {
-                serverConfigurationCallback(this);
-            }
         }
 
         /// <summary>

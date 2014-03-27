@@ -48,20 +48,16 @@
             }
         }
 
-        private void ConfigureServer(InMemoryServer server)
-        {
-            server.Configuration.Filters.Add(new ValidateModelAttribute());
-
-            server.Configuration.MapHttpAttributeRoutes();
-        }
-
         private InMemoryServer CreateServer()
         {
             var container = new Container();
 
             container.Register<ValidateModelAttributeFixtureController>();
 
-            var server = new InMemoryServer(container, this.ConfigureServer);
+            var server = new InMemoryServer(container);
+
+            server.Configuration.Filters.Add(new ValidateModelAttribute());
+            server.Configuration.MapHttpAttributeRoutes();
 
             return server;
         }

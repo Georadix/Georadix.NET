@@ -17,22 +17,6 @@
         }
 
         [Fact]
-        public void CreateWithConfigurationCallbackGetsCalled()
-        {
-            bool wasConfigCalled = false;
-
-            var server = new InMemoryServer(
-                new Container(), 
-                (InMemoryServer s) => 
-                {
-                    Assert.NotNull(s);
-                    wasConfigCalled = true;
-                });
-
-            Assert.True(wasConfigCalled);
-        }
-
-        [Fact]
         public void CreateIsProperlyInitialized()
         {
             var container = new Container();
