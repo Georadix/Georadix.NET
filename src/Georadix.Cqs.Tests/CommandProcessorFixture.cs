@@ -7,7 +7,7 @@
     public class CommandProcessorFixture
     {
         [Fact]
-        public void CreateWithNullServiceProviderThrowsArgumentNullException()
+        public void ConstructorWithNullServiceProviderThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new CommandProcessor(null));
 

@@ -7,7 +7,7 @@
     public class InMemoryServerFixture
     {
         [Fact]
-        public void CreateWithNullContainerThrowsArgumentNullException()
+        public void ConstrutorWithNullContainerThrowsArgumentNullException()
         {
             InMemoryServer server;
 
@@ -17,7 +17,7 @@
         }
 
         [Fact]
-        public void CreateIsProperlyInitialized()
+        public void ConstructorReturnsInitializedInstance()
         {
             var container = new Container();
             var server = new InMemoryServer(container);

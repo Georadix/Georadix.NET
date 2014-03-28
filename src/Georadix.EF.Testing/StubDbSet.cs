@@ -128,7 +128,7 @@
         /// </summary>
         /// <param name="keyValues">The key values.</param>
         /// <returns>An entity matching the key values, otherwise <see langword="null"/>.</returns>
-        public virtual T Find(params object[] keyValues)
+        public T Find(params object[] keyValues)
         {
             var ids = keyValues.Cast<Guid>().ToList();
 

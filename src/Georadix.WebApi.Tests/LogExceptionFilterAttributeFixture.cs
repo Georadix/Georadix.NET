@@ -12,7 +12,7 @@
     public class LogExceptionFilterAttributeFixture
     {
         [Fact]
-        public void CreateWithNullLoggerFactoryThrowsArgumentNullException()
+        public void ConstructorWithNullLoggerFactoryThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new LogExceptionFilterAttribute(null));
 

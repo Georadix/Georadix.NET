@@ -30,17 +30,7 @@
         }
 
         [Fact]
-        public void CreateDerivedEntityReturnsDerivedEntityInstance()
-        {
-            var sut = new StubDbSet<TestEntity>();
-
-            var e = sut.Create<DerivedTestEntity>();
-
-            Assert.NotNull(e);
-        }
-
-        [Fact]
-        public void CreateIsInitializedProperly()
+        public void ConstructorReturnsIntializedInstance()
         {
             var sut = new StubDbSet<TestEntity>();
 
@@ -50,6 +40,16 @@
             Assert.NotNull(sut.GetEnumerator());
             Assert.NotNull(((IEnumerable)sut).GetEnumerator());
             Assert.NotNull(sut.Provider);
+        }
+
+        [Fact]
+        public void CreateDerivedEntityReturnsDerivedEntityInstance()
+        {
+            var sut = new StubDbSet<TestEntity>();
+
+            var e = sut.Create<DerivedTestEntity>();
+
+            Assert.NotNull(e);
         }
 
         [Fact]
@@ -63,7 +63,7 @@
         }
 
         [Fact]
-        public void DetachRemoveItemsFromLocalCollection()
+        public void DetachRemovesItemsFromLocalCollection()
         {
             var sut = new StubDbSet<TestEntity>();
 
@@ -79,7 +79,7 @@
         }
 
         [Fact]
-        public void FindWithKnowIdReturnsEntity()
+        public void FindWithKnownIdReturnsEntity()
         {
             var sut = new StubDbSet<TestEntity>();
 
