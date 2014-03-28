@@ -4,20 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E2F8D9A-7ADF-404F-B043-5D7136013F97}</ProjectGuid>
+    <ProjectGuid>{D9E4FF22-3765-419D-B939-BE29BA994106}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.Core</RootNamespace>
-    <AssemblyName>Georadix.Core</AssemblyName>
+    <RootNamespace>Georadix.EF.Testing</RootNamespace>
+    <AssemblyName>Georadix.EF.Testing</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +22,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>bin\Debug\Georadix.Core.XML</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Debug\Georadix.EF.Testing.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,41 +32,43 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>bin\Release\Georadix.Core.XML</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\Release\Georadix.EF.Testing.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArgumentExtensions.cs" />
-    <Compile Include="Data\EntityUniqueConstraintException.cs" />
-    <Compile Include="Data\OrderByExpression.cs" />
-    <Compile Include="Data\SortDirection.cs" />
-    <Compile Include="Data\StringExtensions.cs" />
-    <Compile Include="DateTimeRange.cs" />
-    <Compile Include="DelegateEqualityComparer.cs" />
-    <Compile Include="Domain\IEntity.cs" />
-    <Compile Include="LinqExtensions.cs" />
-    <Compile Include="ContinuousRange.cs" />
-    <Compile Include="DateTimeOffsetRange.cs" />
-    <Compile Include="DiscreteRange.cs" />
-    <Compile Include="DoubleRange.cs" />
-    <Compile Include="IntRange.cs" />
-    <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Range.cs" />
-    <Compile Include="SequentialGuid.cs" />
-    <Compile Include="ShortRange.cs" />
-    <Compile Include="SystemExtensions.cs" />
+    <Compile Include="StubDbSet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Georadix.Core.nuspec" />
+    <None Include="App.config" />
+    <None Include="Georadix.EF.Testing.nuspec" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
+      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
+      <Name>Georadix.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -78,17 +78,17 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+    <PostBuildEvent>
+      cd $(SolutionDir)
+      ..\tools\NuGet\nuget.exe pack Georadix.EF.Testing\Georadix.EF.Testing.csproj -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets'))" />
   </Target>
-  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-    <PostBuildEvent>
-      cd $(SolutionDir)
-      ..\tools\NuGet\nuget.exe pack Georadix.Core\Georadix.Core.csproj -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" />
 </Project>

@@ -7,7 +7,7 @@
     public class CommandFixture
     {
         [Fact]
-        public void CreateSetsId()
+        public void ConstructorReturnsInitializedInstance()
         {
             var command = new TestCommand();
 

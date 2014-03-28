@@ -7,7 +7,7 @@
     public class QueryProcessorFixture
     {
         [Fact]
-        public void CreateWithNullServiceProviderThrowsArgumentNullException()
+        public void ConstructorWithNullServiceProviderThrowsArgumentNullException()
         {
             QueryProcessor sut = null;
 

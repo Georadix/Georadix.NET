@@ -7,7 +7,7 @@
     public class SimpleInjectorWebApiDependencyResolverFixture
     {
         [Fact]
-        public void CreateWithNullContainerThrowsArgumentNullException()
+        public void ConstructorWithNullContainerThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new SimpleInjectorWebApiDependencyResolver(null));
 
