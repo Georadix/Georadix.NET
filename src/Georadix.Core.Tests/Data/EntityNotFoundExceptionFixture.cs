@@ -20,7 +20,7 @@
         }
 
         [Fact]
-        public void CreateSucceeds()
+        public void ConstructorSucceeds()
         {
             var ex = new EntityNotFoundException();
 
@@ -30,7 +30,7 @@
         }
 
         [Fact]
-        public void CreateWithMessageAndIdAndInnerExceptionSucceeds()
+        public void ConstructorWithMessageAndIdAndInnerExceptionSucceeds()
         {
             var ex = new EntityNotFoundException(ErrorMessage, Id, InnerException);
 
@@ -41,7 +41,7 @@
         }
 
         [Fact]
-        public void CreateWithMessageAndIdSucceeds()
+        public void ConstructorWithMessageAndIdSucceeds()
         {
             var ex = new EntityNotFoundException(ErrorMessage, Id);
 
@@ -52,7 +52,7 @@
         }
 
         [Fact]
-        public void CreateWithMessageAndInnerExceptionSucceeds()
+        public void ConstructorWithMessageAndInnerExceptionSucceeds()
         {
             var ex = new EntityNotFoundException(ErrorMessage, InnerException);
 
@@ -62,7 +62,7 @@
         }
 
         [Fact]
-        public void CreateWithMessageSucceeds()
+        public void ConstructorWithMessageSucceeds()
         {
             var ex = new EntityNotFoundException(ErrorMessage);
 
