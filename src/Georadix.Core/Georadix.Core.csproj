@@ -46,6 +46,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
+    <Compile Include="Data\EntityNotFoundException.cs" />
     <Compile Include="Data\EntityUniqueConstraintException.cs" />
     <Compile Include="Data\OrderByExpression.cs" />
     <Compile Include="Data\SortDirection.cs" />
