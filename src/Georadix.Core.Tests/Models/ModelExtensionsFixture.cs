@@ -11,7 +11,7 @@
         {
             var sut = new TestModel() { Name = "Name", Title = string.Empty };
 
-            sut.AssertValid();
+            sut.AssertValid("sut");
         }
 
         [Fact]
@@ -19,8 +19,9 @@
         {
             var sut = new TestModel() { };
 
-            var ex = Assert.Throws<ArgumentException>(() => sut.AssertValid());
+            var ex = Assert.Throws<ArgumentException>(() => sut.AssertValid("sut"));
 
+            Assert.Equal("sut", ex.ParamName);
             Assert.Contains("Name: Value is required.", ex.Message);
             Assert.Contains("Title: Value is required.", ex.Message);
         }
