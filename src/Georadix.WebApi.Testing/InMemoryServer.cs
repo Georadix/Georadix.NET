@@ -39,7 +39,7 @@
 
             var server = new HttpServer(this.Configuration);
 
-            this.Client = new HttpClient(server, true)
+            this.Client = new HttpClient(new InMemoryHttpContentSerializationHandler(server), true)
             {
                 BaseAddress = new Uri("http://www.test.com/")
             };
