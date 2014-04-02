@@ -9,7 +9,7 @@
         [Fact]
         public void AssertValidOnValidModelDoesNotThrowException()
         {
-            var sut = new TestModel() { Name = "Name", Title = "Title" };
+            var sut = new TestModel() { Name = "Name", Title = string.Empty };
 
             sut.AssertValid();
         }
@@ -30,7 +30,7 @@
             [Required(AllowEmptyStrings = false, ErrorMessage = "Value is required.")]
             public string Name { get; set; }
 
-            [Required(AllowEmptyStrings = false, ErrorMessage = "Value is required.")]
+            [Required(AllowEmptyStrings = true, ErrorMessage = "Value is required.")]
             public string Title { get; set; }
         }
     }
