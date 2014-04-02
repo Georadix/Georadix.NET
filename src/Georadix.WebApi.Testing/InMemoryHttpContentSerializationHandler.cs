@@ -17,7 +17,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryHttpContentSerializationHandler"/> class.
         /// </summary>
-        /// <param name="innerHandler">The inner handler which is responsible for processing the HTTP response messages.</param>
+        /// <param name="innerHandler">The inner handler which is responsible for processing the HTTP response 
+        /// messages.</param>
         public InMemoryHttpContentSerializationHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
@@ -29,9 +30,11 @@
         /// <param name="request">The HTTP request message to send to the server.</param>
         /// <param name="cancellationToken">A cancellation token to cancel operation.</param>
         /// <returns>
-        /// Returns <see cref="T:System.Threading.Tasks.Task`1" />. The task object representing the asynchronous operation.
+        /// Returns <see cref="T:System.Threading.Tasks.Task`1" />. The task object representing the asynchronous 
+        /// operation.
         /// </returns>
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request, CancellationToken cancellationToken)
         {
             request.Content = await this.ConvertToStreamContentAsync(request.Content);
 
