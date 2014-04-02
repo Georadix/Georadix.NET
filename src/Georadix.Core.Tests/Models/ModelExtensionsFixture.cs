@@ -15,13 +15,14 @@
         }
 
         [Fact]
-        public void AssertValidOnInvalidModelThrowsValidationException()
+        public void AssertValidOnInvalidModelThrowsArgumentException()
         {
-            var sut = new TestModel() { Title = "Title" };
+            var sut = new TestModel() { };
 
             var ex = Assert.Throws<ArgumentException>(() => sut.AssertValid());
 
-            Assert.Equal("Properties: Name. Value is required.", ex.Message);
+            Assert.Contains("Name: Value is required.", ex.Message);
+            Assert.Contains("Title: Value is required.", ex.Message);
         }
 
         private class TestModel : Model

@@ -17,27 +17,32 @@
         /// Ensures the model is valid by validating all data annotations.
         /// </summary>
         /// <param name="model">The model.</param>
-        /// <param name="items">A dictionary of key/value pairs to make available data annotation attributes. This
-        /// parameter is optional.</param>
-        /// <param name="serviceProvider">The service provider to allow data annotation attributes to resolve
-        /// additional dependencies. This parameter is optional.</param>
-        /// <exception cref="ArgumentException">Contains the error message of the first 
-        /// <see cref="ValidationResult"/>.</exception>
+        /// <param name="items">
+        /// A dictionary of key/value pairs to make available data annotation attributes. This parameter is optional.
+        /// </param>
+        /// <param name="serviceProvider">
+        /// The service provider to allow data annotation attributes to resolve additional dependencies. This 
+        /// parameter is optional.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// Contains the error message of the first <see cref="ValidationResult"/>.
+        /// </exception>
         public static void AssertValid(
             this Model model, IDictionary<object, object> items = null, IServiceProvider serviceProvider = null)
         {
-            var validationResult = model.Validate(items, serviceProvider).FirstOrDefault();
+            var validationResults = model.Validate(items, serviceProvider);
 
-            if (validationResult != null)
+            if (validationResults.Any())
             {
-                var errorMessage = string.Empty;
+                var errorMessages = new List<string>();
 
-                if (validationResult.MemberNames.Any())
+                foreach (var result in validationResults)
                 {
-                    errorMessage = string.Format("Properties: {0}. ", string.Join(", ", validationResult.MemberNames));
+                    errorMessages.Add(
+                        string.Format("{0}: {1}", string.Join(", ", result.MemberNames), result.ErrorMessage));
                 }
-
-                throw new ArgumentException(errorMessage + validationResult.ErrorMessage);
+                
+                throw new ArgumentException(string.Join(Environment.NewLine, errorMessages));
             }
         }
     }

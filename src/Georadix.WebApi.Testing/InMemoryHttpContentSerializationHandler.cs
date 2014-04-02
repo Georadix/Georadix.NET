@@ -17,8 +17,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryHttpContentSerializationHandler"/> class.
         /// </summary>
-        /// <param name="innerHandler">The inner handler which is responsible for processing the HTTP response 
-        /// messages.</param>
+        /// <param name="innerHandler">
+        /// The inner handler which is responsible for processing the HTTP response messages.
+        /// </param>
         public InMemoryHttpContentSerializationHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
