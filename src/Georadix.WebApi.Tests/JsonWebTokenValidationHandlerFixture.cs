@@ -83,10 +83,10 @@
 
                 var response = await server.Client.PostAsJsonAsync<string>(this.rootRoute, "test");
 
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsAsync<string>();
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.Equal("\"test\"", content);
+                Assert.Equal("test", content);
             }
         }
 

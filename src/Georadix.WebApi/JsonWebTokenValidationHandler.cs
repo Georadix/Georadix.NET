@@ -74,7 +74,8 @@
             return base.SendAsync(request, cancellationToken);
         }
 
-        private ClaimsPrincipal ValidateTokenWithX509SecurityToken(X509RawDataKeyIdentifierClause x509DataClause, string token)
+        private ClaimsPrincipal ValidateTokenWithX509SecurityToken(
+            X509RawDataKeyIdentifierClause x509DataClause, string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var x509SecurityToken = new X509SecurityToken(new X509Certificate2(x509DataClause.GetX509RawData()));
