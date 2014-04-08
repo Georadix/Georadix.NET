@@ -14,6 +14,14 @@
 
     public class ValidateModelAttributeFixture
     {
+        private readonly string rootRoute;
+
+        public ValidateModelAttributeFixture()
+        {
+            this.rootRoute = string.Format(
+                "{0}/entities", typeof(ValidateModelAttributeFixtureController).Name.ToLowerInvariant());
+        }
+
         [Fact]
         public async Task ExecuteActionWithInvalidModelReturnsModelState()
         {
@@ -21,7 +29,7 @@
             {
                 var model = new ValidateModelAttributeFixtureModel() { Name = string.Empty };
 
-                var response = await server.Client.PostAsJsonAsync("entities", model);
+                var response = await server.Client.PostAsJsonAsync(this.rootRoute, model);
 
                 Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
@@ -38,7 +46,7 @@
             {
                 var model = new ValidateModelAttributeFixtureModel() { Name = "test" };
 
-                var response = await server.Client.PostAsJsonAsync("entities", model);
+                var response = await server.Client.PostAsJsonAsync(this.rootRoute, model);
 
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -65,7 +73,7 @@
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
         Justification = "Embedding this controller class inside the fixture causes routing to its methods to fail.")]
-    [RoutePrefix("entities")]
+    [RoutePrefix("validatemodelattributefixturecontroller/entities")]
     public class ValidateModelAttributeFixtureController : ApiController
     {
         [Route("")]

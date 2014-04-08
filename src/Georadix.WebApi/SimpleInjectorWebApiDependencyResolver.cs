@@ -20,10 +20,7 @@
         /// <exception cref="ArgumentNullException"><paramref name="container"/> is <see langword="null"/>.</exception>
         public SimpleInjectorWebApiDependencyResolver(Container container)
         {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
+            container.AssertNotNull("container");
 
             this.container = container;
         }
