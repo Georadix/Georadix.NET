@@ -78,10 +78,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AuthCertificateProvider.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
-    <Compile Include="IAuthCertificateProvider.cs" />
     <Compile Include="JsonWebTokenValidationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\InvariantStrings.Designer.cs">

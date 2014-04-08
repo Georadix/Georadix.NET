@@ -5,6 +5,7 @@
     using Moq;
     using SimpleInjector;
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.IdentityModel.Protocols.WSTrust;
@@ -21,6 +22,7 @@
 
     public class JsonWebTokenValidationHandlerFixture
     {
+        private readonly List<string> allowedAudiences = new List<string>(new string[] { "http://www.example.com" });
         private readonly X509Certificate2 certificate;
         private readonly string rootRoute;
 
@@ -28,7 +30,7 @@
         {
             var store = new X509Store(StoreName.TrustedPeople);
 
-            store.Open(OpenFlags.ReadWrite);
+            store.Open(OpenFlags.ReadOnly);
 
             var certName = ConfigurationManager.AppSettings["AuthCertName"];
 
@@ -43,9 +45,8 @@
         public async Task AccessingAnonymousResourceWithNoTokenReturnsOK()
         {
             var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-            var certProviderMock = new Mock<IAuthCertificateProvider>(MockBehavior.Strict);
 
-            using (var server = this.CreateServer(loggerMock.Object, certProviderMock.Object))
+            using (var server = this.CreateServer(loggerMock.Object))
             {
                 var response = await server.Client.GetAsync(this.rootRoute);
 
@@ -57,9 +58,8 @@
         public async Task AccessingProtectedResourceWithNoTokenReturnsForbidden()
         {
             var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-            var certProviderMock = new Mock<IAuthCertificateProvider>(MockBehavior.Strict);
 
-            using (var server = this.CreateServer(loggerMock.Object, certProviderMock.Object))
+            using (var server = this.CreateServer(loggerMock.Object))
             {
                 var response = await server.Client.PostAsJsonAsync<string>(this.rootRoute, "test");
 
@@ -71,15 +71,11 @@
         public async Task AccessingProtectedResourceWithValidTokenReturnsIt()
         {
             var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-            var certProviderMock = new Mock<IAuthCertificateProvider>(MockBehavior.Strict);
 
-            certProviderMock.Setup(p => p.AllowedAudience).Returns("http://www.example.com");
-            certProviderMock.Setup(p => p.Certificate).Returns(this.certificate);
-
-            using (var server = this.CreateServer(loggerMock.Object, certProviderMock.Object))
+            using (var server = this.CreateServer(loggerMock.Object))
             {
                 server.Client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", this.GenerateAuthToken("http://www.example.com"));
+                    new AuthenticationHeaderValue("Bearer", this.GenerateAuthToken(this.allowedAudiences.First()));
 
                 var response = await server.Client.PostAsJsonAsync<string>(this.rootRoute, "test");
 
@@ -91,37 +87,51 @@
         }
 
         [Fact]
-        public void ConstructorWithNullCertProviderThrowsArgumentNullException()
+        public void ConstructorWithNullCertificateThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(
-                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), null));
+                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), this.allowedAudiences, null));
 
-            Assert.Equal("certProvider", ex.ParamName);
+            Assert.Equal("certificate", ex.ParamName);
         }
 
         [Fact]
         public void ConstructorWithNullLoggerThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(
-                () => new JsonWebTokenValidationHandler(null, Mock.Of<IAuthCertificateProvider>()));
+                () => new JsonWebTokenValidationHandler(null, this.allowedAudiences, this.certificate));
 
             Assert.Equal("logger", ex.ParamName);
+        }
+
+        [Fact]
+        public void ConstrutorWithEmptyAllowedAudiencesThrowsArgumentException()
+        {
+            var ex = Assert.Throws<ArgumentException>(
+                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), new string[] { }, this.certificate));
+
+            Assert.Equal("allowedAudiences", ex.ParamName);
+        }
+
+        [Fact]
+        public void ConstrutorWithNullAllowedAudiencesThrowsArgumentNullException()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(
+                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), null, this.certificate));
+
+            Assert.Equal("allowedAudiences", ex.ParamName);
         }
 
         [Fact]
         public async Task RequestWithMalformedTokenIsLogged()
         {
             var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-            var certProviderMock = new Mock<IAuthCertificateProvider>(MockBehavior.Strict);
-
-            certProviderMock.Setup(p => p.AllowedAudience).Returns("audience");
-            certProviderMock.Setup(p => p.Certificate).Returns(this.certificate);
 
             loggerMock.Setup(l => l.Info(
                 It.Is<string>(s => s.Equals("Invalid authentication token.")),
                 It.IsAny<Exception>()));
 
-            using (var server = this.CreateServer(loggerMock.Object, certProviderMock.Object))
+            using (var server = this.CreateServer(loggerMock.Object))
             {
                 server.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "dfggd");
 
@@ -133,7 +143,7 @@
             }
         }
 
-        private InMemoryServer CreateServer(ILog logger, IAuthCertificateProvider certProvider)
+        private InMemoryServer CreateServer(ILog logger)
         {
             var container = new Container();
 
@@ -141,7 +151,9 @@
 
             var server = new InMemoryServer(container);
 
-            server.Configuration.MessageHandlers.Add(new JsonWebTokenValidationHandler(logger, certProvider));
+            server.Configuration.MessageHandlers.Add(
+                new JsonWebTokenValidationHandler(logger, this.allowedAudiences, this.certificate));
+
             server.Configuration.MapHttpAttributeRoutes();
 
             return server;

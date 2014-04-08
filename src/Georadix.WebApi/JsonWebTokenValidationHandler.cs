@@ -2,6 +2,7 @@
 {
     using log4net;
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens;
     using System.Net.Http;
     using System.Security.Claims;
@@ -15,25 +16,34 @@
     /// </summary>
     public class JsonWebTokenValidationHandler : DelegatingHandler
     {
-        private readonly IAuthCertificateProvider certProvider;
+        private readonly List<string> allowedAudiences = new List<string>();
+        private readonly X509Certificate2 certificate;
         private readonly ILog logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonWebTokenValidationHandler" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
-        /// <param name="certProvider">The certificate provider.</param>
+        /// <param name="allowedAudiences">A list of allowed audiences (Typically a list of domain names).</param>
+        /// <param name="certificate">The certificate used to generate the signing token.</param>
         /// <exception cref="ArgumentNullException"><paramref name="logger"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="certProvider"/> is <see langword="null"/>.
+        /// <paramref name="allowedAudiences"/> is <see langword="null"/>.
         /// </exception>
-        public JsonWebTokenValidationHandler(ILog logger, IAuthCertificateProvider certProvider)
+        /// <exception cref="ArgumentException"><paramref name="allowedAudiences"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="certificate"/> is <see langword="null"/>.
+        /// </exception>
+        public JsonWebTokenValidationHandler(
+            ILog logger, IEnumerable<string> allowedAudiences, X509Certificate2 certificate)
         {
             logger.AssertNotNull("logger");
-            certProvider.AssertNotNull("certProvider");
+            allowedAudiences.AssertNotNullOrEmpty(true, "allowedAudiences");
+            certificate.AssertNotNull("certificate");
 
             this.logger = logger;
-            this.certProvider = certProvider;
+            this.allowedAudiences.AddRange(allowedAudiences);
+            this.certificate = certificate;
         }
 
         /// <summary>
@@ -60,7 +70,7 @@
                     try
                     {
                         principal = this.ValidateTokenWithX509SecurityToken(
-                            new X509RawDataKeyIdentifierClause(this.certProvider.Certificate.RawData), token);
+                            new X509RawDataKeyIdentifierClause(this.certificate.RawData), token);
                     }
                     catch (Exception e)
                     {
@@ -82,7 +92,7 @@
 
             var validationParameters = new TokenValidationParameters()
             {
-                AllowedAudience = this.certProvider.AllowedAudience,
+                AllowedAudiences = this.allowedAudiences,
                 SigningToken = x509SecurityToken,
                 ValidIssuer = "self"
             };
