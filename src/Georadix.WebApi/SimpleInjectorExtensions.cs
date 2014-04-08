@@ -23,10 +23,7 @@
             this Container container, Func<DependencyContext, TService> contextBasedFactory)
             where TService : class
         {
-            if (contextBasedFactory == null)
-            {
-                throw new ArgumentNullException("contextBasedFactory");
-            }
+            contextBasedFactory.AssertNotNull("contextBasedFactory");
 
             Func<TService> rootFactory = () =>
             {
