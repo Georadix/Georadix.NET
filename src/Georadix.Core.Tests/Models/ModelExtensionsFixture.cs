@@ -26,7 +26,7 @@
             Assert.Contains("Title: Value is required.", ex.Message);
         }
 
-        private class TestModel : Model
+        private class TestModel : IModel
         {
             [Required(AllowEmptyStrings = false, ErrorMessage = "Value is required.")]
             public string Name { get; set; }

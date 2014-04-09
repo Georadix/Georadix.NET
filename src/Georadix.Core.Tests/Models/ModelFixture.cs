@@ -31,7 +31,7 @@
             Assert.Empty(validationResults);
         }
 
-        private class TestModel : Model
+        private class TestModel : IModel
         {
             [Required(AllowEmptyStrings = false, ErrorMessage = "Name is required.")]
             public string Name { get; set; }
