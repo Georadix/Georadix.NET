@@ -27,7 +27,8 @@
         /// A list of <see cref="ValidationResult"/> containing validation errors. The list will be empty if the
         /// model is valid.
         /// </returns>
-        public static IEnumerable<ValidationResult> Validate(this IModel model,
+        public static IEnumerable<ValidationResult> Validate(
+            this IModel model,
             IDictionary<object, object> items = null,
             IServiceProvider serviceProvider = null)
         {
@@ -55,7 +56,10 @@
         /// <exception cref="ArgumentException">
         /// Contains the error message of the first <see cref="ValidationResult"/>.
         /// </exception>
-        public static void AssertValid(this IModel model, string paramName, IDictionary<object, object> items = null,
+        public static void AssertValid(
+            this IModel model, 
+            string paramName, 
+            IDictionary<object, object> items = null, 
             IServiceProvider serviceProvider = null)
         {
             var validationResults = model.Validate(items, serviceProvider);
