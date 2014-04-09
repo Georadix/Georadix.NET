@@ -145,11 +145,7 @@
 
         private InMemoryServer CreateServer(ILog logger)
         {
-            var container = new Container();
-
-            container.Register<JsonWebTokenValidationHandlerFixtureController>();
-
-            var server = new InMemoryServer(container);
+            var server = new InMemoryServer();
 
             server.Configuration.MessageHandlers.Add(
                 new JsonWebTokenValidationHandler(logger, this.allowedAudiences, this.certificate));

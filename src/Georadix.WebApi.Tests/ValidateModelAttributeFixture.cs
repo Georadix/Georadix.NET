@@ -3,7 +3,6 @@
     using Georadix.WebApi.Filters;
     using Georadix.WebApi.Testing;
     using Newtonsoft.Json;
-    using SimpleInjector;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
@@ -58,11 +57,7 @@
 
         private InMemoryServer CreateServer()
         {
-            var container = new Container();
-
-            container.Register<ValidateModelAttributeFixtureController>();
-
-            var server = new InMemoryServer(container);
+            var server = new InMemoryServer();
 
             server.Configuration.Filters.Add(new ValidateModelAttribute());
             server.Configuration.MapHttpAttributeRoutes();

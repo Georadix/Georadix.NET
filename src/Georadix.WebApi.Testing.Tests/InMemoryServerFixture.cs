@@ -7,26 +7,12 @@
     public class InMemoryServerFixture
     {
         [Fact]
-        public void ConstrutorWithNullContainerThrowsArgumentNullException()
-        {
-            InMemoryServer server;
-
-            var ex = Assert.Throws<ArgumentNullException>(() => server = new InMemoryServer(null));
-
-            Assert.Equal("container", ex.ParamName);
-        }
-
-        [Fact]
         public void ConstructorReturnsInitializedInstance()
         {
-            var container = new Container();
-            var server = new InMemoryServer(container);
+            var server = new InMemoryServer();
 
-            Assert.Same(container, server.Container);
             Assert.NotNull(server.Client);
             Assert.NotNull(server.Configuration);
-            Assert.NotNull(server.LoggerFactory);
-            Assert.NotNull(server.MockLoggers);
         }
     }
 }

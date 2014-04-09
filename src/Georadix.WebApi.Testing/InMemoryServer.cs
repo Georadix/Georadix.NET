@@ -1,10 +1,6 @@
 ﻿namespace Georadix.WebApi.Testing
 {
-    using log4net;
-    using Moq;
-    using SimpleInjector;
     using System;
-    using System.Collections.Generic;
     using System.Net.Http;
     using System.Web.Http;
 
@@ -13,25 +9,13 @@
     /// </summary>
     public class InMemoryServer : IDisposable
     {
-        private readonly Dictionary<Type, Mock<ILog>> mockLoggers = new Dictionary<Type, Mock<ILog>>();
         private bool disposed = false;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryServer" /> class with a specified container.
+        /// Initializes a new instance of the <see cref="InMemoryServer"/> class.
         /// </summary>
-        /// <remarks>
-        /// Use the server configuration callback in order to perform configuration usually done
-        /// on application start in a standard Web API project.
-        /// </remarks>
-        /// <param name="container">The container.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="container" /> is <see langword="null" /></exception>
-        public InMemoryServer(Container container)
+        public InMemoryServer()
         {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-
             this.Configuration = new HttpConfiguration()
             {
                 IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always
@@ -43,22 +27,6 @@
             {
                 BaseAddress = new Uri("http://www.test.com/")
             };
-
-            this.Container = container;
-
-            this.LoggerFactory = new Func<Type, ILog>(type =>
-            {
-                if (!this.MockLoggers.ContainsKey(type))
-                {
-                    this.MockLoggers.Add(type, new Mock<ILog>());
-                }
-
-                return this.MockLoggers[type].Object;
-            });
-
-            this.Container.RegisterSingle<Func<Type, ILog>>(this.LoggerFactory);
-
-            this.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(this.Container);
         }
 
         /// <summary>
@@ -78,24 +46,6 @@
         /// Gets the configuration.
         /// </summary>
         public HttpConfiguration Configuration { get; private set; }
-
-        /// <summary>
-        /// Gets the container.
-        /// </summary>
-        public Container Container { get; private set; }
-
-        /// <summary>
-        /// Gets the logger factory.
-        /// </summary>
-        public Func<Type, ILog> LoggerFactory { get; private set; }
-
-        /// <summary>
-        /// Gets the mocked loggers.
-        /// </summary>
-        public Dictionary<Type, Mock<ILog>> MockLoggers
-        {
-            get { return this.mockLoggers; }
-        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
