@@ -57,6 +57,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.3.0.2\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -76,6 +81,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="InMemoryHttpContentSerializationHandler.cs" />
     <Compile Include="InMemoryServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
+      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
+      <Name>Georadix.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Georadix.Cqs\Georadix.Cqs.csproj">
       <Project>{e7f9b0de-3bc7-4175-9330-9b412cf44866}</Project>
       <Name>Georadix.Cqs</Name>
