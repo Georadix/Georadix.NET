@@ -20,14 +20,16 @@
         /// A dictionary of key/value pairs to make available data annotation attributes. This parameter is optional.
         /// </param>
         /// <param name="serviceProvider">
-        /// The service provider to allow data annotation attributes to resolve additional dependencies. This 
+        /// The service provider to allow data annotation attributes to resolve additional dependencies. This
         /// parameter is optional.
         /// </param>
         /// <returns>
-        /// A list of <see cref="ValidationResult"/> containing validation errors. The list will be empty if the 
+        /// A list of <see cref="ValidationResult"/> containing validation errors. The list will be empty if the
         /// model is valid.
         /// </returns>
-        public static IEnumerable<ValidationResult> Validate(this IModel model, IDictionary<object, object> items = null, IServiceProvider serviceProvider = null)
+        public static IEnumerable<ValidationResult> Validate(this IModel model,
+            IDictionary<object, object> items = null,
+            IServiceProvider serviceProvider = null)
         {
             var context = new ValidationContext(model, serviceProvider, items);
 
@@ -47,14 +49,14 @@
         /// A dictionary of key/value pairs to make available data annotation attributes. This parameter is optional.
         /// </param>
         /// <param name="serviceProvider">
-        /// The service provider to allow data annotation attributes to resolve additional dependencies. This 
+        /// The service provider to allow data annotation attributes to resolve additional dependencies. This
         /// parameter is optional.
         /// </param>
         /// <exception cref="ArgumentException">
         /// Contains the error message of the first <see cref="ValidationResult"/>.
         /// </exception>
-        public static void AssertValid(
-            this IModel model, string paramName, IDictionary<object, object> items = null, IServiceProvider serviceProvider = null)
+        public static void AssertValid(this IModel model, string paramName, IDictionary<object, object> items = null,
+            IServiceProvider serviceProvider = null)
         {
             var validationResults = model.Validate(items, serviceProvider);
 
@@ -67,7 +69,7 @@
                     errorMessages.Add(
                         string.Format("{0}: {1}", string.Join(", ", result.MemberNames), result.ErrorMessage));
                 }
-                
+
                 throw new ArgumentException(string.Join(Environment.NewLine, errorMessages), paramName);
             }
         }
