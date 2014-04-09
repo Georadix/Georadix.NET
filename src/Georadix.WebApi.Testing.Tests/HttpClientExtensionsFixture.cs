@@ -1,7 +1,6 @@
 ﻿namespace Georadix.WebApi.Testing
 {
     using System;
-    using System.Collections.Generic;
     using System.Configuration;
     using System.IdentityModel.Tokens;
     using System.Linq;
@@ -37,9 +36,24 @@
             sut.SetJwtAuthorizationHeader(this.certificate, "http://www.example.com", new Claim[] { claim });
 
             var principal = this.ValidateTokenWithX509SecurityToken(
-                sut.DefaultRequestHeaders.Authorization.Parameter, new string[] { "http://www.example.com" });
+                sut.DefaultRequestHeaders.Authorization.Parameter, "http://www.example.com");
 
             Assert.Equal("User1", principal.Identity.Name);
+        }
+
+        [Fact]
+        public void SetJwtAuthorizationHeaderWithDurationProperlySetsTokenLifetime()
+        {
+            var sut = new HttpClient();
+
+            var duration = TimeSpan.FromSeconds(60);
+
+            sut.SetJwtAuthorizationHeader(
+                this.certificate, "http://www.example.com", null, "self", duration);
+
+            var token = new JwtSecurityToken(sut.DefaultRequestHeaders.Authorization.Parameter);
+
+            Assert.Equal(duration, token.ValidTo - token.ValidFrom);
         }
 
         [Theory]
@@ -80,7 +94,7 @@
             Assert.Equal("signingCertificate", ex.ParamName);
         }
 
-        private ClaimsPrincipal ValidateTokenWithX509SecurityToken(string token, IEnumerable<string> allowedAudiences)
+        private ClaimsPrincipal ValidateTokenWithX509SecurityToken(string token, params string[] allowedAudiences)
         {
             var x509DataClause = new X509RawDataKeyIdentifierClause(this.certificate.RawData);
             var tokenHandler = new JwtSecurityTokenHandler();

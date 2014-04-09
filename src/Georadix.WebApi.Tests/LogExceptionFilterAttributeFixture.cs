@@ -13,7 +13,7 @@
 
     public class LogExceptionFilterAttributeFixture
     {
-        private readonly Dictionary<Type, Mock<ILog>> mockLoggers = new Dictionary<Type, Mock<ILog>>();
+        private readonly Dictionary<Type, Mock<ILog>> loggerMocks = new Dictionary<Type, Mock<ILog>>();
 
         [Fact]
         public void ConstructorWithNullLoggerFactoryThrowsArgumentNullException()
@@ -30,9 +30,9 @@
             {
                 var response = await server.Client.GetAsync("test/exception");
 
-                Assert.True(this.mockLoggers.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
+                Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
-                this.mockLoggers[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
+                this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
                     LogExceptionFilterAttributeFixtureController.Exception.Message,
                     LogExceptionFilterAttributeFixtureController.Exception));
             }
@@ -45,9 +45,9 @@
             {
                 var response = await server.Client.GetAsync("test/nestedxception");
 
-                Assert.True(this.mockLoggers.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
+                Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
-                this.mockLoggers[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
+                this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
                     LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException().Message,
                     LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException()));
             }
@@ -59,12 +59,12 @@
 
             server.Configuration.Filters.Add(new LogExceptionFilterAttribute((t) =>
                 {
-                    if (!this.mockLoggers.ContainsKey(t))
+                    if (!this.loggerMocks.ContainsKey(t))
                     {
-                        this.mockLoggers.Add(t, new Mock<ILog>());
+                        this.loggerMocks.Add(t, new Mock<ILog>());
                     }
 
-                    return this.mockLoggers[t].Object;
+                    return this.loggerMocks[t].Object;
                 }));
 
             server.Configuration.MapHttpAttributeRoutes();

@@ -22,12 +22,25 @@
         /// <param name="appliesToAddress">The address for which the token is considered valid.</param>
         /// <param name="claims">The claims that defines the user. Leave null for an anonymous user.</param>
         /// <param name="tokenIssuerName">Name of the token issuer. Defaults to "self".</param>
+        /// <param name="tokenDuration">
+        /// The token duration for which its considered valid. Defaults to 2 hours.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="signingCertificate"/> is <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="appliesToAddress"/> is <see langword="null"/> or empty.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="tokenIssuerName"/> is <see langword="null"/> or empty.
+        /// </exception>
         public static void SetJwtAuthorizationHeader(
             this HttpClient client,
             X509Certificate2 signingCertificate,
             string appliesToAddress,
             IEnumerable<Claim> claims = null,
-            string tokenIssuerName = "self")
+            string tokenIssuerName = "self",
+            TimeSpan? tokenDuration = null)
         {
             signingCertificate.AssertNotNull("signingCertificate");
             appliesToAddress.AssertNotNullOrWhitespace("appliesToAddress");
@@ -40,7 +53,7 @@
                 Subject = new ClaimsIdentity(claims),
                 TokenIssuerName = tokenIssuerName,
                 AppliesToAddress = appliesToAddress,
-                Lifetime = new Lifetime(now, now.AddHours(2)),
+                Lifetime = new Lifetime(now, now.Add(tokenDuration ?? TimeSpan.FromHours(2))),
                 SigningCredentials = new X509SigningCredentials(signingCertificate)
             };
 
