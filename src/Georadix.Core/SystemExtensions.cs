@@ -44,7 +44,7 @@
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="min"/> is greater than <paramref name="max"/>.
         /// </exception>
-        public static double Clip(this double value, double min, double max)
+        public static short Clip(this short value, short min, short max)
         {
             min.AssertLessThanOrEqualTo(max, "min");
 
@@ -78,11 +78,58 @@
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="min"/> is greater than <paramref name="max"/>.
         /// </exception>
-        public static short Clip(this short value, short min, short max)
+        public static long Clip(this long value, long min, long max)
         {
             min.AssertLessThanOrEqualTo(max, "min");
 
             return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Clips the number to the specified minimum and maximum values.
+        /// </summary>
+        /// <param name="value">The number to clip.</param>
+        /// <param name="min">The minimum allowable value.</param>
+        /// <param name="max">The maximum allowable value.</param>
+        /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        public static float Clip(this float value, float min, float max)
+        {
+            min.AssertLessThanOrEqualTo(max, "min");
+
+            return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Clips the number to the specified minimum and maximum values.
+        /// </summary>
+        /// <param name="value">The number to clip.</param>
+        /// <param name="min">The minimum allowable value.</param>
+        /// <param name="max">The maximum allowable value.</param>
+        /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        public static double Clip(this double value, double min, double max)
+        {
+            min.AssertLessThanOrEqualTo(max, "min");
+
+            return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether this instance and a specified <see cref="Single"/> represent the same
+        /// value based on a specified tolerance.
+        /// </summary>
+        /// <param name="instance">The instance.</param>
+        /// <param name="value">The value to compare to the instance.</param>
+        /// <param name="tolerance">The tolerance.</param>
+        /// <returns><see langword="true"/> if they are equal; otherwise, <see langword="false"/>.</returns>
+        public static bool IsEqualTo(this float instance, float value, float tolerance)
+        {
+            return Math.Abs(instance - value) <= tolerance;
         }
 
         /// <summary>

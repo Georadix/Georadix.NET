@@ -35,7 +35,7 @@
         [Fact]
         public void ClipDoubleWithInvalidMinMaxThrowsArgumentOutOfRangeException()
         {
-            var sut = 5.0;
+            double sut = 5.0;
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10.0, 8.0));
 
@@ -44,17 +44,55 @@
         }
 
         [Theory]
-        [InlineData(0, 5, 10, 5)]
-        [InlineData(0, -10, -5, -5)]
-        public void ClipIntegerReturnsExpectedResult(int sut, int min, int max, int expected)
+        [InlineData(0.1F, 5.2F, 10.3F, 5.2F)]
+        [InlineData(0.1F, -10.2F, -5.3F, -5.3F)]
+        public void ClipFloatReturnsExpectedResult(float sut, float min, float max, float expected)
         {
             Assert.Equal(expected, sut.Clip(min, max));
         }
 
         [Fact]
-        public void ClipIntegerWithInvalidMinMaxThrowsArgumentOutOfRangeException()
+        public void ClipFloatWithInvalidMinMaxThrowsArgumentOutOfRangeException()
         {
-            var sut = 5;
+            float sut = 5.0F;
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10.0F, 8.0F));
+
+            Assert.Equal("min", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
+        [InlineData(0, 5, 10, 5)]
+        [InlineData(0, -10, -5, -5)]
+        public void ClipIntReturnsExpectedResult(int sut, int min, int max, int expected)
+        {
+            Assert.Equal(expected, sut.Clip(min, max));
+        }
+
+        [Fact]
+        public void ClipIntWithInvalidMinMaxThrowsArgumentOutOfRangeException()
+        {
+            int sut = 5;
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10, 8));
+
+            Assert.Equal("min", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
+        [InlineData(0, 5, 10, 5)]
+        [InlineData(0, -10, -5, -5)]
+        public void ClipLongReturnsExpectedResult(long sut, long min, long max, long expected)
+        {
+            Assert.Equal(expected, sut.Clip(min, max));
+        }
+
+        [Fact]
+        public void ClipLongWithInvalidMinMaxThrowsArgumentOutOfRangeException()
+        {
+            long sut = 5;
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10, 8));
 
@@ -86,11 +124,20 @@
         [InlineData(0.01, 0.01, 0.001, true)]
         [InlineData(0.01, 0.02, 0.1, true)]
         [InlineData(0.01, 0.02, 0.001, false)]
-        public void IsEqualToReturnsExpectedResult(double sut, double value, double tolerance, bool expected)
+        public void IsEqualToDoubleReturnsExpectedResult(double sut, double value, double tolerance, bool expected)
         {
             Assert.Equal(expected, sut.IsEqualTo(value, tolerance));
         }
 
+        [Theory]
+        [InlineData(0.01F, 0.01F, 0F, true)]
+        [InlineData(0.01F, 0.01F, 0.001F, true)]
+        [InlineData(0.01F, 0.02F, 0.1F, true)]
+        [InlineData(0.01F, 0.02F, 0.001F, false)]
+        public void IsEqualToFloatReturnsExpectedResult(float sut, float value, float tolerance, bool expected)
+        {
+            Assert.Equal(expected, sut.IsEqualTo(value, tolerance));
+        }
         #endregion Numeric Types
 
         #region EventHandler Types
