@@ -2,8 +2,10 @@
 {
     using Georadix.WebApi.Filters;
     using Georadix.WebApi.Testing;
-    using SimpleInjector;
+    using log4net;
+    using Moq;
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -11,6 +13,8 @@
 
     public class LogExceptionFilterAttributeFixture
     {
+        private readonly Dictionary<Type, Mock<ILog>> loggerMocks = new Dictionary<Type, Mock<ILog>>();
+
         [Fact]
         public void ConstructorWithNullLoggerFactoryThrowsArgumentNullException()
         {
@@ -26,9 +30,9 @@
             {
                 var response = await server.Client.GetAsync("test/exception");
 
-                Assert.True(server.MockLoggers.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
+                Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
-                server.MockLoggers[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
+                this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
                     LogExceptionFilterAttributeFixtureController.Exception.Message,
                     LogExceptionFilterAttributeFixtureController.Exception));
             }
@@ -41,9 +45,9 @@
             {
                 var response = await server.Client.GetAsync("test/nestedxception");
 
-                Assert.True(server.MockLoggers.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
+                Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
-                server.MockLoggers[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
+                this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
                     LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException().Message,
                     LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException()));
             }
@@ -51,12 +55,18 @@
 
         private InMemoryServer CreateServer()
         {
-            var container = new Container();
-            container.Register<LogExceptionFilterAttributeFixtureController>();
+            var server = new InMemoryServer();
 
-            var server = new InMemoryServer(container);
+            server.Configuration.Filters.Add(new LogExceptionFilterAttribute((t) =>
+                {
+                    if (!this.loggerMocks.ContainsKey(t))
+                    {
+                        this.loggerMocks.Add(t, new Mock<ILog>());
+                    }
 
-            server.Configuration.Filters.Add(new LogExceptionFilterAttribute(server.LoggerFactory));
+                    return this.loggerMocks[t].Object;
+                }));
+
             server.Configuration.MapHttpAttributeRoutes();
 
             return server;
