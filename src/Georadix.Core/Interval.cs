@@ -65,9 +65,6 @@
         /// <summary>
         /// Gets the left endpoint.
         /// </summary>
-        /// <value>
-        /// The left endpoint.
-        /// </value>
         public T? Left
         {
             get { return this.left; }
@@ -76,9 +73,6 @@
         /// <summary>
         /// Gets the left endpoint type.
         /// </summary>
-        /// <value>
-        /// The left endpoint type.
-        /// </value>
         public EndpointType LeftType
         {
             get
@@ -91,9 +85,6 @@
         /// <summary>
         /// Gets the right endpoint.
         /// </summary>
-        /// <value>
-        /// The right endpoint.
-        /// </value>
         public T? Right
         {
             get { return this.right; }
@@ -102,9 +93,6 @@
         /// <summary>
         /// Gets the right endpoint type.
         /// </summary>
-        /// <value>
-        /// The right endpoint type.
-        /// </value>
         public EndpointType RightType
         {
             get
