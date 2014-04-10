@@ -41,66 +41,95 @@
         /// <param name="min">The minimum allowable value.</param>
         /// <param name="max">The maximum allowable value.</param>
         /// <returns>The clipped value.</returns>
-        public static double Clip(this double value, double min, double max)
-        {
-            return Math.Min(Math.Max(value, min), max);
-        }
-
-        /// <summary>
-        /// Clips the number to the specified range.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="range">The range.</param>
-        /// <returns>The clipped value.</returns>
-        public static double Clip(this double value, DoubleRange range)
-        {
-            return value.Clip(range.Start, range.End);
-        }
-
-        /// <summary>
-        /// Clips the number to the specified minimum and maximum values.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="min">The minimum allowable value.</param>
-        /// <param name="max">The maximum allowable value.</param>
-        /// <returns>The clipped value.</returns>
-        public static int Clip(this int value, int min, int max)
-        {
-            return Math.Min(Math.Max(value, min), max);
-        }
-
-        /// <summary>
-        /// Clips the number to the specified range.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="range">The range.</param>
-        /// <returns>The clipped value.</returns>
-        public static int Clip(this int value, IntRange range)
-        {
-            return value.Clip(range.Start, range.End);
-        }
-
-        /// <summary>
-        /// Clips the number to the specified minimum and maximum values.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="min">The minimum allowable value.</param>
-        /// <param name="max">The maximum allowable value.</param>
-        /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
         public static short Clip(this short value, short min, short max)
         {
+            min.AssertLessThanOrEqualTo(max, "min");
+
             return Math.Min(Math.Max(value, min), max);
         }
 
         /// <summary>
-        /// Clips the number to the specified range.
+        /// Clips the number to the specified minimum and maximum values.
         /// </summary>
         /// <param name="value">The number to clip.</param>
-        /// <param name="range">The range.</param>
+        /// <param name="min">The minimum allowable value.</param>
+        /// <param name="max">The maximum allowable value.</param>
         /// <returns>The clipped value.</returns>
-        public static short Clip(this short value, ShortRange range)
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        public static int Clip(this int value, int min, int max)
         {
-            return value.Clip(range.Start, range.End);
+            min.AssertLessThanOrEqualTo(max, "min");
+
+            return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Clips the number to the specified minimum and maximum values.
+        /// </summary>
+        /// <param name="value">The number to clip.</param>
+        /// <param name="min">The minimum allowable value.</param>
+        /// <param name="max">The maximum allowable value.</param>
+        /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        public static long Clip(this long value, long min, long max)
+        {
+            min.AssertLessThanOrEqualTo(max, "min");
+
+            return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Clips the number to the specified minimum and maximum values.
+        /// </summary>
+        /// <param name="value">The number to clip.</param>
+        /// <param name="min">The minimum allowable value.</param>
+        /// <param name="max">The maximum allowable value.</param>
+        /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        public static float Clip(this float value, float min, float max)
+        {
+            min.AssertLessThanOrEqualTo(max, "min");
+
+            return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Clips the number to the specified minimum and maximum values.
+        /// </summary>
+        /// <param name="value">The number to clip.</param>
+        /// <param name="min">The minimum allowable value.</param>
+        /// <param name="max">The maximum allowable value.</param>
+        /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        public static double Clip(this double value, double min, double max)
+        {
+            min.AssertLessThanOrEqualTo(max, "min");
+
+            return Math.Min(Math.Max(value, min), max);
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether this instance and a specified <see cref="Single"/> represent the same
+        /// value based on a specified tolerance.
+        /// </summary>
+        /// <param name="instance">The instance.</param>
+        /// <param name="value">The value to compare to the instance.</param>
+        /// <param name="tolerance">The tolerance.</param>
+        /// <returns><see langword="true"/> if they are equal; otherwise, <see langword="false"/>.</returns>
+        public static bool IsEqualTo(this float instance, float value, float tolerance)
+        {
+            return Math.Abs(instance - value) <= tolerance;
         }
 
         /// <summary>

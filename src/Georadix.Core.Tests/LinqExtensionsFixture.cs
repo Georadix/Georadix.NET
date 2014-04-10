@@ -8,122 +8,6 @@
 
     public class LinqExtensionsFixture
     {
-        #region IQueryable Extensions
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void OrderByWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
-        {
-            var items = new int[] { };
-
-            Assert.Throws<ArgumentNullException>(() => items.AsQueryable<int>().OrderBy(propertyName));
-        }
-
-        [Fact]
-        public void OrderByWithPropertyReturnsProperlyOrderedResult()
-        {
-            var items = new Tuple<string, int>[] 
-            {
-                new Tuple<string, int>("2", 2),
-                new Tuple<string, int>("3", 3),
-                new Tuple<string, int>("1", 1)
-            };
-
-            var sortedItems = items.OrderBy((t) => t.Item1);
-
-            Assert.True(items.AsQueryable<Tuple<string, int>>().OrderBy("Item1").SequenceEqual(sortedItems));
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void OrderByDescendingWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
-        {
-            var items = new int[] { };
-
-            Assert.Throws<ArgumentNullException>(() => items.AsQueryable<int>().OrderByDescending(propertyName));
-        }
-
-        [Fact]
-        public void OrderByDescendingWithPropertyReturnsProperlyOrderedResult()
-        {
-            var items = new Tuple<string, int>[] 
-            {
-                new Tuple<string, int>("2", 2),
-                new Tuple<string, int>("3", 3),
-                new Tuple<string, int>("1", 1)
-            };
-
-            var sortedItems = items.OrderByDescending((t) => t.Item1);
-
-            Assert.True(items.AsQueryable<Tuple<string, int>>().OrderByDescending("Item1").SequenceEqual(sortedItems));
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void ThenByWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
-        {
-            var items = new Tuple<string, int>[] { };
-
-            Assert.Throws<ArgumentNullException>(() => 
-                {
-                    items.AsQueryable<Tuple<string, int>>().OrderBy("Item1").ThenBy(propertyName);
-                });
-        }
-
-        [Fact]
-        public void ThenByWithPropertyReturnsProperlyOrderedResult()
-        {
-            var items = new Tuple<string, int>[] 
-            {
-                new Tuple<string, int>("1", 2),
-                new Tuple<string, int>("3", 3),
-                new Tuple<string, int>("1", 1)
-            };
-
-            var sortedItems = items.OrderBy((t) => t.Item1).ThenBy((t) => t.Item2);
-
-            Assert.True(items.AsQueryable<Tuple<string, int>>()
-                .OrderBy("Item1").ThenBy("Item2").SequenceEqual(sortedItems));
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void ThenByDescendingWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
-        {
-            var items = new Tuple<string, int>[] { };
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                items.AsQueryable<Tuple<string, int>>().OrderBy("Item1").ThenByDescending(propertyName);
-            });
-        }
-
-        [Fact]
-        public void ThenByDescendingWithPropertyReturnsProperlyOrderedResult()
-        {
-            var items = new Tuple<string, int>[] 
-            {
-                new Tuple<string, int>("1", 2),
-                new Tuple<string, int>("3", 3),
-                new Tuple<string, int>("1", 1)
-            };
-
-            var sortedItems = items.OrderBy((t) => t.Item1).ThenByDescending((t) => t.Item2);
-
-            Assert.True(items.AsQueryable<Tuple<string, int>>()
-                .OrderBy("Item1").ThenByDescending("Item2").SequenceEqual(sortedItems));
-        }
-
-        #endregion
-
         [Fact]
         public void AddRangeAddsSpecifiedItems()
         {
@@ -344,6 +228,118 @@
             var ex2 = Assert.Throws<ArgumentNullException>(() => sut.MinBy(selector, Comparer<int>.Default));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void OrderByDescendingWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
+        {
+            var items = new int[] { };
+
+            Assert.Throws<ArgumentNullException>(() => items.AsQueryable<int>().OrderByDescending(propertyName));
+        }
+
+        [Fact]
+        public void OrderByDescendingWithPropertyReturnsProperlyOrderedResult()
+        {
+            var items = new Tuple<string, int>[] 
+            {
+                new Tuple<string, int>("2", 2),
+                new Tuple<string, int>("3", 3),
+                new Tuple<string, int>("1", 1)
+            };
+
+            var sortedItems = items.OrderByDescending((t) => t.Item1);
+
+            Assert.True(items.AsQueryable<Tuple<string, int>>().OrderByDescending("Item1").SequenceEqual(sortedItems));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void OrderByWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
+        {
+            var items = new int[] { };
+
+            Assert.Throws<ArgumentNullException>(() => items.AsQueryable<int>().OrderBy(propertyName));
+        }
+
+        [Fact]
+        public void OrderByWithPropertyReturnsProperlyOrderedResult()
+        {
+            var items = new Tuple<string, int>[] 
+            {
+                new Tuple<string, int>("2", 2),
+                new Tuple<string, int>("3", 3),
+                new Tuple<string, int>("1", 1)
+            };
+
+            var sortedItems = items.OrderBy((t) => t.Item1);
+
+            Assert.True(items.AsQueryable<Tuple<string, int>>().OrderBy("Item1").SequenceEqual(sortedItems));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void ThenByDescendingWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
+        {
+            var items = new Tuple<string, int>[] { };
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                items.AsQueryable<Tuple<string, int>>().OrderBy("Item1").ThenByDescending(propertyName);
+            });
+        }
+
+        [Fact]
+        public void ThenByDescendingWithPropertyReturnsProperlyOrderedResult()
+        {
+            var items = new Tuple<string, int>[] 
+            {
+                new Tuple<string, int>("1", 2),
+                new Tuple<string, int>("3", 3),
+                new Tuple<string, int>("1", 1)
+            };
+
+            var sortedItems = items.OrderBy((t) => t.Item1).ThenByDescending((t) => t.Item2);
+
+            Assert.True(items.AsQueryable<Tuple<string, int>>()
+                .OrderBy("Item1").ThenByDescending("Item2").SequenceEqual(sortedItems));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void ThenByWithInvalidPropertyNameThrowsArgumentNullException(string propertyName)
+        {
+            var items = new Tuple<string, int>[] { };
+
+            Assert.Throws<ArgumentNullException>(() => 
+                {
+                    items.AsQueryable<Tuple<string, int>>().OrderBy("Item1").ThenBy(propertyName);
+                });
+        }
+
+        [Fact]
+        public void ThenByWithPropertyReturnsProperlyOrderedResult()
+        {
+            var items = new Tuple<string, int>[] 
+            {
+                new Tuple<string, int>("1", 2),
+                new Tuple<string, int>("3", 3),
+                new Tuple<string, int>("1", 1)
+            };
+
+            var sortedItems = items.OrderBy((t) => t.Item1).ThenBy((t) => t.Item2);
+
+            Assert.True(items.AsQueryable<Tuple<string, int>>()
+                .OrderBy("Item1").ThenBy("Item2").SequenceEqual(sortedItems));
         }
 
         private class ReverseComparer : IComparer<string>

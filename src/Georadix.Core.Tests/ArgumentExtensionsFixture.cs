@@ -243,9 +243,25 @@
         }
 
         [Fact]
-        public void AssertGreaterThanOnGreaterIntegerDoesNotThrowException()
+        public void AssertGreaterThanOnGreaterFloatDoesNotThrowException()
+        {
+            float sut = 0.2F;
+
+            sut.AssertGreaterThan(0.1F, "sut");
+        }
+
+        [Fact]
+        public void AssertGreaterThanOnGreaterIntDoesNotThrowException()
         {
             int sut = 1;
+
+            sut.AssertGreaterThan(0, "sut");
+        }
+
+        [Fact]
+        public void AssertGreaterThanOnGreaterLongDoesNotThrowException()
+        {
+            long sut = 1;
 
             sut.AssertGreaterThan(0, "sut");
         }
@@ -271,9 +287,33 @@
         }
 
         [Theory]
+        [InlineData(0.1F, 0.1F)]
+        [InlineData(0.1F, 0.2F)]
+        public void AssertGreaterThanOnLesserOrEqualFloatThrowsArgumentOutOfRangeException(float sut, float value)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertGreaterThan(value, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
         [InlineData(0, 0)]
         [InlineData(0, 1)]
-        public void AssertGreaterThanOnLesserOrEqualIntegerThrowsArgumentOutOfRangeException(int sut, int value)
+        public void AssertGreaterThanOnLesserOrEqualIntThrowsArgumentOutOfRangeException(int sut, int value)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertGreaterThan(value, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(0, 1)]
+        public void AssertGreaterThanOnLesserOrEqualLongThrowsArgumentOutOfRangeException(long sut, long value)
         {
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertGreaterThan(value, "sut"));
 
@@ -303,9 +343,25 @@
         }
 
         [Theory]
+        [InlineData(0.2F, 0.2F)]
+        [InlineData(0.2F, 0.1F)]
+        public void AssertGreaterThanOrEqualToOnGreaterOrEqualFloatDoesNotThrowException(float sut, float value)
+        {
+            sut.AssertGreaterThanOrEqualTo(value, "sut");
+        }
+
+        [Theory]
         [InlineData(1, 1)]
         [InlineData(1, 0)]
-        public void AssertGreaterThanOrEqualToOnGreaterOrEqualIntegerDoesNotThrowException(int sut, int value)
+        public void AssertGreaterThanOrEqualToOnGreaterOrEqualIntDoesNotThrowException(int sut, int value)
+        {
+            sut.AssertGreaterThanOrEqualTo(value, "sut");
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(1, 0)]
+        public void AssertGreaterThanOrEqualToOnGreaterOrEqualLongDoesNotThrowException(long sut, long value)
         {
             sut.AssertGreaterThanOrEqualTo(value, "sut");
         }
@@ -331,9 +387,33 @@
         }
 
         [Fact]
-        public void AssertGreaterThanOrEqualToOnLesserIntegerThrowsArgumentOutOfRangeException()
+        public void AssertGreaterThanOrEqualToOnLesserFloatThrowsArgumentOutOfRangeException()
+        {
+            float sut = 0.1F;
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertGreaterThanOrEqualTo(0.2F, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void AssertGreaterThanOrEqualToOnLesserIntThrowsArgumentOutOfRangeException()
         {
             int sut = 0;
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertGreaterThanOrEqualTo(1, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void AssertGreaterThanOrEqualToOnLesserLongThrowsArgumentOutOfRangeException()
+        {
+            long sut = 0;
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertGreaterThanOrEqualTo(1, "sut"));
 
@@ -361,7 +441,7 @@
         public void AssertInRangeOnDoubleInRangeDoesNotThrowException(double sut, double min, double max)
         {
             sut.AssertInRange(min, max, "sut");
-            sut.AssertInRange(new DoubleRange(min, max), "sut");
+            sut.AssertInRange(Interval<double>.Bounded(min, true, max, true), "sut");
         }
 
         [Theory]
@@ -377,7 +457,36 @@
             Assert.NotNull(ex.Message);
 
             var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                sut.AssertInRange(new DoubleRange(min, max), "sut"));
+                sut.AssertInRange(Interval<double>.Bounded(min, true, max, true), "sut"));
+
+            Assert.Equal(ex.ParamName, ex2.ParamName);
+            Assert.Equal(ex.ActualValue, ex2.ActualValue);
+            Assert.Equal(ex.Message, ex2.Message);
+        }
+
+        [Theory]
+        [InlineData(1.0F, 1.0F, 5.0F)]
+        [InlineData(3.0F, 1.0F, 5.0F)]
+        [InlineData(4.9F, 1.0F, 5.0F)]
+        public void AssertInRangeOnFloatInRangeDoesNotThrowException(float sut, float min, float max)
+        {
+            sut.AssertInRange(min, max, "sut");
+            sut.AssertInRange(Interval<float>.Bounded(min, true, max, true), "sut");
+        }
+
+        [Theory]
+        [InlineData(0.9F, 1.0F, 5.0F)]
+        [InlineData(5.1F, 1.0F, 5.0F)]
+        public void AssertInRangeOnFloatOutOfRangeThrowsArgumentOutOfRangeException(float sut, float min, float max)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertInRange(min, max, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+
+            var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                sut.AssertInRange(Interval<float>.Bounded(min, true, max, true), "sut"));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
             Assert.Equal(ex.ActualValue, ex2.ActualValue);
@@ -388,16 +497,16 @@
         [InlineData(1, 1, 5)]
         [InlineData(3, 1, 5)]
         [InlineData(5, 1, 5)]
-        public void AssertInRangeOnIntegerInRangeDoesNotThrowException(int sut, int min, int max)
+        public void AssertInRangeOnIntInRangeDoesNotThrowException(int sut, int min, int max)
         {
             sut.AssertInRange(min, max, "sut");
-            sut.AssertInRange(new IntRange(min, max), "sut");
+            sut.AssertInRange(Interval<int>.Bounded(min, true, max, true), "sut");
         }
 
         [Theory]
         [InlineData(0, 1, 5)]
         [InlineData(6, 1, 5)]
-        public void AssertInRangeOnIntegerOutOfRangeThrowsArgumentOutOfRangeException(int sut, int min, int max)
+        public void AssertInRangeOnIntOutOfRangeThrowsArgumentOutOfRangeException(int sut, int min, int max)
         {
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertInRange(min, max, "sut"));
 
@@ -406,7 +515,36 @@
             Assert.NotNull(ex.Message);
 
             var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                sut.AssertInRange(new IntRange(min, max), "sut"));
+                sut.AssertInRange(Interval<int>.Bounded(min, true, max, true), "sut"));
+
+            Assert.Equal(ex.ParamName, ex2.ParamName);
+            Assert.Equal(ex.ActualValue, ex2.ActualValue);
+            Assert.Equal(ex.Message, ex2.Message);
+        }
+
+        [Theory]
+        [InlineData(1, 1, 5)]
+        [InlineData(3, 1, 5)]
+        [InlineData(5, 1, 5)]
+        public void AssertInRangeOnLongInRangeDoesNotThrowException(long sut, long min, long max)
+        {
+            sut.AssertInRange(min, max, "sut");
+            sut.AssertInRange(Interval<long>.Bounded(min, true, max, true), "sut");
+        }
+
+        [Theory]
+        [InlineData(0, 1, 5)]
+        [InlineData(6, 1, 5)]
+        public void AssertInRangeOnLongOutOfRangeThrowsArgumentOutOfRangeException(long sut, long min, long max)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertInRange(min, max, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+
+            var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                sut.AssertInRange(Interval<long>.Bounded(min, true, max, true), "sut"));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
             Assert.Equal(ex.ActualValue, ex2.ActualValue);
@@ -420,7 +558,7 @@
         public void AssertInRangeOnShortInRangeDoesNotThrowException(short sut, short min, short max)
         {
             sut.AssertInRange(min, max, "sut");
-            sut.AssertInRange(new ShortRange(min, max), "sut");
+            sut.AssertInRange(Interval<short>.Bounded(min, true, max, true), "sut");
         }
 
         [Theory]
@@ -435,7 +573,7 @@
             Assert.NotNull(ex.Message);
 
             var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                sut.AssertInRange(new ShortRange(min, max), "sut"));
+                sut.AssertInRange(Interval<short>.Bounded(min, true, max, true), "sut"));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
             Assert.Equal(ex.ActualValue, ex2.ActualValue);
@@ -451,9 +589,25 @@
         }
 
         [Fact]
-        public void AssertLessThanOnGreaterIntegerDoesNotThrowException()
+        public void AssertLessThanOnGreaterFloatDoesNotThrowException()
+        {
+            float sut = 0.1F;
+
+            sut.AssertLessThan(0.2F, "sut");
+        }
+
+        [Fact]
+        public void AssertLessThanOnGreaterIntDoesNotThrowException()
         {
             int sut = 0;
+
+            sut.AssertLessThan(1, "sut");
+        }
+
+        [Fact]
+        public void AssertLessThanOnGreaterLongDoesNotThrowException()
+        {
+            long sut = 0;
 
             sut.AssertLessThan(1, "sut");
         }
@@ -483,9 +637,33 @@
         }
 
         [Theory]
+        [InlineData(0.1F, 0.1F)]
+        [InlineData(0.2F, 0.1F)]
+        public void AssertLessThanOnLesserOrEqualFloatThrowsArgumentOutOfRangeException(float sut, float value)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertLessThan(value, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
-        public void AssertLessThanOnLesserOrEqualIntegerThrowsArgumentOutOfRangeException(int sut, int value)
+        public void AssertLessThanOnLesserOrEqualIntThrowsArgumentOutOfRangeException(int sut, int value)
+        {
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertLessThan(value, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(1, 0)]
+        public void AssertLessThanOnLesserOrEqualLongThrowsArgumentOutOfRangeException(long sut, long value)
         {
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertLessThan(value, "sut"));
 
@@ -515,9 +693,33 @@
         }
 
         [Fact]
-        public void AssertLessThanOrEqualToOnGreaterIntegerThrowsArgumentOutOfRangeException()
+        public void AssertLessThanOrEqualToOnGreaterFloatThrowsArgumentOutOfRangeException()
+        {
+            float sut = 0.2F;
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertLessThanOrEqualTo(0.1F, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void AssertLessThanOrEqualToOnGreaterIntThrowsArgumentOutOfRangeException()
         {
             int sut = 1;
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertLessThanOrEqualTo(0, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.Equal(sut, ex.ActualValue);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void AssertLessThanOrEqualToOnGreaterLongThrowsArgumentOutOfRangeException()
+        {
+            long sut = 1;
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.AssertLessThanOrEqualTo(0, "sut"));
 
@@ -547,9 +749,25 @@
         }
 
         [Theory]
+        [InlineData(0.2F, 0.2F)]
+        [InlineData(0.1F, 0.2F)]
+        public void AssertLessThanOrEqualToOnLesserOrEqualFloatDoesNotThrowException(float sut, float value)
+        {
+            sut.AssertLessThanOrEqualTo(value, "sut");
+        }
+
+        [Theory]
         [InlineData(1, 1)]
         [InlineData(0, 1)]
-        public void AssertLessThanOrEqualToOnLesserOrEqualIntegerDoesNotThrowException(int sut, int value)
+        public void AssertLessThanOrEqualToOnLesserOrEqualIntDoesNotThrowException(int sut, int value)
+        {
+            sut.AssertLessThanOrEqualTo(value, "sut");
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(0, 1)]
+        public void AssertLessThanOrEqualToOnLesserOrEqualLongDoesNotThrowException(long sut, long value)
         {
             sut.AssertLessThanOrEqualTo(value, "sut");
         }

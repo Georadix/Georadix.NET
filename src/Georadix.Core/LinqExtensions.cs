@@ -8,69 +8,6 @@
     /// </summary>
     public static class LinqExtensions
     {
-        #region IQueryable Extensions
-
-        /// <summary>
-        /// Sorts the elements of a sequence in ascending order according to a property.
-        /// </summary>
-        /// <typeparam name="T">The type of the elements of source.</typeparam>
-        /// <param name="source">A sequence of values to order.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the 
-        /// property.
-        /// </returns>
-        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
-        {
-            return BuildExpression<IQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "OrderBy");
-        }
-
-        /// <summary>
-        /// Sorts the elements of a sequence in descending order according to a property.
-        /// </summary>
-        /// <typeparam name="T">The type of the elements of source.</typeparam>
-        /// <param name="source">A sequence of values to order.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the property.
-        /// </returns>
-        public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> source, string propertyName)
-        {
-            return BuildExpression<IQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "OrderByDescending");
-        }
-
-        /// <summary>
-        /// Performs a subsequent ordering of the elements in a sequence in ascending order according to a property.
-        /// </summary>
-        /// <typeparam name="T">The type of the elements of source.</typeparam>
-        /// <param name="source">A sequence of values to order.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the property name.
-        /// </returns>
-        public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> source, string propertyName)
-        {
-            return BuildExpression<IOrderedQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "ThenBy");
-        }
-
-        /// <summary>
-        /// Performs a subsequent ordering of the elements in a sequence in descending order according to a property.
-        /// </summary>
-        /// <typeparam name="T">The type of the elements of source.</typeparam>
-        /// <param name="source">A sequence of values to order.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the 
-        /// property.
-        /// </returns>
-        public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, string propertyName)
-        {
-            return BuildExpression<IOrderedQueryable<T>, IOrderedQueryable<T>>(
-                source, propertyName, "ThenByDescending");
-        }
-
-        #endregion
-
         /// <summary>
         /// Adds the specified elements to the end of the collection.
         /// </summary>
@@ -253,6 +190,67 @@
 
                 return min;
             }
+        }
+
+        /// <summary>
+        /// Sorts the elements of a sequence in ascending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the 
+        /// property.
+        /// </returns>
+        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "OrderBy");
+        }
+
+        /// <summary>
+        /// Sorts the elements of a sequence in descending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the
+        /// property.
+        /// </returns>
+        public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "OrderByDescending");
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in ascending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the
+        /// property name.
+        /// </returns>
+        public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IOrderedQueryable<T>, IOrderedQueryable<T>>(source, propertyName, "ThenBy");
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in descending order according to a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements of source.</typeparam>
+        /// <param name="source">A sequence of values to order.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the 
+        /// property.
+        /// </returns>
+        public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, string propertyName)
+        {
+            return BuildExpression<IOrderedQueryable<T>, IOrderedQueryable<T>>(
+                source, propertyName, "ThenByDescending");
         }
 
         private static TResult BuildExpression<TSource, TResult>(TSource source, string propertyName, string methodName)

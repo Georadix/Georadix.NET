@@ -47,27 +47,20 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
+    <Compile Include="Interval.cs" />
     <Compile Include="Data\EntityNotFoundException.cs" />
     <Compile Include="Data\EntityUniqueConstraintException.cs" />
     <Compile Include="Data\OrderByExpression.cs" />
     <Compile Include="Data\SortDirection.cs" />
     <Compile Include="Data\StringExtensions.cs" />
-    <Compile Include="DateTimeRange.cs" />
     <Compile Include="DelegateEqualityComparer.cs" />
     <Compile Include="Domain\IEntity.cs" />
     <Compile Include="LinqExtensions.cs" />
-    <Compile Include="ContinuousRange.cs" />
-    <Compile Include="DateTimeOffsetRange.cs" />
-    <Compile Include="DiscreteRange.cs" />
-    <Compile Include="DoubleRange.cs" />
-    <Compile Include="IntRange.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Range.cs" />
     <Compile Include="SequentialGuid.cs" />
-    <Compile Include="ShortRange.cs" />
     <Compile Include="SystemExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
