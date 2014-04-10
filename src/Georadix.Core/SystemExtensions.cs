@@ -1,12 +1,37 @@
 ﻿namespace System
 {
     using Georadix.Core;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
 
     /// <summary>
     /// Defines methods that extend system types.
     /// </summary>
     public static class SystemExtensions
     {
+        #region Types
+
+        private static readonly Func<MethodInfo, IEnumerable<Type>> ParameterTypeProjection =
+            method => method.GetParameters().Select(p => p.ParameterType.GetGenericTypeDefinition());
+
+        /// <summary>
+        /// Gets the generic method.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="parameterTypes">The parameter types.</param>
+        /// <returns>A <see cref="MethodInfo"/> instance representing the generic method.</returns>
+        public static MethodInfo GetGenericMethod(this Type type, string name, params Type[] parameterTypes)
+        {
+            return (from method in type.GetMethods()
+                    where method.Name == name
+                    where parameterTypes.SequenceEqual(ParameterTypeProjection(method))
+                    select method).SingleOrDefault();
+        }
+
+        #endregion
+
         #region Numeric Types
 
         /// <summary>
