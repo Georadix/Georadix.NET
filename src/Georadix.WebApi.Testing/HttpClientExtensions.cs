@@ -20,10 +20,10 @@
         /// <param name="client">The client for which to set the authorization header.</param>
         /// <param name="signingCertificate">The signing certificate to sign the token.</param>
         /// <param name="appliesToAddress">The address for which the token is considered valid.</param>
-        /// <param name="claims">The claims that defines the user. Leave null for an anonymous user.</param>
+        /// <param name="claims">The claims that define the user. Leave null for an anonymous user.</param>
         /// <param name="tokenIssuerName">Name of the token issuer. Defaults to "self".</param>
         /// <param name="tokenDuration">
-        /// The token duration for which its considered valid. Defaults to 2 hours.
+        /// The token duration for which it's considered valid. Defaults to 2 hours.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="signingCertificate"/> is <see langword="null"/>.
