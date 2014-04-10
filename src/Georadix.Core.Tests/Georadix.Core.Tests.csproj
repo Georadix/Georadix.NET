@@ -48,14 +48,10 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensionsFixture.cs" />
-    <Compile Include="DateTimeOffsetRangeFixture.cs" />
-    <Compile Include="DateTimeRangeFixture.cs" />
-    <Compile Include="DoubleRangeFixture.cs" />
-    <Compile Include="IntRangeFixture.cs" />
+    <Compile Include="IntervalFixture.cs" />
     <Compile Include="LinqExtensionsFixture.cs" />
     <Compile Include="MathHelperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShortRangeFixture.cs" />
     <Compile Include="SystemExtensionsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
