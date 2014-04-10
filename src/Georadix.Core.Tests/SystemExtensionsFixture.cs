@@ -14,10 +14,17 @@
         public void ClipDoubleReturnsExpectedResult(double sut, double min, double max, double expected)
         {
             Assert.Equal(expected, sut.Clip(min, max));
+        }
 
-            var range = new DoubleRange(min, max);
+        [Fact]
+        public void ClipDoubleWithInvalidMinMaxThrowsArgumentOutOfRangeException()
+        {
+            var sut = 5.0;
 
-            Assert.Equal(expected, sut.Clip(range));
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10.0, 8.0));
+
+            Assert.Equal("min", ex.ParamName);
+            Assert.NotNull(ex.Message);
         }
 
         [Theory]
@@ -26,10 +33,17 @@
         public void ClipIntegerReturnsExpectedResult(int sut, int min, int max, int expected)
         {
             Assert.Equal(expected, sut.Clip(min, max));
+        }
 
-            var range = new IntRange(min, max);
+        [Fact]
+        public void ClipIntegerWithInvalidMinMaxThrowsArgumentOutOfRangeException()
+        {
+            var sut = 5;
 
-            Assert.Equal(expected, sut.Clip(range));
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10, 8));
+
+            Assert.Equal("min", ex.ParamName);
+            Assert.NotNull(ex.Message);
         }
 
         [Theory]
@@ -38,10 +52,17 @@
         public void ClipShortReturnsExpectedResult(short sut, short min, short max, short expected)
         {
             Assert.Equal(expected, sut.Clip(min, max));
+        }
 
-            var range = new ShortRange(min, max);
+        [Fact]
+        public void ClipShortWithInvalidMinMaxThrowsArgumentOutOfRangeException()
+        {
+            short sut = 5;
 
-            Assert.Equal(expected, sut.Clip(range));
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sut.Clip(10, 8));
+
+            Assert.Equal("min", ex.ParamName);
+            Assert.NotNull(ex.Message);
         }
 
         [Theory]

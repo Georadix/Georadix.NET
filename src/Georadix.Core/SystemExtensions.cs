@@ -16,20 +16,14 @@
         /// <param name="min">The minimum allowable value.</param>
         /// <param name="max">The maximum allowable value.</param>
         /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
         public static double Clip(this double value, double min, double max)
         {
-            return Math.Min(Math.Max(value, min), max);
-        }
+            min.AssertLessThanOrEqualTo(max, "min");
 
-        /// <summary>
-        /// Clips the number to the specified range.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="range">The range.</param>
-        /// <returns>The clipped value.</returns>
-        public static double Clip(this double value, DoubleRange range)
-        {
-            return value.Clip(range.Start, range.End);
+            return Math.Min(Math.Max(value, min), max);
         }
 
         /// <summary>
@@ -39,20 +33,14 @@
         /// <param name="min">The minimum allowable value.</param>
         /// <param name="max">The maximum allowable value.</param>
         /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
         public static int Clip(this int value, int min, int max)
         {
-            return Math.Min(Math.Max(value, min), max);
-        }
+            min.AssertLessThanOrEqualTo(max, "min");
 
-        /// <summary>
-        /// Clips the number to the specified range.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="range">The range.</param>
-        /// <returns>The clipped value.</returns>
-        public static int Clip(this int value, IntRange range)
-        {
-            return value.Clip(range.Start, range.End);
+            return Math.Min(Math.Max(value, min), max);
         }
 
         /// <summary>
@@ -62,20 +50,14 @@
         /// <param name="min">The minimum allowable value.</param>
         /// <param name="max">The maximum allowable value.</param>
         /// <returns>The clipped value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
         public static short Clip(this short value, short min, short max)
         {
-            return Math.Min(Math.Max(value, min), max);
-        }
+            min.AssertLessThanOrEqualTo(max, "min");
 
-        /// <summary>
-        /// Clips the number to the specified range.
-        /// </summary>
-        /// <param name="value">The number to clip.</param>
-        /// <param name="range">The range.</param>
-        /// <returns>The clipped value.</returns>
-        public static short Clip(this short value, ShortRange range)
-        {
-            return value.Clip(range.Start, range.End);
+            return Math.Min(Math.Max(value, min), max);
         }
 
         /// <summary>

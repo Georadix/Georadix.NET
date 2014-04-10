@@ -265,7 +265,7 @@
         /// </exception>
         public static void AssertInRange(this short arg, short min, short max, string paramName)
         {
-            arg.AssertInRange(new ShortRange(min, max), paramName);
+            arg.AssertInRange(Interval<short>.Bounded(min, true, max, true), paramName);
         }
 
         /// <summary>
@@ -275,16 +275,16 @@
         /// <param name="range">The range.</param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="arg"/> is not contained by <paramref name="range"/>.
+        /// <paramref name="arg"/> is not in <paramref name="range"/>.
         /// </exception>
-        public static void AssertInRange(this short arg, ShortRange range, string paramName)
+        public static void AssertInRange(this short arg, Interval<short> range, string paramName)
         {
-            if (!range.Contains(arg))
+            if (!range.Includes(arg))
             {
                 throw new ArgumentOutOfRangeException(
                     paramName,
                     arg,
-                    string.Format("The value must be greater than {0} and less than {1}.", range.Start, range.End));
+                    string.Format("The value must be in {0}.", range));
             }
         }
 
@@ -300,7 +300,7 @@
         /// </exception>
         public static void AssertInRange(this int arg, int min, int max, string paramName)
         {
-            arg.AssertInRange(new IntRange(min, max), paramName);
+            arg.AssertInRange(Interval<int>.Bounded(min, true, max, true), paramName);
         }
 
         /// <summary>
@@ -310,16 +310,16 @@
         /// <param name="range">The range.</param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="arg"/> is not contained by <paramref name="range"/>.
+        /// <paramref name="arg"/> is not in <paramref name="range"/>.
         /// </exception>
-        public static void AssertInRange(this int arg, IntRange range, string paramName)
+        public static void AssertInRange(this int arg, Interval<int> range, string paramName)
         {
-            if (!range.Contains(arg))
+            if (!range.Includes(arg))
             {
                 throw new ArgumentOutOfRangeException(
                     paramName,
                     arg,
-                    string.Format("The value must be greater than {0} and less than {1}.", range.Start, range.End));
+                    string.Format("The value must be in {0}.", range));
             }
         }
 
@@ -335,7 +335,7 @@
         /// </exception>
         public static void AssertInRange(this double arg, double min, double max, string paramName)
         {
-            arg.AssertInRange(new DoubleRange(min, max), paramName);
+            arg.AssertInRange(Interval<double>.Bounded(min, true, max, true), paramName);
         }
 
         /// <summary>
@@ -345,16 +345,16 @@
         /// <param name="range">The range.</param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="arg"/> is not contained by <paramref name="range"/>.
+        /// <paramref name="arg"/> is not in <paramref name="range"/>.
         /// </exception>
-        public static void AssertInRange(this double arg, DoubleRange range, string paramName)
+        public static void AssertInRange(this double arg, Interval<double> range, string paramName)
         {
-            if (!range.Contains(arg))
+            if (!range.Includes(arg))
             {
                 throw new ArgumentOutOfRangeException(
                     paramName,
                     arg,
-                    string.Format("The value must be greater than {0} and less than {1}.", range.Start, range.End));
+                    string.Format("The value must be in {0}.", range));
             }
         }
 

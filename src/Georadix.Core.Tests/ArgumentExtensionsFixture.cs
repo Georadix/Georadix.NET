@@ -361,7 +361,7 @@
         public void AssertInRangeOnDoubleInRangeDoesNotThrowException(double sut, double min, double max)
         {
             sut.AssertInRange(min, max, "sut");
-            sut.AssertInRange(new DoubleRange(min, max), "sut");
+            sut.AssertInRange(Interval<double>.Bounded(min, true, max, true), "sut");
         }
 
         [Theory]
@@ -377,7 +377,7 @@
             Assert.NotNull(ex.Message);
 
             var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                sut.AssertInRange(new DoubleRange(min, max), "sut"));
+                sut.AssertInRange(Interval<double>.Bounded(min, true, max, true), "sut"));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
             Assert.Equal(ex.ActualValue, ex2.ActualValue);
@@ -391,7 +391,7 @@
         public void AssertInRangeOnIntegerInRangeDoesNotThrowException(int sut, int min, int max)
         {
             sut.AssertInRange(min, max, "sut");
-            sut.AssertInRange(new IntRange(min, max), "sut");
+            sut.AssertInRange(Interval<int>.Bounded(min, true, max, true), "sut");
         }
 
         [Theory]
@@ -406,7 +406,7 @@
             Assert.NotNull(ex.Message);
 
             var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                sut.AssertInRange(new IntRange(min, max), "sut"));
+                sut.AssertInRange(Interval<int>.Bounded(min, true, max, true), "sut"));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
             Assert.Equal(ex.ActualValue, ex2.ActualValue);
@@ -420,7 +420,7 @@
         public void AssertInRangeOnShortInRangeDoesNotThrowException(short sut, short min, short max)
         {
             sut.AssertInRange(min, max, "sut");
-            sut.AssertInRange(new ShortRange(min, max), "sut");
+            sut.AssertInRange(Interval<short>.Bounded(min, true, max, true), "sut");
         }
 
         [Theory]
@@ -435,7 +435,7 @@
             Assert.NotNull(ex.Message);
 
             var ex2 = Assert.Throws<ArgumentOutOfRangeException>(() =>
-                sut.AssertInRange(new ShortRange(min, max), "sut"));
+                sut.AssertInRange(Interval<short>.Bounded(min, true, max, true), "sut"));
 
             Assert.Equal(ex.ParamName, ex2.ParamName);
             Assert.Equal(ex.ActualValue, ex2.ActualValue);
