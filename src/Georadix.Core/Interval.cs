@@ -107,7 +107,7 @@
         /// </summary>
         /// <param name="left">The left endpoint.</param>
         /// <param name="isLeftClosed">A value indicating whether the left endpoint is closed.</param>
-        /// <param name="right">The right.</param>
+        /// <param name="right">The right endpoint.</param>
         /// <param name="isRightClosed">A value indicating whether the right endpoint is closed.</param>
         /// <returns>An <see cref="Interval{T}"/> instance.</returns>
         public static Interval<T> Bounded(T left, bool isLeftClosed, T right, bool isRightClosed)
