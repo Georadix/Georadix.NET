@@ -54,6 +54,8 @@
 
         private class TestModel
         {
+            public string Description { get; set; }
+
             [Required(AllowEmptyStrings = false, ErrorMessage = "Value is required.")]
             public string Name { get; set; }
 
