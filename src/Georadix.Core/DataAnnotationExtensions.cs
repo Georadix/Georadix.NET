@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Ensures the subject is valid by validating all data annotations.
+        /// Ensures the object is valid by validating all data annotations.
         /// </summary>
         /// <param name="subject">The object to validate.</param>
         /// <param name="paramName">The name of the parameter.</param>
@@ -50,7 +50,7 @@
         /// parameter is optional.
         /// </param>
         /// <exception cref="ArgumentException">
-        /// Contains the error message of the first <see cref="ValidationResult"/>.
+        /// Contains the error message of all <see cref="ValidationResult"/>.
         /// </exception>
         public static void AssertValid(
             this object subject,
