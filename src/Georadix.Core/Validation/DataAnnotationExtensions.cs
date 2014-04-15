@@ -34,7 +34,7 @@
 
             var validationResults = new List<ValidationResult>();
 
-            Validator.TryValidateObject(subject, context, validationResults);
+            Validator.TryValidateObject(subject, context, validationResults, true);
 
             return validationResults;
         }
