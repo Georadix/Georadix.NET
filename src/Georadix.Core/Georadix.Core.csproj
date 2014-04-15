@@ -47,7 +47,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
-    <Compile Include="DataAnnotationExtensions.cs" />
+    <Compile Include="Validation\DataAnnotationExtensions.cs" />
     <Compile Include="Interval.cs" />
     <Compile Include="Data\EntityNotFoundException.cs" />
     <Compile Include="Data\EntityUniqueConstraintException.cs" />

@@ -1,6 +1,8 @@
-﻿namespace System.ComponentModel.DataAnnotations
+﻿namespace Georadix.Core.Validation
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     /// <summary>

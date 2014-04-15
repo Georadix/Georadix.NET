@@ -1,4 +1,4 @@
-﻿namespace Georadix.Core
+﻿namespace Georadix.Core.Validation
 {
     using System;
     using System.ComponentModel.DataAnnotations;
