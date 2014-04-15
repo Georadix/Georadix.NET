@@ -1,21 +1,17 @@
-﻿namespace Georadix.Core.Models
+﻿namespace System.ComponentModel.DataAnnotations
 {
-    using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     /// <summary>
-    /// Extensions for classes marked with the <see cref="IModel"/> interface.
+    /// Extensions related to data annotations and validation.
     /// </summary>
-    public static class ModelExtensions
+    public static class DataAnnotationExtensions
     {
         /// <summary>
-        /// Validates a model instance using the data annotations validator.
+        /// Validates an object instance using the data annotations validator.
         /// </summary>
-        /// <param name="model">
-        /// The model instance to validate
-        /// </param>
+        /// <param name="subject">The object instance to validate.</param>
         /// <param name="items">
         /// A dictionary of key/value pairs to make available data annotation attributes. This parameter is optional.
         /// </param>
@@ -28,23 +24,23 @@
         /// model is valid.
         /// </returns>
         public static IEnumerable<ValidationResult> Validate(
-            this IModel model,
+            this object subject,
             IDictionary<object, object> items = null,
             IServiceProvider serviceProvider = null)
         {
-            var context = new ValidationContext(model, serviceProvider, items);
+            var context = new ValidationContext(subject, serviceProvider, items);
 
             var validationResults = new List<ValidationResult>();
 
-            Validator.TryValidateObject(model, context, validationResults);
+            Validator.TryValidateObject(subject, context, validationResults);
 
             return validationResults;
         }
 
         /// <summary>
-        /// Ensures the model is valid by validating all data annotations.
+        /// Ensures the subject is valid by validating all data annotations.
         /// </summary>
-        /// <param name="model">The model.</param>
+        /// <param name="subject">The object to validate.</param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <param name="items">
         /// A dictionary of key/value pairs to make available data annotation attributes. This parameter is optional.
@@ -57,12 +53,12 @@
         /// Contains the error message of the first <see cref="ValidationResult"/>.
         /// </exception>
         public static void AssertValid(
-            this IModel model, 
-            string paramName, 
-            IDictionary<object, object> items = null, 
+            this object subject,
+            string paramName,
+            IDictionary<object, object> items = null,
             IServiceProvider serviceProvider = null)
         {
-            var validationResults = model.Validate(items, serviceProvider);
+            var validationResults = subject.Validate(items, serviceProvider);
 
             if (validationResults.Any())
             {
