@@ -51,6 +51,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensionsFixture.cs" />
+    <Compile Include="Validation\DataAnnotationExtensionsFixture.cs" />
     <Compile Include="IntervalFixture.cs" />
     <Compile Include="Data\EntityNotFoundExceptionFixture.cs" />
     <Compile Include="Data\EntityUniqueConstraintExceptionFixture.cs" />
@@ -59,8 +60,6 @@
     <Compile Include="DelegateEqualityComparerFixture.cs" />
     <Compile Include="LinqExtensionsFixture.cs" />
     <Compile Include="MathHelperFixture.cs" />
-    <Compile Include="Models\ModelExtensionsFixture.cs" />
-    <Compile Include="Models\ModelFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SequentialGuidFixture.cs" />
     <Compile Include="SystemExtensionsFixture.cs" />
