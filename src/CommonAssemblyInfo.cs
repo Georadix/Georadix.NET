@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Georadix")]
 [assembly: AssemblyProduct("Georadix.NET")]
-[assembly: AssemblyCopyright("Copyright © 2013 Georadix")]
+[assembly: AssemblyCopyright("© 2014 Georadix")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
