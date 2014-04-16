@@ -1,7 +1,5 @@
 ﻿namespace Georadix.WebApi.Testing
 {
-    using SimpleInjector;
-    using System;
     using Xunit;
 
     public class InMemoryServerFixture

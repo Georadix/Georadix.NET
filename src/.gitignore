@@ -1,0 +1,3 @@
+# Ignore all generated NuGet manifests
+*.nuspec
+!Common.nuspec
