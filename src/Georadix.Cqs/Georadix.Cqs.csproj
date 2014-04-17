@@ -11,8 +11,6 @@
     <AssemblyName>Georadix.Cqs</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
@@ -63,7 +61,7 @@
     <Compile Include="QueryProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Georadix.Cqs.nuspec" />
+    <None Include="Georadix.Cqs.nutrans" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -79,18 +77,19 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets'))" />
   </Target>
+  <Import Project="..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
-  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-    <PostBuildEvent>
-      cd $(SolutionDir)
-      ..\tools\NuGet\nuget.exe pack Georadix.Cqs\Georadix.Cqs.csproj -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" />
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <Source>$(SolutionDir)Common.nuspec</Source>
+      <Transform>$(ProjectDir)$(ProjectName).nutrans</Transform>
+      <Destination>$(ProjectDir)$(ProjectName).nuspec</Destination>
+    </PropertyGroup>
+    <MSBuild Projects="$(SolutionDir)..\tools\TransformXml.proj" Properties="Source=$(Source);Transform=$(Transform);Destination=$(Destination)" />
+    <Exec Condition="'$(BuildingInsideVisualStudio)' == 'true'" WorkingDirectory="$(SolutionDir)" Command="..\tools\NuGet\nuget.exe pack $(ProjectPath) -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive" />
+  </Target>
 </Project>
