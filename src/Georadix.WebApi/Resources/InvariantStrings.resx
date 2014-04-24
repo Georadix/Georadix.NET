@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Error_CertificateNotFound" xml:space="preserve">
-    <value>The certificate {0} is not in the {1} store.</value>
+  <data name="ErrorProcessingRequest" xml:space="preserve">
+    <value>Sorry, an error occurred while processing your request.</value>
+  </data>
+  <data name="ParameterIsRequired" xml:space="preserve">
+    <value>The parameter is required.</value>
   </data>
 </root>

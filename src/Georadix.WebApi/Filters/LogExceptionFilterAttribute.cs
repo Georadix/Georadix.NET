@@ -1,5 +1,6 @@
 ﻿namespace Georadix.WebApi.Filters
 {
+    using Georadix.WebApi.Resources;
     using log4net;
     using System;
     using System.Net;
@@ -22,10 +23,7 @@
         /// </exception>
         public LogExceptionFilterAttribute(Func<Type, ILog> loggerFactory)
         {
-            if (loggerFactory == null)
-            {
-                throw new ArgumentNullException("loggerFactory");
-            }
+            loggerFactory.AssertNotNull("loggerFactory");
 
             this.loggerFactory = loggerFactory;
         }
@@ -44,9 +42,7 @@
             logger.Error(baseException.Message, baseException);
 
             actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-
-            actionExecutedContext.Response.Content =
-                new StringContent("An error occurred while processing your request.");
+            actionExecutedContext.Response.Content = new StringContent(InvariantStrings.ErrorProcessingRequest);
         }
     }
 }
