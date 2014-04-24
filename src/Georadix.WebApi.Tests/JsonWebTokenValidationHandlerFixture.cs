@@ -128,7 +128,7 @@
             var loggerMock = new Mock<ILog>(MockBehavior.Strict);
 
             loggerMock.Setup(l => l.Info(
-                It.Is<string>(s => s.Equals("Invalid authentication token.")),
+                It.Is<string>(s => s.Equals("The auth token from client IP  is invalid.")),
                 It.IsAny<Exception>()));
 
             using (var server = this.CreateServer(loggerMock.Object))

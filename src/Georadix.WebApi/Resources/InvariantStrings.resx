@@ -120,6 +120,9 @@
   <data name="ErrorProcessingRequest" xml:space="preserve">
     <value>Sorry, an error occurred while processing your request.</value>
   </data>
+  <data name="LogInvalidAuthToken" xml:space="preserve">
+    <value>The auth token from client IP {0} is invalid.</value>
+  </data>
   <data name="ParameterIsRequired" xml:space="preserve">
     <value>The parameter is required.</value>
   </data>

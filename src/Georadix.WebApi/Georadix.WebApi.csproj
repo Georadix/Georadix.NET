@@ -79,6 +79,7 @@
     <Compile Include="Filters\CheckArgumentsForNullAttribute.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
+    <Compile Include="HttpRequestMessageExtensions.cs" />
     <Compile Include="JsonWebTokenValidationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\InvariantStrings.Designer.cs">

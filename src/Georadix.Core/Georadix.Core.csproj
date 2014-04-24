@@ -47,6 +47,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
+    <Compile Include="NetExtensions.cs" />
     <Compile Include="Validation\DataAnnotationExtensions.cs" />
     <Compile Include="Interval.cs" />
     <Compile Include="Data\EntityNotFoundException.cs" />

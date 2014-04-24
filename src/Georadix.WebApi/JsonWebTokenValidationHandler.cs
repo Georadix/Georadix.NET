@@ -1,5 +1,6 @@
 ﻿namespace Georadix.WebApi
 {
+    using Georadix.WebApi.Resources;
     using log4net;
     using System;
     using System.Collections.Generic;
@@ -74,7 +75,8 @@
                     }
                     catch (Exception e)
                     {
-                        this.logger.Info("Invalid authentication token.", e);
+                        this.logger.Info(
+                            string.Format(InvariantStrings.LogInvalidAuthToken, request.GetClientIpAddress()), e);
                     }
                 }
             }
