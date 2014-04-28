@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
     <Compile Include="NetExtensions.cs" />
+    <Compile Include="Security\Rfc2898EncryptedValue.cs" />
     <Compile Include="Validation\DataAnnotationExtensions.cs" />
     <Compile Include="Interval.cs" />
     <Compile Include="Data\EntityNotFoundException.cs" />
