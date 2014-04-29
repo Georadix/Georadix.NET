@@ -33,7 +33,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Rfc2898EncryptedValue"/> class.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="value">The value to encrypt.</param>
         /// <param name="hashSize">The number of bytes to generate for the hash.</param>
         /// <param name="iterations">The number of iterations for the hashing operation.</param>
         /// <param name="saltSize">The number of bytes to generate for the salt.</param>
@@ -59,7 +59,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Rfc2898EncryptedValue"/> class.
         /// </summary>
-        /// <param name="value">The value.</param>
+        /// <param name="value">The value to encrypt.</param>
         /// <param name="salt">The salt to use for hashing the value.</param>
         /// <param name="hashSize">The number of bytes to generate for the hash.</param>
         /// <param name="iterations">The number of iterations for the hashing operation.</param>
@@ -133,7 +133,9 @@
         /// Populates a <see cref="T:SerializationInfo"/> with the data needed to serialize the target object.
         /// </summary>
         /// <param name="info">The <see cref="T:SerializationInfo" /> to populate with data.</param>
-        /// <param name="context">The destination (see <see cref="T:StreamingContext" />) for this serialization.</param>
+        /// <param name="context">
+        /// The destination (see <see cref="T:StreamingContext" />) for this serialization.
+        /// </param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Hash", this.Hash, typeof(byte[]));
