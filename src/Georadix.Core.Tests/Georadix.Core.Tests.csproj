@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="ArgumentExtensionsFixture.cs" />
     <Compile Include="NetExtensionsFixture.cs" />
+    <Compile Include="Security\Rfc2898EncryptedValueFixture.cs" />
     <Compile Include="Validation\DataAnnotationExtensionsFixture.cs" />
     <Compile Include="IntervalFixture.cs" />
     <Compile Include="Data\EntityNotFoundExceptionFixture.cs" />
