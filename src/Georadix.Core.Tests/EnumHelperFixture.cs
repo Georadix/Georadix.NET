@@ -7,7 +7,7 @@
     [SuppressMessage(
         "StyleCop.CSharp.DocumentationRules",
         "SA1602:EnumerationItemsMustBeDocumented",
-        Justification = "Simple test enumeration do not require documentation.")]
+        Justification = "Simple test enumeration does not require documentation.")]
     public class EnumHelperFixture
     {
         private enum TestEnum1
