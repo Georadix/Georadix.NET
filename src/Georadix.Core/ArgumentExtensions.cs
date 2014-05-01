@@ -59,8 +59,8 @@
         /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
-        /// <paramref name="assertContentsNotNull"/> is <see langword="true"/> and one of the items in the collection
-        /// is <see langword="null"/>.
+        /// <paramref name="assertContentsNotNull"/> is <c>true</c> and one of the items in the collection is
+        /// <see langword="null"/>.
         /// </exception>
         public static void AssertNotNull(this IEnumerable arg, bool assertContentsNotNull, string paramName)
         {
@@ -91,8 +91,8 @@
         /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="arg"/> is empty.</exception>
         /// <exception cref="ArgumentException">
-        /// <paramref name="assertContentsNotNull"/> is <see langword="true"/> and one of the items in the collection
-        /// is <see langword="null"/>.
+        /// <paramref name="assertContentsNotNull"/> is <c>true</c> and one of the items in the collection is
+        /// <see langword="null"/>.
         /// </exception>
         public static void AssertNotNullOrEmpty<T>(
             this IEnumerable<T> arg, bool assertContentsNotNull, string paramName)

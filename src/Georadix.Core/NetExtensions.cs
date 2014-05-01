@@ -18,8 +18,7 @@
         /// </remarks>
         /// <param name="ip">The IP address.</param>
         /// <returns>
-        /// <see langword="true"/> if the IP address is in the private IP address space; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if the IP address is in the private IP address space; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsPrivate(this IPAddress ip)
         {

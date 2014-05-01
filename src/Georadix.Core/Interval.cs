@@ -171,9 +171,7 @@
         /// Determines whether a set of intervals contains some that overlap.
         /// </summary>
         /// <param name="intervals">The intervals.</param>
-        /// <returns>
-        /// <see langword="true"/> if the set contains intervals that overlap; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if the set contains intervals that overlap; otherwise, <c>false</c>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="intervals"/> is <see langword="null"/>.</exception>
         public static bool HasOverlap(IEnumerable<Interval<T>> intervals)
         {
@@ -201,7 +199,7 @@
         /// Determines whether a set of intervals is contiguous.
         /// </summary>
         /// <param name="intervals">The intervals.</param>
-        /// <returns><see langword="true"/> if the set is contiguous; otherwise, <see langword="false"/>.</returns>
+        /// <returns><c>true</c> if the set is contiguous; otherwise, <c>false</c>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="intervals"/> is <see langword="null"/>.</exception>
         public static bool IsContiguous(IEnumerable<Interval<T>> intervals)
         {
@@ -228,8 +226,7 @@
         /// <param name="right">The right endpoint.</param>
         /// <param name="isRightClosed">A value indicating whether the right endpoint is closed.</param>
         /// <returns>
-        /// <see langword="true"/> if the interval is empty (i.e. [b,a] (a,a) [a,a) (a,a]); otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if the interval is empty (i.e. [b,a] (a,a) [a,a) (a,a]); otherwise, <c>false</c>.
         /// </returns>
         public static bool IsEmpty(T left, bool isLeftClosed, T right, bool isRightClosed)
         {
@@ -265,8 +262,7 @@
         /// <param name="a">The first interval.</param>
         /// <param name="b">The second interval.</param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="a"/> is not equal to <paramref name="b"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if <paramref name="a"/> is not equal to <paramref name="b"/>; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator !=(Interval<T> a, Interval<T> b)
         {
@@ -279,8 +275,7 @@
         /// <param name="a">The first interval.</param>
         /// <param name="b">The second interval.</param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="a"/> is less than <paramref name="b"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if <paramref name="a"/> is less than <paramref name="b"/>; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator <(Interval<T> a, Interval<T> b)
         {
@@ -293,8 +288,7 @@
         /// <param name="a">The first interval.</param>
         /// <param name="b">The second interval.</param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="a"/> is less than or equal to <paramref name="b"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if <paramref name="a"/> is less than or equal to <paramref name="b"/>; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator <=(Interval<T> a, Interval<T> b)
         {
@@ -307,8 +301,7 @@
         /// <param name="a">The first interval.</param>
         /// <param name="b">The second interval.</param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="a"/> is equal to <paramref name="b"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if <paramref name="a"/> is equal to <paramref name="b"/>; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator ==(Interval<T> a, Interval<T> b)
         {
@@ -321,8 +314,7 @@
         /// <param name="a">The first interval.</param>
         /// <param name="b">The second interval.</param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="a"/> is greater than <paramref name="b"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if <paramref name="a"/> is greater than <paramref name="b"/>; otherwise, <c>false</c>.
         /// </returns>
         public static bool operator >(Interval<T> a, Interval<T> b)
         {
@@ -335,8 +327,8 @@
         /// <param name="a">The first interval.</param>
         /// <param name="b">The second interval.</param>
         /// <returns>
-        /// <see langword="true"/> if <paramref name="a"/> is greater than or equal to <paramref name="b"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if <paramref name="a"/> is greater than or equal to <paramref name="b"/>; otherwise,
+        /// <c>false</c>.
         /// </returns>
         public static bool operator >=(Interval<T> a, Interval<T> b)
         {
@@ -368,9 +360,7 @@
         /// Determines whether this interval is adjacent to another.
         /// </summary>
         /// <param name="interval">The other interval.</param>
-        /// <returns>
-        /// <see langword="true"/> if this interval is adjacent to the other; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if this interval is adjacent to the other; otherwise, <c>false</c>.</returns>
         public bool Abuts(Interval<T> interval)
         {
             return (interval != null) && !this.Overlaps(interval) && (this.Gap(interval) == null);
@@ -428,8 +418,7 @@
         /// </summary>
         /// <param name="obj">The <see cref="Object"/> to compare with this instance.</param>
         /// <returns>
-        /// <see langword="true"/> if the specified <see cref="Object"/> is equal to this instance; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if the specified <see cref="Object"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -441,8 +430,7 @@
         /// </summary>
         /// <param name="other">An interval to compare with this one.</param>
         /// <returns>
-        /// <see langword="true"/> if this interval is equal to <paramref name="other"/>; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if this interval is equal to <paramref name="other"/>; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(Interval<T> other)
         {
@@ -491,7 +479,7 @@
         /// </summary>
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash
-        /// table. 
+        /// table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -505,9 +493,7 @@
         /// Determines whether the interval includes a value.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns>
-        /// <see langword="true"/> if the interval includes the value; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if the interval includes the value; otherwise, <c>false</c>.</returns>
         public bool Includes(T value)
         {
             return this.LeftIncludes(value, true) && this.RightIncludes(value, true);
@@ -517,9 +503,7 @@
         /// Determines whether the interval includes another.
         /// </summary>
         /// <param name="other">An interval to check for inclusion in the current one.</param>
-        /// <returns>
-        /// <see langword="true"/> if the interval contains the other; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if the interval contains the other; otherwise, <c>false</c>.</returns>
         public bool Includes(Interval<T> other)
         {
             if (other == null)
@@ -546,9 +530,7 @@
         /// Determines whether the interval is partitioned by a set of intervals.
         /// </summary>
         /// <param name="intervals">The intervals.</param>
-        /// <returns>
-        /// <see langword="true"/> if the interval is partitioned by the set; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if the interval is partitioned by the set; otherwise, <c>false</c>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="intervals"/> is <see langword="null"/>.</exception>
         public bool IsPartitionedBy(IEnumerable<Interval<T>> intervals)
         {
@@ -561,9 +543,7 @@
         /// Determines whether this interval overlaps another.
         /// </summary>
         /// <param name="other">The other interval.</param>
-        /// <returns>
-        /// <see langword="true"/> if this interval overlaps the other; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if this interval overlaps the other; otherwise, <c>false</c>.</returns>
         public bool Overlaps(Interval<T> other)
         {
             if (other == null)
@@ -653,10 +633,7 @@
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="included">A value indicating whether <paramref name="value"/> is included.</param>
-        /// <returns>
-        /// <see langword="true"/> if the interval's left endpoint includes the value; otherwise,
-        /// <see langword="false"/>.
-        /// </returns>
+        /// <returns><c>true</c> if the interval's left endpoint includes the value; otherwise, <c>false</c>.</returns>
         private bool LeftIncludes(T value, bool included)
         {
             return
@@ -671,8 +648,7 @@
         /// <param name="value">The value.</param>
         /// <param name="included">A value indicating whether <paramref name="value"/> is included.</param>
         /// <returns>
-        /// <see langword="true"/> if the interval's right endpoint includes the value; otherwise,
-        /// <see langword="false"/>.
+        /// <c>true</c> if the interval's right endpoint includes the value; otherwise, <c>false</c>.
         /// </returns>
         private bool RightIncludes(T value, bool included)
         {
