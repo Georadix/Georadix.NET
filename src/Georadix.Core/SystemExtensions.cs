@@ -126,7 +126,7 @@
         /// <param name="instance">The instance.</param>
         /// <param name="value">The value to compare to the instance.</param>
         /// <param name="tolerance">The tolerance.</param>
-        /// <returns><see langword="true"/> if they are equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns><c>true</c> if they are equal; otherwise, <c>false</c>.</returns>
         public static bool IsEqualTo(this float instance, float value, float tolerance)
         {
             return Math.Abs(instance - value) <= tolerance;
@@ -139,7 +139,7 @@
         /// <param name="instance">The instance.</param>
         /// <param name="value">The value to compare to the instance.</param>
         /// <param name="tolerance">The tolerance.</param>
-        /// <returns><see langword="true"/> if they are equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns><c>true</c> if they are equal; otherwise, <c>false</c>.</returns>
         public static bool IsEqualTo(this double instance, double value, double tolerance)
         {
             return Math.Abs(instance - value) <= tolerance;

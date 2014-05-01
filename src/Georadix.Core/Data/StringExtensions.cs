@@ -15,8 +15,8 @@
         /// <param name="source">The source.</param>
         /// <param name="expressions">The expressions.</param>
         /// <returns>
-        /// <see langword="true"/> if the source was parsed into a list of <see cref="OrderByExpression"/>,
-        /// <see langword="false"/> otherwise.
+        /// <c>true</c> if the source was parsed into a list of <see cref="OrderByExpression"/>; otherwise,
+        /// <c>false</c>.
         /// </returns>
         public static bool TryParseOrderByExpressions(this string source, out OrderByExpression[] expressions)
         {
