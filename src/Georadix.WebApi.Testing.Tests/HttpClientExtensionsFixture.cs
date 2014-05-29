@@ -35,7 +35,7 @@
 
             sut.SetJwtAuthorizationHeader(this.certificate, "http://www.example.com", new Claim[] { claim });
 
-            var principal = this.ValidateTokenWithX509SecurityToken(
+            var principal = this.ValidateToken(
                 sut.DefaultRequestHeaders.Authorization.Parameter, "http://www.example.com");
 
             Assert.Equal("User1", principal.Identity.Name);
@@ -94,16 +94,14 @@
             Assert.Equal("signingCertificate", ex.ParamName);
         }
 
-        private ClaimsPrincipal ValidateTokenWithX509SecurityToken(string token, params string[] allowedAudiences)
+        private ClaimsPrincipal ValidateToken(string token, params string[] allowedAudiences)
         {
-            var x509DataClause = new X509RawDataKeyIdentifierClause(this.certificate.RawData);
             var tokenHandler = new JwtSecurityTokenHandler();
-            var x509SecurityToken = new X509SecurityToken(new X509Certificate2(x509DataClause.GetX509RawData()));
 
             var validationParameters = new TokenValidationParameters()
             {
                 AllowedAudiences = allowedAudiences,
-                SigningToken = x509SecurityToken,
+                SigningToken = new X509SecurityToken(this.certificate),
                 ValidIssuer = "self"
             };
 
