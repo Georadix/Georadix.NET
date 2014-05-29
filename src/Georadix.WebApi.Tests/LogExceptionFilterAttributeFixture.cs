@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
     using Xunit;
@@ -30,6 +31,7 @@
             {
                 var response = await server.Client.GetAsync("test/exception");
 
+                Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
                 Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
                 this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
@@ -43,13 +45,28 @@
         {
             using (var server = this.CreateServer())
             {
-                var response = await server.Client.GetAsync("test/nestedxception");
+                var response = await server.Client.GetAsync("test/nestedexception");
 
+                Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
                 Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
                 this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
                     LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException().Message,
                     LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException()));
+            }
+        }
+
+        [Fact]
+        public async Task HttpResponseExceptionFromControllerIsReturnedAndNotLogged()
+        {
+            using (var server = this.CreateServer())
+            {
+                var response = await server.Client.GetAsync("test/httpresponseexception");
+
+                Assert.Equal(
+                    LogExceptionFilterAttributeFixtureController.HttpResponseException.Response.StatusCode,
+                    response.StatusCode);
+                Assert.False(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
             }
         }
 
@@ -79,7 +96,7 @@
     public class LogExceptionFilterAttributeFixtureController : ApiController
     {
         public static readonly InvalidOperationException Exception;
-
+        public static readonly HttpResponseException HttpResponseException;
         public static readonly InvalidOperationException NestedException;
 
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations",
@@ -89,6 +106,7 @@
             Exception = new InvalidOperationException("Error Message");
             NestedException = new InvalidOperationException(
                 "Error Message", new InvalidOperationException("Inner Error Message"));
+            HttpResponseException = new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
         }
 
         [Route("exception")]
@@ -97,7 +115,13 @@
             throw Exception;
         }
 
-        [Route("nestedxception")]
+        [Route("httpresponseexception")]
+        public void GetHttpResponseException()
+        {
+            throw HttpResponseException;
+        }
+
+        [Route("nestedexception")]
         public void GetNestedException()
         {
             throw NestedException;
