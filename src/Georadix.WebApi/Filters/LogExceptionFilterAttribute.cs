@@ -5,6 +5,7 @@
     using System;
     using System.Net;
     using System.Net.Http;
+    using System.Web.Http;
     using System.Web.Http.Filters;
 
     /// <summary>
@@ -34,15 +35,18 @@
         /// <param name="actionExecutedContext">The context for the action.</param>
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            var logger = this.loggerFactory(
-                actionExecutedContext.ActionContext.ControllerContext.Controller.GetType());
-
             var baseException = actionExecutedContext.Exception.GetBaseException();
 
-            logger.Error(baseException.Message, baseException);
+            if (!(baseException is HttpResponseException))
+            {
+                var logger = this.loggerFactory(
+                    actionExecutedContext.ActionContext.ControllerContext.Controller.GetType());
 
-            actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            actionExecutedContext.Response.Content = new StringContent(InvariantStrings.ErrorProcessingRequest);
+                logger.Error(baseException.Message, baseException);
+
+                actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                actionExecutedContext.Response.Content = new StringContent(InvariantStrings.ErrorProcessingRequest);
+            }
         }
     }
 }
