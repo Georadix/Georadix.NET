@@ -53,6 +53,7 @@
     <Compile Include="ArgumentExtensionsFixture.cs" />
     <Compile Include="EnumHelperFixture.cs" />
     <Compile Include="NetExtensionsFixture.cs" />
+    <Compile Include="Security\ClaimsExtensionsFixture.cs" />
     <Compile Include="Security\Rfc2898EncryptedValueFixture.cs" />
     <Compile Include="Validation\DataAnnotationExtensionsFixture.cs" />
     <Compile Include="IntervalFixture.cs" />
