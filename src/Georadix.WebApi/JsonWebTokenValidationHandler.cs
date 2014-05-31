@@ -70,8 +70,7 @@
                 {
                     try
                     {
-                        principal = this.ValidateTokenWithX509SecurityToken(
-                            new X509RawDataKeyIdentifierClause(this.certificate.RawData), token);
+                        principal = this.ValidateToken(token);
                     }
                     catch (Exception e)
                     {
@@ -86,16 +85,14 @@
             return base.SendAsync(request, cancellationToken);
         }
 
-        private ClaimsPrincipal ValidateTokenWithX509SecurityToken(
-            X509RawDataKeyIdentifierClause x509DataClause, string token)
+        private ClaimsPrincipal ValidateToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var x509SecurityToken = new X509SecurityToken(new X509Certificate2(x509DataClause.GetX509RawData()));
 
             var validationParameters = new TokenValidationParameters()
             {
                 AllowedAudiences = this.allowedAudiences,
-                SigningToken = x509SecurityToken,
+                SigningToken = new X509SecurityToken(this.certificate),
                 ValidIssuer = "self"
             };
 
