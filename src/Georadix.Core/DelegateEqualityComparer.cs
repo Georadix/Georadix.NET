@@ -29,11 +29,9 @@
         /// <summary>
         /// Determines whether the specified objects are equal.
         /// </summary>
-        /// <param name="x">The first object of type {T} to compare.</param>
-        /// <param name="y">The second object of type {T} to compare.</param>
-        /// <returns>
-        /// true if the specified objects are equal; otherwise, false.
-        /// </returns>
+        /// <param name="x">The first object to compare.</param>
+        /// <param name="y">The second object to compare.</param>
+        /// <returns><c>true</c> if the specified objects are equal; otherwise, <c>false</c>.</returns>
         public bool Equals(T x, T y)
         {
             return this.comparer(x, y);
@@ -44,8 +42,8 @@
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures 
-        /// like a hash table. 
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash
+        /// table.
         /// </returns>
         public int GetHashCode(T obj)
         {
