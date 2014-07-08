@@ -159,6 +159,71 @@
 
         #region String Arguments
 
+        [Theory]
+        [InlineData("1", 1, 5)]
+        [InlineData("123", 1, 5)]
+        [InlineData("12345", 1, 5)]
+        public void AssertLengthInRangeOnStringInRangeDoesNotThrowException(string sut, int min, int max)
+        {
+            sut.AssertLengthInRange(min, max, "sut");
+            sut.AssertLengthInRange(Interval<int>.Bounded(min, true, max, true), "sut");
+        }
+
+        [Theory]
+        [InlineData("", 1, 5)]
+        [InlineData("123456", 1, 5)]
+        public void AssertLengthInRangeOnStringOutOfRangeThrowsArgumentException(string sut, int min, int max)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => sut.AssertLengthInRange(min, max, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.NotNull(ex.Message);
+
+            var ex2 = Assert.Throws<ArgumentException>(() =>
+                sut.AssertLengthInRange(Interval<int>.Bounded(min, true, max, true), "sut"));
+
+            Assert.Equal(ex.ParamName, ex2.ParamName);
+            Assert.Equal(ex.Message, ex2.Message);
+        }
+
+        [Fact]
+        public void AssertLongerThanOnLongerStringDoesNotThrowException()
+        {
+            string sut = "1";
+
+            sut.AssertLongerThan(0, "sut");
+        }
+
+        [Theory]
+        [InlineData("", 0)]
+        [InlineData("", 1)]
+        public void AssertLongerThanOnShorterOrEqualStringThrowsArgumentException(string sut, int value)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => sut.AssertLongerThan(value, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
+        [InlineData("1", 1)]
+        [InlineData("1", 0)]
+        public void AssertLongerThanOrEqualToOnLongerOrEqualStringDoesNotThrowException(string sut, int value)
+        {
+            sut.AssertLongerThanOrEqualTo(value, "sut");
+        }
+
+        [Fact]
+        public void AssertLongerThanOrEqualToOnShorterStringThrowsArgumentException()
+        {
+            string sut = string.Empty;
+
+            var ex = Assert.Throws<ArgumentException>(() => sut.AssertLongerThanOrEqualTo(1, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
         [Fact]
         public void AssertNotNullOrEmptyOnEmptyStringThrowsArgumentException()
         {
@@ -228,6 +293,44 @@
 
             Assert.Equal("sut", ex.ParamName);
             Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void AssertShorterThanOnLongerStringDoesNotThrowException()
+        {
+            string sut = string.Empty;
+
+            sut.AssertShorterThan(1, "sut");
+        }
+
+        [Theory]
+        [InlineData("", 0)]
+        [InlineData("1", 0)]
+        public void AssertShorterThanOnShorterOrEqualStringThrowsArgumentException(string sut, int value)
+        {
+            var ex = Assert.Throws<ArgumentException>(() => sut.AssertShorterThan(value, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Fact]
+        public void AssertShorterThanOrEqualToOnLongerStringThrowsArgumentException()
+        {
+            string sut = "1";
+
+            var ex = Assert.Throws<ArgumentException>(() => sut.AssertShorterThanOrEqualTo(0, "sut"));
+
+            Assert.Equal("sut", ex.ParamName);
+            Assert.NotNull(ex.Message);
+        }
+
+        [Theory]
+        [InlineData("1", 1)]
+        [InlineData("", 1)]
+        public void AssertShorterThanOrEqualToOnShorterOrEqualStringDoesNotThrowException(string sut, int value)
+        {
+            sut.AssertShorterThanOrEqualTo(value, "sut");
         }
 
         #endregion String Arguments

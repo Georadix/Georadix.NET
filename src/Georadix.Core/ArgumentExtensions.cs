@@ -110,6 +110,75 @@
         #region String Arguments
 
         /// <summary>
+        /// Ensures the length of the string argument is within a range of values.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="min">The minimum length.</param>
+        /// <param name="max">The maximum length.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentException">
+        /// The length of <paramref name="arg"/> is less than <paramref name="min"/> or greater than
+        /// <paramref name="max"/>.
+        /// </exception>
+        public static void AssertLengthInRange(this string arg, int min, int max, string paramName)
+        {
+            arg.AssertLengthInRange(Interval<int>.Bounded(min, true, max, true), paramName);
+        }
+
+        /// <summary>
+        /// Ensures the length of the string argument is within a range of values.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="range">The length range.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentException">
+        /// The length of <paramref name="arg"/> is not in <paramref name="range"/>.
+        /// </exception>
+        public static void AssertLengthInRange(this string arg, Interval<int> range, string paramName)
+        {
+            if (!range.Includes(arg.Length))
+            {
+                throw new ArgumentException(string.Format("The value must be {0} characters long.", range), paramName);
+            }
+        }
+
+        /// <summary>
+        /// Ensures the string argument is longer than a specified value.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentException">
+        /// The length of <paramref name="arg"/> is less than or equal to <paramref name="value"/>.
+        /// </exception>
+        public static void AssertLongerThan(this string arg, int value, string paramName)
+        {
+            if (arg.Length <= value)
+            {
+                throw new ArgumentException(
+                    string.Format("The value must be more than {0} characters long.", value), paramName);
+            }
+        }
+
+        /// <summary>
+        /// Ensures the string argument is longer than or equal to a specified value.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentException">
+        /// The length of <paramref name="arg"/> is less than <paramref name="value"/>.
+        /// </exception>
+        public static void AssertLongerThanOrEqualTo(this string arg, int value, string paramName)
+        {
+            if (arg.Length < value)
+            {
+                throw new ArgumentException(
+                    string.Format("The value must be at least {0} characters long.", value), paramName);
+            }
+        }
+
+        /// <summary>
         /// Ensures the string argument is not <see langword="null"/> or empty.
         /// </summary>
         /// <param name="arg">The argument.</param>
@@ -138,6 +207,42 @@
             {
                 throw new ArgumentException(
                     "The value cannot be null, empty, or consisting only of white-space characters.", paramName);
+            }
+        }
+
+        /// <summary>
+        /// Ensures the string argument is shorter than a specified value.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentException">
+        /// The length of <paramref name="arg"/> is greater than or equal to <paramref name="value"/>.
+        /// </exception>
+        public static void AssertShorterThan(this string arg, int value, string paramName)
+        {
+            if (arg.Length >= value)
+            {
+                throw new ArgumentException(
+                    string.Format("The value must be less than {0} characters long.", value), paramName);
+            }
+        }
+
+        /// <summary>
+        /// Ensures the string argument is shorter than or equal to a specified value.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentException">
+        /// The length of <paramref name="arg"/> is greater than <paramref name="value"/>.
+        /// </exception>
+        public static void AssertShorterThanOrEqualTo(this string arg, int value, string paramName)
+        {
+            if (arg.Length > value)
+            {
+                throw new ArgumentException(
+                    string.Format("The value must be no more than {0} characters long.", value), paramName);
             }
         }
 
