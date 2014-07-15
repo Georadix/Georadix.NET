@@ -54,7 +54,7 @@
         /// </summary>
         /// <param name="arg">The argument.</param>
         /// <param name="assertContentsNotNull">
-        /// Whether to check the items in the collection for <see langword="null"/>.
+        /// A value indicating whether to check the items in the collection for <see langword="null"/>.
         /// </param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
@@ -85,7 +85,7 @@
         /// <typeparam name="T">The type of element in the enumeration.</typeparam>
         /// <param name="arg">The argument.</param>
         /// <param name="assertContentsNotNull">
-        /// Whether to check the items in the collection for <see langword="null"/>.
+        /// A value indicating whether to check the items in the collection for <see langword="null"/>.
         /// </param>
         /// <param name="paramName">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
