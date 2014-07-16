@@ -8,4 +8,4 @@ function Install-Certificate ($certPath, [string]$storeLocation = "LocalMachine"
     "Thumbprint: $($cert.Thumbprint)"
 }
 
-Install-Certificate ($env:APPVEYOR_BUILD_FOLDER + "\Dev.pfx")
+Install-Certificate ($env:APPVEYOR_BUILD_FOLDER + "\tools\Dev.pfx")
