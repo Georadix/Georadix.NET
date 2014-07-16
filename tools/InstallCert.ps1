@@ -5,7 +5,6 @@ function Install-Certificate ($certPath, [string]$storeLocation = "LocalMachine"
     $store.Open("ReadWrite")
     $store.Add($cert)
     $store.Close()
-    "Thumbprint: $($cert.Thumbprint)"
 }
 
 Install-Certificate ($env:APPVEYOR_BUILD_FOLDER + "\tools\Dev.pfx")
