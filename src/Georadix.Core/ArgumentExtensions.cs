@@ -116,6 +116,7 @@
         /// <param name="min">The minimum length.</param>
         /// <param name="max">The maximum length.</param>
         /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// The length of <paramref name="arg"/> is less than <paramref name="min"/> or greater than
         /// <paramref name="max"/>.
@@ -131,11 +132,14 @@
         /// <param name="arg">The argument.</param>
         /// <param name="range">The length range.</param>
         /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// The length of <paramref name="arg"/> is not in <paramref name="range"/>.
         /// </exception>
         public static void AssertLengthInRange(this string arg, Interval<int> range, string paramName)
         {
+            arg.AssertNotNull(paramName);
+
             if (!range.Includes(arg.Length))
             {
                 throw new ArgumentException(string.Format("The value must be {0} characters long.", range), paramName);
@@ -148,11 +152,14 @@
         /// <param name="arg">The argument.</param>
         /// <param name="value">The value.</param>
         /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// The length of <paramref name="arg"/> is less than or equal to <paramref name="value"/>.
         /// </exception>
         public static void AssertLongerThan(this string arg, int value, string paramName)
         {
+            arg.AssertNotNull(paramName);
+
             if (arg.Length <= value)
             {
                 throw new ArgumentException(
@@ -166,11 +173,14 @@
         /// <param name="arg">The argument.</param>
         /// <param name="value">The value.</param>
         /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// The length of <paramref name="arg"/> is less than <paramref name="value"/>.
         /// </exception>
         public static void AssertLongerThanOrEqualTo(this string arg, int value, string paramName)
         {
+            arg.AssertNotNull(paramName);
+
             if (arg.Length < value)
             {
                 throw new ArgumentException(
@@ -216,11 +226,14 @@
         /// <param name="arg">The argument.</param>
         /// <param name="value">The value.</param>
         /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// The length of <paramref name="arg"/> is greater than or equal to <paramref name="value"/>.
         /// </exception>
         public static void AssertShorterThan(this string arg, int value, string paramName)
         {
+            arg.AssertNotNull(paramName);
+
             if (arg.Length >= value)
             {
                 throw new ArgumentException(
@@ -234,11 +247,14 @@
         /// <param name="arg">The argument.</param>
         /// <param name="value">The value.</param>
         /// <param name="paramName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arg"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">
         /// The length of <paramref name="arg"/> is greater than <paramref name="value"/>.
         /// </exception>
         public static void AssertShorterThanOrEqualTo(this string arg, int value, string paramName)
         {
+            arg.AssertNotNull(paramName);
+
             if (arg.Length > value)
             {
                 throw new ArgumentException(
