@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Core", "Georadix.Core\Georadix.Core.csproj", "{4E2F8D9A-7ADF-404F-B043-5D7136013F97}"
 EndProject
@@ -36,6 +36,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.EF.Testing", "Georadix.EF.Testing\Georadix.EF.Testing.csproj", "{D9E4FF22-3765-419D-B939-BE29BA994106}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.EF.Testing.Tests", "Georadix.EF.Testing.Tests\Georadix.EF.Testing.Tests.csproj", "{53079145-969E-4148-9A7A-538695731031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Web", "Georadix.Web\Georadix.Web.csproj", "{96A15FE8-AE39-467D-AC9C-F22655C74028}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Web.Tests", "Georadix.Web.Tests\Georadix.Web.Tests.csproj", "{6792A3FC-8240-47B4-8A5C-38125839BA6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,14 @@ Global
 		{53079145-969E-4148-9A7A-538695731031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53079145-969E-4148-9A7A-538695731031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53079145-969E-4148-9A7A-538695731031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6792A3FC-8240-47B4-8A5C-38125839BA6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6792A3FC-8240-47B4-8A5C-38125839BA6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6792A3FC-8240-47B4-8A5C-38125839BA6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6792A3FC-8240-47B4-8A5C-38125839BA6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,5 +105,6 @@ Global
 		{F94E1837-D217-42A9-B3F0-8A018A432EAA} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{463F4807-F7C1-46E2-B095-BFE3097ED112} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{53079145-969E-4148-9A7A-538695731031} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
+		{6792A3FC-8240-47B4-8A5C-38125839BA6D} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 	EndGlobalSection
 EndGlobal

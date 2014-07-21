@@ -1,13 +1,9 @@
 ﻿namespace Georadix.WebApi
 {
-    using Georadix.WebApi.Resources;
-    using log4net;
     using System;
-    using System.Collections.Generic;
     using System.IdentityModel.Tokens;
     using System.Net.Http;
     using System.Security.Claims;
-    using System.Security.Cryptography.X509Certificates;
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,34 +13,20 @@
     /// </summary>
     public class JsonWebTokenValidationHandler : DelegatingHandler
     {
-        private readonly List<string> allowedAudiences = new List<string>();
-        private readonly X509Certificate2 certificate;
-        private readonly ILog logger;
+        private readonly TokenValidationParameters tokenValidationParameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonWebTokenValidationHandler" /> class.
         /// </summary>
-        /// <param name="logger">The logger.</param>
-        /// <param name="allowedAudiences">A list of allowed audiences (Typically a list of domain names).</param>
-        /// <param name="certificate">The certificate used to generate the signing token.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="logger"/> is <see langword="null"/>.</exception>
+        /// <param name="tokenValidationParameters">The token validation parameters.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="allowedAudiences"/> is <see langword="null"/>.
+        /// <paramref name="tokenValidationParameters" /> is <see langword="null" />.
         /// </exception>
-        /// <exception cref="ArgumentException"><paramref name="allowedAudiences"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="certificate"/> is <see langword="null"/>.
-        /// </exception>
-        public JsonWebTokenValidationHandler(
-            ILog logger, IEnumerable<string> allowedAudiences, X509Certificate2 certificate)
+        public JsonWebTokenValidationHandler(TokenValidationParameters tokenValidationParameters)
         {
-            logger.AssertNotNull("logger");
-            allowedAudiences.AssertNotNullOrEmpty(true, "allowedAudiences");
-            certificate.AssertNotNull("certificate");
+            tokenValidationParameters.AssertNotNull("tokenValidationParameters");
 
-            this.logger = logger;
-            this.allowedAudiences.AddRange(allowedAudiences);
-            this.certificate = certificate;
+            this.tokenValidationParameters = tokenValidationParameters;
         }
 
         /// <summary>
@@ -68,10 +50,8 @@
                 {
                     principal = this.ValidateToken(token);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    this.logger.Info(
-                        string.Format(InvariantStrings.LogInvalidAuthToken, request.GetClientIpAddress()), e);
                 }
             }
 
@@ -107,14 +87,7 @@
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var validationParameters = new TokenValidationParameters()
-            {
-                AllowedAudiences = this.allowedAudiences,
-                SigningToken = new X509SecurityToken(this.certificate),
-                ValidIssuer = "self"
-            };
-
-            return tokenHandler.ValidateToken(new JwtSecurityToken(token), validationParameters);
+            return tokenHandler.ValidateToken(new JwtSecurityToken(token), this.tokenValidationParameters);
         }
     }
 }

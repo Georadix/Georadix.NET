@@ -1,9 +1,6 @@
 ﻿namespace Georadix.WebApi
 {
     using Georadix.WebApi.Testing;
-    using log4net;
-    using Moq;
-    using SimpleInjector;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -44,9 +41,7 @@
         [Fact]
         public async Task AccessingAnonymousResourceWithNoTokenReturnsOK()
         {
-            var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-
-            using (var server = this.CreateServer(loggerMock.Object))
+            using (var server = this.CreateServer())
             {
                 var response = await server.Client.GetAsync(this.rootRoute);
 
@@ -57,9 +52,7 @@
         [Fact]
         public async Task AccessingProtectedResourceWithNoTokenReturnsForbidden()
         {
-            var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-
-            using (var server = this.CreateServer(loggerMock.Object))
+            using (var server = this.CreateServer())
             {
                 var response = await server.Client.PostAsJsonAsync<string>(this.rootRoute, "test");
 
@@ -70,9 +63,7 @@
         [Fact]
         public async Task AccessingProtectedResourceWithValidTokenReturnsIt()
         {
-            var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-
-            using (var server = this.CreateServer(loggerMock.Object))
+            using (var server = this.CreateServer())
             {
                 server.Client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", this.GenerateAuthToken(this.allowedAudiences.First()));
@@ -87,69 +78,39 @@
         }
 
         [Fact]
-        public void ConstructorWithNullCertificateThrowsArgumentNullException()
+        public void ConstructorWithNullTokenValidationParametersThrowsArgumentNullException()
         {
             var ex = Assert.Throws<ArgumentNullException>(
-                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), this.allowedAudiences, null));
+                () => new JsonWebTokenValidationHandler(null));
 
-            Assert.Equal("certificate", ex.ParamName);
-        }
-
-        [Fact]
-        public void ConstructorWithNullLoggerThrowsArgumentNullException()
-        {
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new JsonWebTokenValidationHandler(null, this.allowedAudiences, this.certificate));
-
-            Assert.Equal("logger", ex.ParamName);
-        }
-
-        [Fact]
-        public void ConstrutorWithEmptyAllowedAudiencesThrowsArgumentException()
-        {
-            var ex = Assert.Throws<ArgumentException>(
-                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), new string[] { }, this.certificate));
-
-            Assert.Equal("allowedAudiences", ex.ParamName);
-        }
-
-        [Fact]
-        public void ConstrutorWithNullAllowedAudiencesThrowsArgumentNullException()
-        {
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new JsonWebTokenValidationHandler(Mock.Of<ILog>(), null, this.certificate));
-
-            Assert.Equal("allowedAudiences", ex.ParamName);
+            Assert.Equal("tokenValidationParameters", ex.ParamName);
         }
 
         [Fact]
         public async Task RequestWithMalformedTokenIsLogged()
         {
-            var loggerMock = new Mock<ILog>(MockBehavior.Strict);
-
-            loggerMock.Setup(l => l.Info(
-                It.Is<string>(s => s.Equals("The auth token from client IP  is invalid.")),
-                It.IsAny<Exception>()));
-
-            using (var server = this.CreateServer(loggerMock.Object))
+            using (var server = this.CreateServer())
             {
                 server.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "dfggd");
 
                 var response = await server.Client.PostAsJsonAsync<string>(this.rootRoute, "test");
 
                 Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-
-                loggerMock.VerifyAll();
             }
         }
 
-        private InMemoryServer CreateServer(ILog logger)
+        private InMemoryServer CreateServer(TokenValidationParameters tokenValidationParameters = null)
         {
             var server = new InMemoryServer();
 
-            server.Configuration.MessageHandlers.Add(
-                new JsonWebTokenValidationHandler(logger, this.allowedAudiences, this.certificate));
+            tokenValidationParameters = tokenValidationParameters ?? new TokenValidationParameters()
+            {
+                AllowedAudiences = this.allowedAudiences,
+                SigningToken = new X509SecurityToken(this.certificate),
+                ValidIssuer = "self"
+            };
 
+            server.Configuration.MessageHandlers.Add(new JsonWebTokenValidationHandler(tokenValidationParameters));
             server.Configuration.MapHttpAttributeRoutes();
 
             return server;
