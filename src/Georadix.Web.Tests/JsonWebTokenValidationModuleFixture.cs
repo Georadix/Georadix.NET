@@ -60,7 +60,7 @@
 
             sut.Init(testApp);
 
-            // TODO: Look at a way to mock an HttpApplication.
+            // TODO: Find a way to verify we are properly registering to AuthenticateRequest.
         }
 
         [Fact]

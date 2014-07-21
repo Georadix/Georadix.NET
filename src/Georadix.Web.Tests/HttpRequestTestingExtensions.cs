@@ -3,8 +3,21 @@
     using System.Collections;
     using System.Reflection;
 
+    /// <summary>
+    /// Defines methods that extends <see cref="HttpRequest"/> to facilitate testing.
+    /// </summary>
     public static class HttpRequestTestingExtensions
     {
+        /// <summary>
+        /// Adds the specified header to an <see cref="HttpRequest"/>.
+        /// </summary>
+        /// <remarks>
+        /// This is a necessary workaround to adding directly to the header collection on an 
+        /// <see cref="HttpRequest"/> which throws a <b>PlatformNotSupportedException</b>.
+        /// </remarks>
+        /// <param name="request">The request.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="values">The values.</param>
         public static void AddHeader(this HttpRequest request, string name, params string[] values)
         {
             var headers = request.Headers;
