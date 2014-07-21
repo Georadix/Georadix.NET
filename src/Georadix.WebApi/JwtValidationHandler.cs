@@ -11,22 +11,33 @@
     /// <summary>
     /// A handler that validates a Web Token is present and valid for all requests.
     /// </summary>
-    public class JsonWebTokenValidationHandler : DelegatingHandler
+    public class JwtValidationHandler : DelegatingHandler
     {
         private readonly TokenValidationParameters tokenValidationParameters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonWebTokenValidationHandler" /> class.
+        /// Initializes a new instance of the <see cref="JwtValidationHandler" /> class.
         /// </summary>
         /// <param name="tokenValidationParameters">The token validation parameters.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="tokenValidationParameters" /> is <see langword="null" />.
         /// </exception>
-        public JsonWebTokenValidationHandler(TokenValidationParameters tokenValidationParameters)
+        public JwtValidationHandler(TokenValidationParameters tokenValidationParameters)
         {
             tokenValidationParameters.AssertNotNull("tokenValidationParameters");
 
             this.tokenValidationParameters = tokenValidationParameters;
+        }
+
+        /// <summary>
+        /// Called when validating an access token fails.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="ex">The exception.</param>
+        protected virtual void OnValidateTokenException(
+            HttpRequestMessage request, CancellationToken cancellationToken, Exception ex)
+        {
         }
 
         /// <summary>
@@ -50,8 +61,9 @@
                 {
                     principal = this.ValidateToken(token);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    this.OnValidateTokenException(request, cancellationToken, ex);
                 }
             }
 

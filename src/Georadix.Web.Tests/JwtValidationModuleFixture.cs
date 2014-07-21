@@ -12,12 +12,12 @@
     using System.Web;
     using Xunit;
 
-    public class JsonWebTokenValidationModuleFixture
+    public class JwtValidationModuleFixture
     {
         private readonly List<string> allowedAudiences = new List<string>(new string[] { "http://www.example.com" });
         private readonly X509Certificate2 certificate;
 
-        public JsonWebTokenValidationModuleFixture()
+        public JwtValidationModuleFixture()
         {
             var store = new X509Store(StoreName.TrustedPeople);
 
@@ -32,7 +32,7 @@
         [Fact]
         public void InitWithNullContextThrowsArgumentNullException()
         {
-            var sut = new JsonWebTokenValidationModule();
+            var sut = new JwtValidationModule();
 
             var ex = Assert.Throws<ArgumentNullException>(() => sut.Init(null));
 
@@ -42,7 +42,7 @@
         [Fact]
         public void InitWithInvalidContextThrowsInvalidOperationException()
         {
-            var sut = new JsonWebTokenValidationModule();
+            var sut = new JwtValidationModule();
 
             Assert.Throws<InvalidOperationException>(() => sut.Init(new HttpApplication()));
         }
@@ -50,7 +50,7 @@
         [Fact]
         public void InitWithValidContextSucceeds()
         {
-            var sut = new JsonWebTokenValidationModule();
+            var sut = new JwtValidationModule();
             var testApp = new TestApplication(new TokenValidationParameters()
                 {
                     AllowedAudiences = this.allowedAudiences,
@@ -108,8 +108,8 @@
             var principal = (ClaimsPrincipal)sut.OnAuthenticateRequestTest(application, request);
 
             Assert.NotNull(sut.ValidationTokenException);
-            Assert.False(principal.HasClaim(ClaimTypes.Name, "Username"));
-            Assert.False(principal.HasClaim(ClaimTypes.Role, "User"));
+            Assert.False(principal.Identity.IsAuthenticated);
+            Assert.Empty(principal.Claims);
         }
 
         [Fact]
@@ -131,6 +131,7 @@
 
             var principal = (ClaimsPrincipal)sut.OnAuthenticateRequestTest(application, request);
 
+            Assert.True(principal.Identity.IsAuthenticated);
             Assert.True(principal.HasClaim(ClaimTypes.Name, "Username"));
             Assert.True(principal.HasClaim(ClaimTypes.Role, "User"));
         }
@@ -158,7 +159,7 @@
             return tokenHandler.WriteToken(token);
         }
 
-        private class TestApplication : HttpApplication, IJsonWebTokenValidationParametersProvider
+        private class TestApplication : HttpApplication, IJwtValidationParametersProvider
         {
             private readonly TokenValidationParameters tokenValidationParameters;
 
@@ -173,7 +174,7 @@
             }
         }
 
-        private class TestModule : JsonWebTokenValidationModule
+        private class TestModule : JwtValidationModule
         {
             public Exception ValidationTokenException { get; private set; }
 

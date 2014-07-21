@@ -63,7 +63,7 @@
     </Compile>
     <Compile Include="HttpRequestExtensionsFixture.cs" />
     <Compile Include="HttpRequestTestingExtensions.cs" />
-    <Compile Include="JsonWebTokenValidationModuleFixture.cs" />
+    <Compile Include="JwtValidationModuleFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

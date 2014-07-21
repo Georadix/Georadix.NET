@@ -11,14 +11,14 @@
     /// <summary>
     /// Represents an <see cref="IHttpModule"/> that handles authorization based on JWT.
     /// </summary>
-    public class JsonWebTokenValidationModule : IHttpModule
+    public class JwtValidationModule : IHttpModule
     {
         private TokenValidationParameters tokenValidationParameters;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonWebTokenValidationModule"/> class.
+        /// Initializes a new instance of the <see cref="JwtValidationModule"/> class.
         /// </summary>
-        public JsonWebTokenValidationModule()
+        public JwtValidationModule()
         {
         }
 
@@ -34,19 +34,21 @@
         /// <summary>
         /// Initializes a module and prepares it to handle requests.
         /// </summary>
-        /// <param name="context">An <see cref="HttpApplication" /> that provides access to the methods,
-        /// properties, and events common to all application objects within an ASP.NET application</param>
+        /// <param name="context">
+        /// An <see cref="HttpApplication" /> that provides access to the methods,
+        /// properties, and events common to all application objects within an ASP.NET application
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="context"/> is <see langword="null"/>.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// <paramref name="context"/> does not implement <see cref="IJsonWebTokenValidationParametersProvider"/>.
+        /// <paramref name="context"/> does not implement <see cref="IJwtValidationParametersProvider"/>.
         /// </exception>
         public void Init(HttpApplication context)
         {
             context.AssertNotNull("context");
 
-            var app = context as IJsonWebTokenValidationParametersProvider;
+            var app = context as IJwtValidationParametersProvider;
 
             if (app == null)
             {
@@ -66,7 +68,7 @@
         /// </remarks>
         /// <param name="request">The request.</param>
         /// <returns>
-        /// If the authorization header is present, a string containing the token, otherwise <see langword="null"/>.
+        /// If the authorization header is present, a string containing the token; otherwise, <see langword="null"/>.
         /// </returns>
         protected virtual string GetTokenFromRequest(HttpRequest request)
         {
@@ -97,11 +99,13 @@
         /// </summary>
         /// <param name="application">The application.</param>
         /// <param name="request">The request.</param>
-        /// <returns>If an access token is present, returns an <see cref="IPrincipal"/> representing the user
-        /// who made the request. Otherwise an anonymous principal.</returns>
+        /// <returns>
+        /// If an access token is present, returns an <see cref="IPrincipal"/> representing the user
+        /// who made the request. Otherwise an anonymous principal.
+        /// </returns>
         protected virtual IPrincipal OnAuthenticateRequest(HttpApplication application, HttpRequest request)
         {
-            var principal = new ClaimsPrincipal();
+            var principal = new ClaimsPrincipal(new ClaimsIdentity());
             var token = this.GetTokenFromRequest(request);
 
             if (!string.IsNullOrWhiteSpace(token))

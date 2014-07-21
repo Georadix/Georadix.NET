@@ -61,20 +61,11 @@ namespace Georadix.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your HttpApplication must implement IJsonWebTokenValidationParametersProvider in order to use the JsonWebTokenValidationModule..
+        ///   Looks up a localized string similar to Your HttpApplication must implement IJwtValidationParametersProvider in order to use the JwtValidationModule..
         /// </summary>
         internal static string InvalidHttpApplication {
             get {
                 return ResourceManager.GetString("InvalidHttpApplication", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The auth token from client IP {0} is invalid..
-        /// </summary>
-        internal static string LogInvalidAuthToken {
-            get {
-                return ResourceManager.GetString("LogInvalidAuthToken", resourceCulture);
             }
         }
     }

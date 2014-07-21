@@ -5,7 +5,7 @@
     /// <summary>
     /// Represents a JWT validation parameters provider.
     /// </summary>
-    public interface IJsonWebTokenValidationParametersProvider
+    public interface IJwtValidationParametersProvider
     {
         /// <summary>
         /// Gets the token validation parameters.

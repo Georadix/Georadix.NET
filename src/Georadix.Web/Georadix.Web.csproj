@@ -56,8 +56,8 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="HttpRequestExtensions.cs" />
-    <Compile Include="IJsonWebTokenValidationParametersProvider.cs" />
-    <Compile Include="JsonWebTokenValidationModule.cs" />
+    <Compile Include="IJwtValidationParametersProvider.cs" />
+    <Compile Include="JwtValidationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\InvariantStrings.Designer.cs">
       <AutoGen>True</AutoGen>

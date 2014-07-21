@@ -70,15 +70,6 @@ namespace Georadix.WebApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The auth token from client IP {0} is invalid..
-        /// </summary>
-        internal static string LogInvalidAuthToken {
-            get {
-                return ResourceManager.GetString("LogInvalidAuthToken", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The parameter is required..
         /// </summary>
         internal static string ParameterIsRequired {

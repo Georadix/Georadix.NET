@@ -87,7 +87,7 @@
     </Compile>
     <Compile Include="HttpRequestMessageExtensionsFixture.cs" />
     <Compile Include="CheckArgumentsForNullAttributeFixture.cs" />
-    <Compile Include="JsonWebTokenValidationHandlerFixture.cs" />
+    <Compile Include="JwtValidationHandlerFixture.cs" />
     <Compile Include="LogExceptionFilterAttributeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContextDependentExtensionsFixture.cs" />
