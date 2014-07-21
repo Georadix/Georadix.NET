@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Georadix.WebApi.Resources {
+namespace Georadix.Web.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Georadix.WebApi.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Georadix.WebApi.Resources.InvariantStrings", typeof(InvariantStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Georadix.Web.Resources.InvariantStrings", typeof(InvariantStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,11 @@ namespace Georadix.WebApi.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, an error occurred while processing your request..
+        ///   Looks up a localized string similar to Your HttpApplication must implement IJwtValidationParametersProvider in order to use the JwtValidationModule..
         /// </summary>
-        internal static string ErrorProcessingRequest {
+        internal static string InvalidHttpApplication {
             get {
-                return ResourceManager.GetString("ErrorProcessingRequest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The parameter is required..
-        /// </summary>
-        internal static string ParameterIsRequired {
-            get {
-                return ResourceManager.GetString("ParameterIsRequired", resourceCulture);
+                return ResourceManager.GetString("InvalidHttpApplication", resourceCulture);
             }
         }
     }

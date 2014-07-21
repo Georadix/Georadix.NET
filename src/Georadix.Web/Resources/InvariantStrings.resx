@@ -117,10 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorProcessingRequest" xml:space="preserve">
-    <value>Sorry, an error occurred while processing your request.</value>
-  </data>
-  <data name="ParameterIsRequired" xml:space="preserve">
-    <value>The parameter is required.</value>
+  <data name="InvalidHttpApplication" xml:space="preserve">
+    <value>Your HttpApplication must implement IJwtValidationParametersProvider in order to use the JwtValidationModule.</value>
   </data>
 </root>
