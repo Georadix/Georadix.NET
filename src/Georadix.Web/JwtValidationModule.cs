@@ -61,6 +61,37 @@
         }
 
         /// <summary>
+        /// Gets the principal by examining the request for a JWT.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <remarks>
+        /// Called when the <see cref="HttpApplication" /> fires the authenticate request event.
+        /// </remarks>
+        /// <returns>
+        /// If an access token is present, returns a <see cref="ClaimsPrincipal"/> representing the user
+        /// who made the request; otherwise, an anonymous <see cref="ClaimsPrincipal"/>.
+        /// </returns>
+        protected virtual IPrincipal GetPrincipalFromRequest(HttpRequest request)
+        {
+            var principal = new ClaimsPrincipal(new ClaimsIdentity());
+            var token = this.GetTokenFromRequest(request);
+
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                try
+                {
+                    principal = this.ValidateToken(token);
+                }
+                catch (Exception ex)
+                {
+                    this.OnValidateTokenException(request, ex);
+                }
+            }
+
+            return principal;
+        }
+
+        /// <summary>
         /// Gets the token from the request by looking at the authorization header.
         /// </summary>
         /// <remarks>
@@ -94,41 +125,12 @@
         {
         }
 
-        /// <summary>
-        /// Called when the <see cref="HttpApplication" /> fires the authenticate request event.
-        /// </summary>
-        /// <param name="application">The application.</param>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// If an access token is present, returns an <see cref="IPrincipal"/> representing the user
-        /// who made the request. Otherwise an anonymous principal.
-        /// </returns>
-        protected virtual IPrincipal OnAuthenticateRequest(HttpApplication application, HttpRequest request)
-        {
-            var principal = new ClaimsPrincipal(new ClaimsIdentity());
-            var token = this.GetTokenFromRequest(request);
-
-            if (!string.IsNullOrWhiteSpace(token))
-            {
-                try
-                {
-                    principal = this.ValidateToken(token);
-                }
-                catch (Exception ex)
-                {
-                    this.OnValidateTokenException(request, ex);
-                }
-            }
-
-            return principal;
-        }
-
         [ExcludeFromCodeCoverage]
         private void Application_AuthenticateRequest(object sender, EventArgs e)
         {
             var application = (HttpApplication)sender;
 
-            this.OnAuthenticateRequest(application, application.Context.Request);
+            application.Context.User = this.GetPrincipalFromRequest(application.Context.Request);
         }
 
         private ClaimsPrincipal ValidateToken(string token)
