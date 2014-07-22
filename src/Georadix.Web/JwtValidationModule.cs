@@ -128,7 +128,7 @@
         {
             var application = (HttpApplication)sender;
 
-            this.OnAuthenticateRequest(application, application.Context.Request);
+            application.Context.User = this.OnAuthenticateRequest(application, application.Context.Request);
         }
 
         private ClaimsPrincipal ValidateToken(string token)
