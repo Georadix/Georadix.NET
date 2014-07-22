@@ -30,13 +30,28 @@
         }
 
         [Fact]
-        public void InitWithNullContextThrowsArgumentNullException()
+        public void GetTokenFromRequestWithAuthorizationHeaderReturnsToken()
         {
-            var sut = new JwtValidationModule();
+            var sut = new TestModule();
+            var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
+            var expectedToken = "access-token";
 
-            var ex = Assert.Throws<ArgumentNullException>(() => sut.Init(null));
+            request.AddHeader("Authorization", expectedToken);
 
-            Assert.Equal("context", ex.ParamName);
+            var extractedToken = sut.GetTokenFromRequestTest(request);
+
+            Assert.Equal(expectedToken, extractedToken);
+        }
+
+        [Fact]
+        public void GetTokenFromRequestWithoutAuthorizationHeaderReturnsNull()
+        {
+            var sut = new TestModule();
+            var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
+
+            var extractedToken = sut.GetTokenFromRequestTest(request);
+
+            Assert.Null(extractedToken);
         }
 
         [Fact]
@@ -45,6 +60,16 @@
             var sut = new JwtValidationModule();
 
             Assert.Throws<InvalidOperationException>(() => sut.Init(new HttpApplication()));
+        }
+
+        [Fact]
+        public void InitWithNullContextThrowsArgumentNullException()
+        {
+            var sut = new JwtValidationModule();
+
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Init(null));
+
+            Assert.Equal("context", ex.ParamName);
         }
 
         [Fact]
@@ -64,31 +89,6 @@
         }
 
         [Fact]
-        public void GetTokenFromRequestWithoutAuthorizationHeaderReturnsNull()
-        {
-            var sut = new TestModule();
-            var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
-
-            var extractedToken = sut.GetTokenFromRequestTest(request);
-
-            Assert.Null(extractedToken);
-        }
-
-        [Fact]
-        public void GetTokenFromRequestWithAuthorizationHeaderReturnsToken()
-        {
-            var sut = new TestModule();
-            var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
-            var expectedToken = "access-token";
-
-            request.AddHeader("Authorization", expectedToken);
-
-            var extractedToken = sut.GetTokenFromRequestTest(request);
-
-            Assert.Equal(expectedToken, extractedToken);
-        }
-
-        [Fact]
         public void OnAuthenticateRequestWithInvalidTokenCallsOnValidateTokenException()
         {
             var application = new TestApplication(new TokenValidationParameters()
@@ -105,7 +105,7 @@
 
             sut.Init(application);
 
-            var principal = (ClaimsPrincipal)sut.OnAuthenticateRequestTest(application, request);
+            var principal = (ClaimsPrincipal)sut.GetPrincipalFromRequestTest(request);
 
             Assert.NotNull(sut.ValidationTokenException);
             Assert.False(principal.Identity.IsAuthenticated);
@@ -129,7 +129,7 @@
 
             sut.Init(application);
 
-            var principal = (ClaimsPrincipal)sut.OnAuthenticateRequestTest(application, request);
+            var principal = (ClaimsPrincipal)sut.GetPrincipalFromRequestTest(request);
 
             Assert.True(principal.Identity.IsAuthenticated);
             Assert.True(principal.HasClaim(ClaimTypes.Name, "Username"));
@@ -178,14 +178,14 @@
         {
             public Exception ValidationTokenException { get; private set; }
 
+            public IPrincipal GetPrincipalFromRequestTest(HttpRequest request)
+            {
+                return this.GetPrincipalFromRequest(request);
+            }
+
             public string GetTokenFromRequestTest(HttpRequest request)
             {
                 return this.GetTokenFromRequest(request);
-            }
-
-            public IPrincipal OnAuthenticateRequestTest(HttpApplication application, HttpRequest request)
-            {
-                return this.OnAuthenticateRequest(application, request);
             }
 
             protected override void OnValidateTokenException(HttpRequest request, Exception ex)
