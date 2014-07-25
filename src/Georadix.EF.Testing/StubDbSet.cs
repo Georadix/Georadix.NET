@@ -127,7 +127,7 @@
         /// Finds the specified key values.
         /// </summary>
         /// <param name="keyValues">The key values.</param>
-        /// <returns>An entity matching the key values, otherwise <see langword="null"/>.</returns>
+        /// <returns>An entity matching the key values if one is found; otherwise, <see langword="null"/>.</returns>
         public T Find(params object[] keyValues)
         {
             var ids = keyValues.Cast<Guid>().ToList();

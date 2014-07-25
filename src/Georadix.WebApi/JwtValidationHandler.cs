@@ -37,7 +37,7 @@
         /// </remarks>
         /// <param name="request">The request.</param>
         /// <returns>
-        /// If the authorization header is present, a string containing the token, otherwise <see langword="null"/>.
+        /// If the authorization header is present, a string containing the token; otherwise, <see langword="null"/>.
         /// </returns>
         protected virtual string GetTokenFromRequest(HttpRequestMessage request)
         {
