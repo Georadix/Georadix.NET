@@ -88,6 +88,14 @@
             Assert.Equal("tokenValidationParameters", ex.ParamName);
         }
 
+        public void Dispose()
+        {
+            if (this.jwtValidationHandler != null)
+            {
+                this.jwtValidationHandler.Dispose();
+            }
+        }
+
         [Fact]
         public async Task RequestWithMalformedTokenCallsOnValidateTokenException()
         {
@@ -100,14 +108,6 @@
                 Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
 
                 Assert.NotNull(this.jwtValidationHandler.TokenValidationException);
-            }
-        }
-
-        public void Dispose()
-        {
-            if (this.jwtValidationHandler != null)
-            {
-                this.jwtValidationHandler.Dispose();
             }
         }
 
