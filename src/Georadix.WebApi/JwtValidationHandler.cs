@@ -30,6 +30,29 @@
         }
 
         /// <summary>
+        /// Gets the token from the request by looking at the authorization header.
+        /// </summary>
+        /// <remarks>
+        /// Override this method if your mechanism for sending access token differs, for example using cookies.
+        /// </remarks>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// If the authorization header is present, a string containing the token, otherwise <see langword="null"/>.
+        /// </returns>
+        protected virtual string GetTokenFromRequest(HttpRequestMessage request)
+        {
+            string token = null;
+            var authHeader = request.Headers.Authorization;
+
+            if ((authHeader != null) && (authHeader.Scheme == "Bearer"))
+            {
+                token = authHeader.Parameter;
+            }
+
+            return token;
+        }
+
+        /// <summary>
         /// Called when validating an access token fails.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -70,29 +93,6 @@
             request.GetRequestContext().Principal = principal;
 
             return base.SendAsync(request, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the token from the request by looking at the authorization header.
-        /// </summary>
-        /// <remarks>
-        /// Override this method if your mechanism for sending access token differs, for example using cookies.
-        /// </remarks>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        /// If the authorization header is present, a string containing the token, otherwise <see langword="null"/>.
-        /// </returns>
-        protected virtual string GetTokenFromRequest(HttpRequestMessage request)
-        {
-            string token = null;
-            var authorizationHeader = request.Headers.Authorization;
-
-            if (authorizationHeader != null && !string.IsNullOrWhiteSpace(authorizationHeader.Parameter))
-            {
-                token = authorizationHeader.Parameter.Replace("Bearer ", string.Empty);
-            }
-
-            return token;
         }
 
         private ClaimsPrincipal ValidateToken(string token)

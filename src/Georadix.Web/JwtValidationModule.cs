@@ -105,11 +105,15 @@
         {
             string token = null;
 
-            var authorizationHeader = request.Headers["Authorization"];
+            var authHeader = request.Headers["Authorization"];
 
-            if (authorizationHeader != null && !string.IsNullOrWhiteSpace(authorizationHeader))
+            if (authHeader != null && !string.IsNullOrWhiteSpace(authHeader))
             {
-                token = authorizationHeader.Replace("Bearer ", string.Empty);
+                var parts = authHeader.Split(' ');
+                if ((parts.Length == 2) && (parts[0] == "Bearer"))
+                {
+                    token = parts[1];
+                }
             }
 
             return token;

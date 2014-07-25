@@ -11,6 +11,7 @@
     using System.Security.Principal;
     using System.Web;
     using Xunit;
+    using Xunit.Extensions;
 
     public class JwtValidationModuleFixture
     {
@@ -36,11 +37,27 @@
             var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
             var expectedToken = "access-token";
 
-            request.AddHeader("Authorization", expectedToken);
+            request.AddHeader("Authorization", "Bearer " + expectedToken);
 
             var extractedToken = sut.GetTokenFromRequestTest(request);
 
             Assert.Equal(expectedToken, extractedToken);
+        }
+
+        [Theory]
+        [InlineData("Bearing access-token")]
+        [InlineData("Bearer access token")]
+        [InlineData("access-token")]
+        public void GetTokenFromRequestWithInvalidAuthorizationHeaderReturnsNull(string header)
+        {
+            var sut = new TestModule();
+            var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
+
+            request.AddHeader("Authorization", header);
+
+            var extractedToken = sut.GetTokenFromRequestTest(request);
+
+            Assert.Null(extractedToken);
         }
 
         [Fact]
@@ -99,7 +116,7 @@
             });
             var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
 
-            request.AddHeader("Authorization", "invalid token");
+            request.AddHeader("Authorization", "Bearer invalid-token");
 
             var sut = new TestModule();
 
@@ -123,7 +140,7 @@
             });
             var request = new HttpRequest(string.Empty, "http://www.example.com", string.Empty);
 
-            request.AddHeader("Authorization", this.GenerateAuthToken("http://www.example.com"));
+            request.AddHeader("Authorization", "Bearer " + this.GenerateAuthToken("http://www.example.com"));
 
             var sut = new TestModule();
 
