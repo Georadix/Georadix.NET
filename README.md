@@ -1,7 +1,7 @@
 Georadix.NET
 ============
 
-Georadix.NET is a set of open source libraries that help you build great .NET apps. It provides solutions to problems found in most .NET projects as well as useful extensions for dealing with comand-query separation (CQS), Entity Framework, and Web API.
+Georadix.NET is a set of open source libraries that help you build great .NET apps. It provides solutions to problems found in most .NET projects as well as useful extensions for dealing with command-query separation (CQS), Entity Framework, and Web API.
 
 To get started, head over to the [wiki](https://github.com/Georadix/Georadix.NET/wiki).
 
