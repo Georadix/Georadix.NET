@@ -1,0 +1,62 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+version: 0.1.{build}
+
+branches:
+  only:
+    - develop
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+init:
+  - git config --global core.autocrlf input
+
+assembly_info:
+  patch: true
+  file: src\CommonAssemblyInfo.cs
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+platform: Any CPU
+
+configuration: Release
+
+before_build:
+  - echo Restoring NuGet packages.
+  - nuget restore src\Georadix.sln
+
+after_build:
+  - echo Creating NuGet packages.
+  - mkdir out
+  - cd out
+  - nuget pack ..\src\Georadix.Core\Georadix.Core.nuspec -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.Cqs\Georadix.Cqs.nuspec -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.EF.Testing\Georadix.EF.Testing.nuspec -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.Web\Georadix.Web.nuspec -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.WebApi\Georadix.WebApi.nuspec -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.nuspec -IncludeReferencedProjects
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+before_test:
+  - echo Installing certificate.
+  - cd tools
+  - ps: .\InstallCert.ps1
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: out\*.nupkg
