@@ -32,9 +32,11 @@ build:
   verbosity: minimal
 
 before_build:
-  - nuget restore src\Georadix.sln
+  - cd %APPVEYOR_BUILD_FOLDER%\src
+  - nuget restore Georadix.sln
 
 after_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir out
   - cd out
   - nuget pack "..\src\Georadix.Core\Georadix.Core.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
@@ -49,7 +51,7 @@ after_build:
 #---------------------------------#
 
 before_test:
-  - cd tools
+  - cd %APPVEYOR_BUILD_FOLDER%\tools
   - ps: .\InstallCert.ps1
 
 #---------------------------------#
