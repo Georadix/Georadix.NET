@@ -26,7 +26,7 @@ assembly_info:
 #       build configuration       #
 #---------------------------------#
 
-platform: Any CPU
+platform: AnyCPU
 
 configuration: Release
 
@@ -39,7 +39,6 @@ before_build:
 after_build:
   - mkdir out
   - cd out
-  - echo Configuration=%CONFIGURATION%;Platform=%PLATFORM%
   - nuget pack "..\src\Georadix.Core\Georadix.Core.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
   - nuget pack "..\src\Georadix.Cqs\Georadix.Cqs.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
   - nuget pack "..\src\Georadix.EF.Testing\Georadix.EF.Testing.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
