@@ -39,19 +39,18 @@ before_build:
 after_build:
   - mkdir out
   - cd out
-  - nuget pack ..\src\Georadix.Core\Georadix.Core.csproj -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.Cqs\Georadix.Cqs.csproj -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.EF.Testing\Georadix.EF.Testing.csproj -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.Web\Georadix.Web.csproj -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.WebApi\Georadix.WebApi.csproj -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.Core\Georadix.Core.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.Cqs\Georadix.Cqs.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.EF.Testing\Georadix.EF.Testing.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.Web\Georadix.Web.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.WebApi\Georadix.WebApi.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=%PLATFORM%" -IncludeReferencedProjects
 
 #---------------------------------#
 #       tests configuration       #
 #---------------------------------#
 
 before_test:
-  - echo Installing certificate.
   - cd tools
   - ps: .\InstallCert.ps1
 
