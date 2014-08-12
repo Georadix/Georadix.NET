@@ -30,20 +30,21 @@ platform: Any CPU
 
 configuration: Release
 
+build:
+  verbosity: minimal
+
 before_build:
-  - echo Restoring NuGet packages.
   - nuget restore src\Georadix.sln
 
 after_build:
-  - echo Creating NuGet packages.
   - mkdir out
   - cd out
-  - nuget pack ..\src\Georadix.Core\Georadix.Core.nuspec -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.Cqs\Georadix.Cqs.nuspec -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.EF.Testing\Georadix.EF.Testing.nuspec -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.Web\Georadix.Web.nuspec -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.WebApi\Georadix.WebApi.nuspec -IncludeReferencedProjects
-  - nuget pack ..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.nuspec -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.Core\Georadix.Core.csproj -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.Cqs\Georadix.Cqs.csproj -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.EF.Testing\Georadix.EF.Testing.csproj -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.Web\Georadix.Web.csproj -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.WebApi\Georadix.WebApi.csproj -IncludeReferencedProjects
+  - nuget pack ..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj -IncludeReferencedProjects
 
 #---------------------------------#
 #       tests configuration       #
