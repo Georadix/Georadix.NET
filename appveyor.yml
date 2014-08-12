@@ -32,11 +32,9 @@ build:
   verbosity: minimal
 
 before_build:
-  - cd %APPVEYOR_BUILD_FOLDER%\src
-  - nuget restore Georadix.sln
+  - nuget restore src\Georadix.sln
 
 after_build:
-  - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir out
   - cd out
   - nuget pack "..\src\Georadix.Core\Georadix.Core.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
@@ -45,14 +43,16 @@ after_build:
   - nuget pack "..\src\Georadix.Web\Georadix.Web.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
   - nuget pack "..\src\Georadix.WebApi\Georadix.WebApi.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
   - nuget pack "..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - cd ..
 
 #---------------------------------#
 #       tests configuration       #
 #---------------------------------#
 
 before_test:
-  - cd %APPVEYOR_BUILD_FOLDER%\tools
+  - cd tools
   - ps: .\InstallCert.ps1
+  - cd ..
 
 #---------------------------------#
 #      artifacts configuration    #
