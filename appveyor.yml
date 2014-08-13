@@ -1,3 +1,5 @@
+# http://www.appveyor.com/docs/appveyor-yml
+
 #---------------------------------#
 #      general configuration      #
 #---------------------------------#
@@ -54,3 +56,14 @@ before_test:
   - cd tools
   - ps: .\InstallCert.ps1
   - cd ..
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: 0f8hc8T70O9EV5Yfmqv0oQqTsiAlK63m+I4IDGCRyYE5F4nVVa1efh9CYGolY3sR
+  on:
+    branch: master
