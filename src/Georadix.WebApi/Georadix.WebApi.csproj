@@ -88,7 +88,6 @@
       <DependentUpon>InvariantStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="SimpleInjectorExtensions.cs" />
-    <Compile Include="SimpleInjectorWebApiDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
