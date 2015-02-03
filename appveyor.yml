@@ -1,0 +1,70 @@
+# http://www.appveyor.com/docs/appveyor-yml
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+version: 0.1.{build}
+
+branches:
+  only:
+    - develop
+    - master
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+init:
+  - git config --global core.autocrlf input
+
+assembly_info:
+  patch: true
+  file: src\CommonAssemblyInfo.cs
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+configuration: Release
+
+build:
+  verbosity: minimal
+
+before_build:
+  - nuget restore src\Georadix.sln
+
+after_build:
+  - mkdir out
+  - cd out
+  - nuget pack "..\src\Georadix.Core\Georadix.Core.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.Cqs\Georadix.Cqs.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.EF.Testing\Georadix.EF.Testing.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.Web\Georadix.Web.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.WebApi\Georadix.WebApi.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - nuget pack "..\src\Georadix.WebApi.Testing\Georadix.WebApi.Testing.csproj" -Properties "Configuration=%CONFIGURATION%;Platform=AnyCPU" -IncludeReferencedProjects
+  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  - cd ..
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+before_test:
+  - cd tools
+  - ps: .\InstallCert.ps1
+  - cd ..
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: 0f8hc8T70O9EV5Yfmqv0oQqTsiAlK63m+I4IDGCRyYE5F4nVVa1efh9CYGolY3sR
+  on:
+    branch: master
