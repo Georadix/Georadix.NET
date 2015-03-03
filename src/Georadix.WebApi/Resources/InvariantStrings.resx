@@ -123,4 +123,7 @@
   <data name="ParameterIsRequired" xml:space="preserve">
     <value>The parameter is required.</value>
   </data>
+  <data name="RequestNotAllowed" xml:space="preserve">
+    <value>Authorization has been denied for this request.</value>
+  </data>
 </root>

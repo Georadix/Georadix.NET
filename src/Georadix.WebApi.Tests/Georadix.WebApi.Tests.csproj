@@ -85,6 +85,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CustomAuthorizationAttributeFixture.cs" />
     <Compile Include="HttpRequestMessageExtensionsFixture.cs" />
     <Compile Include="CheckArgumentsForNullAttributeFixture.cs" />
     <Compile Include="JwtValidationHandlerFixture.cs" />

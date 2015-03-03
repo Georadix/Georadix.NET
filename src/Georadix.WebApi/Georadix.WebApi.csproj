@@ -77,6 +77,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Filters\CheckArgumentsForNullAttribute.cs" />
+    <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="HttpRequestMessageExtensions.cs" />
