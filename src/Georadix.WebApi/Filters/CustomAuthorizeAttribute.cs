@@ -29,7 +29,7 @@
 
             var principal = actionContext.RequestContext.Principal;
 
-            if (!principal.Identity.IsAuthenticated)
+            if (principal == null || !principal.Identity.IsAuthenticated)
             {
                 base.HandleUnauthorizedRequest(actionContext);
             }
