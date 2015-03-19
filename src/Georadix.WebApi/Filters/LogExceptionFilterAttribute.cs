@@ -1,15 +1,12 @@
 ﻿namespace Georadix.WebApi.Filters
 {
-    using Georadix.WebApi.Resources;
     using log4net;
     using System;
-    using System.Net;
-    using System.Net.Http;
     using System.Web.Http;
     using System.Web.Http.Filters;
 
     /// <summary>
-    /// Logs exception and returns a standard HTTP 500 status code.
+    /// Represents a filter attribute that logs unhandled exceptions in the execution.
     /// </summary>
     public class LogExceptionFilterAttribute : ExceptionFilterAttribute
     {
@@ -43,9 +40,6 @@
                     actionExecutedContext.ActionContext.ControllerContext.Controller.GetType());
 
                 logger.Error(baseException.Message, baseException);
-
-                actionExecutedContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                actionExecutedContext.Response.Content = new StringContent(InvariantStrings.ErrorProcessingRequest);
             }
         }
     }

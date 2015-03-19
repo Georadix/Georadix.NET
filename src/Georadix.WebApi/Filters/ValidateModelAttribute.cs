@@ -6,7 +6,7 @@
     using System.Web.Http.Filters;
 
     /// <summary>
-    /// An attribute to automatically validate model with Web API.
+    /// Represents a filter attribute that validates models used within a Web API.
     /// </summary>
     public class ValidateModelAttribute : ActionFilterAttribute
     {
