@@ -7,7 +7,6 @@
     using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using System.Web.Http.ModelBinding;
 
     /// <summary>
     /// Represents a filter attribute used to check if the arguments are null.
