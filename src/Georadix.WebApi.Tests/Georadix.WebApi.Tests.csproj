@@ -92,6 +92,7 @@
     <Compile Include="LogExceptionFilterAttributeFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContextDependentExtensionsFixture.cs" />
+    <Compile Include="RequireHttpsAttributeFixture.cs" />
     <Compile Include="ValidateModelAttributeFixture.cs" />
   </ItemGroup>
   <ItemGroup>

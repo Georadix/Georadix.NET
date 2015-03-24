@@ -14,7 +14,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryServer"/> class.
         /// </summary>
-        public InMemoryServer()
+        /// <param name="useHttps">A value indicating whether the client should use HTTPS.</param>
+        public InMemoryServer(bool useHttps = false)
         {
             this.Configuration = new HttpConfiguration()
             {
@@ -25,7 +26,7 @@
 
             this.Client = new HttpClient(new InMemoryHttpContentSerializationHandler(server), true)
             {
-                BaseAddress = new Uri("http://www.test.com/")
+                BaseAddress = new Uri((useHttps ? Uri.UriSchemeHttps : Uri.UriSchemeHttp) + "://www.test.com/")
             };
         }
 
@@ -60,7 +61,7 @@
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">
-        /// <c>true</c> to release both managed and unmanaged resources; 
+        /// <c>true</c> to release both managed and unmanaged resources;
         /// <c>false</c> to release only unmanaged resources.
         /// </param>
         protected virtual void Dispose(bool disposing)
