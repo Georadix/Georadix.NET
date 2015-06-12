@@ -32,6 +32,16 @@
         /// </returns>
         public bool Equals(T x, T y)
         {
+            if (x == null)
+            {
+                return (y != null) ? false : true;
+            }
+
+            if (y == null)
+            {
+                return false;
+            }
+
             foreach (var property in this.properties)
             {
                 dynamic valueX = property.GetValue(x);

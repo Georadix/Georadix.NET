@@ -7,10 +7,6 @@
 
     public class GenericEqualityComparerFixture
     {
-        private static DateTime sampleDateTime = DateTime.FromFileTimeUtc(1234567890);
-
-        private static Guid sampleGuid = Guid.NewGuid();
-
         private static Model sampleModel = new Model(
             DateTime.Now, Guid.NewGuid(), new Random().Next(), new Random().Next().ToString(), sampleSubModel);
 
@@ -39,13 +35,13 @@
                     {
                         new Model(
                             new DateTime(2015, 06, 12),
-                            Guid.Empty,
+                            new Guid("{2c623f7b-8dfe-4ed3-a1e6-90de4ff1a87f}"),
                             15,
                             "A simple string",
                             new SubModel(new DateTime(1234567890), Guid.Empty, -100, string.Empty)),
                         new Model(
                             new DateTime(2015, 06, 12),
-                            Guid.Empty,
+                            new Guid("{2c623f7b-8dfe-4ed3-a1e6-90de4ff1a87f}"),
                             15,
                             "A simple string",
                             new SubModel(new DateTime(1234567890), Guid.Empty, -100, string.Empty)),
@@ -53,8 +49,26 @@
                     },
                     new object[]
                     {
-                        new Model() { GuidProp = Guid.NewGuid() },
+                        null,
+                        null,
+                        true
+                    },
+                    new object[]
+                    {
+                        null,
                         new Model(),
+                        false
+                    },
+                    new object[]
+                    {
+                        new Model() { SubModelProp = new SubModel() },
+                        new Model(),
+                        false
+                    },
+                    new object[]
+                    {
+                        new Model(),
+                        new Model() { GuidProp = Guid.NewGuid() },
                         false
                     },
                     new object[]
@@ -90,6 +104,12 @@
                         new SubModel(new DateTime(9876543210), Guid.Empty, 999, "SubModel string"),
                         new SubModel(new DateTime(9876543210), Guid.Empty, 999, "SubModel string"),
                         true
+                    },
+                    new object[]
+                    {
+                        new SubModel(),
+                        null,
+                        false
                     },
                     new object[]
                     {
