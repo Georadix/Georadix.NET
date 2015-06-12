@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="ArgumentExtensions.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="GenericEqualityComparer.cs" />
     <Compile Include="NetExtensions.cs" />
     <Compile Include="Security\ClaimsExtensions.cs" />
     <Compile Include="Security\Rfc2898EncryptedValue.cs" />
