@@ -2,16 +2,35 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Xunit;
     using Xunit.Extensions;
 
     public class GenericEqualityComparerFixture
     {
         private static Model sampleModel = new Model(
-            DateTime.Now, Guid.NewGuid(), new Random().Next(), new Random().Next().ToString(), sampleSubModel);
+            DateTime.Now,
+            Enum.First,
+            Guid.NewGuid(),
+            new Random().Next(),
+            new Random().Next().ToString(),
+            sampleSubModel);
 
         private static SubModel sampleSubModel = new SubModel(
-            DateTime.Now, Guid.NewGuid(), new Random().Next(), new Random().Next().ToString());
+            DateTime.Now,
+            Enum.Second,
+            Guid.NewGuid(),
+            new Random().Next(),
+            new Random().Next().ToString());
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented",
+            Justification = "No need to document this here.")]
+        public enum Enum
+        {
+            First,
+            Second,
+            Third
+        }
 
         public static IEnumerable<object[]> EqualsWithModelsScenarios
         {
@@ -35,16 +54,18 @@
                     {
                         new Model(
                             new DateTime(2015, 06, 12),
+                            Enum.Third,
                             new Guid("{2c623f7b-8dfe-4ed3-a1e6-90de4ff1a87f}"),
                             15,
                             "A simple string",
-                            new SubModel(new DateTime(1234567890), Guid.Empty, -100, string.Empty)),
+                            new SubModel(new DateTime(1234567890), Enum.Second, Guid.Empty, -100, string.Empty)),
                         new Model(
                             new DateTime(2015, 06, 12),
+                            Enum.Third,
                             new Guid("{2c623f7b-8dfe-4ed3-a1e6-90de4ff1a87f}"),
                             15,
                             "A simple string",
-                            new SubModel(new DateTime(1234567890), Guid.Empty, -100, string.Empty)),
+                            new SubModel(new DateTime(1234567890), Enum.Second, Guid.Empty, -100, string.Empty)),
                         true
                     },
                     new object[]
@@ -101,8 +122,8 @@
                     },
                     new object[]
                     {
-                        new SubModel(new DateTime(9876543210), Guid.Empty, 999, "SubModel string"),
-                        new SubModel(new DateTime(9876543210), Guid.Empty, 999, "SubModel string"),
+                        new SubModel(new DateTime(9876543210), Enum.Third, Guid.Empty, 999, "SubModel string"),
+                        new SubModel(new DateTime(9876543210), Enum.Third, Guid.Empty, 999, "SubModel string"),
                         true
                     },
                     new object[]
@@ -168,9 +189,16 @@
             {
             }
 
-            public Model(DateTime? dateTimeProp, Guid guidProp, int intProp, string stringProp, SubModel subModelProp)
+            public Model(
+                DateTime? dateTimeProp,
+                Enum enumProp,
+                Guid guidProp,
+                int intProp,
+                string stringProp,
+                SubModel subModelProp)
             {
                 this.DateTimeProp = dateTimeProp;
+                this.EnumProp = enumProp;
                 this.GuidProp = guidProp;
                 this.IntProp = intProp;
                 this.StringProp = stringProp;
@@ -178,6 +206,8 @@
             }
 
             public DateTime? DateTimeProp { get; private set; }
+
+            public Enum EnumProp { get; set; }
 
             public Guid GuidProp { get; set; }
 
@@ -194,19 +224,22 @@
             {
             }
 
-            public SubModel(DateTime? dateTimeProp, Guid guidProp, int intProp, string stringProp)
+            public SubModel(DateTime dateTimeProp, Enum? enumProp, Guid? guidProp, int? intProp, string stringProp)
             {
                 this.DateTimeProp = dateTimeProp;
+                this.EnumProp = enumProp;
                 this.GuidProp = guidProp;
                 this.IntProp = intProp;
                 this.StringProp = stringProp;
             }
 
-            public DateTime? DateTimeProp { get; set; }
+            public DateTime DateTimeProp { get; set; }
 
-            public Guid GuidProp { get; private set; }
+            public Enum? EnumProp { get; private set; }
 
-            public int IntProp { get; set; }
+            public Guid? GuidProp { get; private set; }
+
+            public int? IntProp { get; set; }
 
             public string StringProp { get; private set; }
         }
