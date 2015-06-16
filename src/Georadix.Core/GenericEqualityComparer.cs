@@ -1,7 +1,9 @@
 ﻿namespace Georadix.Core
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
 
     /// <summary>
@@ -52,6 +54,35 @@
                     if (valueX != valueY)
                     {
                         return false;
+                    }
+                }
+                else if (property.PropertyType.IsGenericType
+                    && property.PropertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+                    && (property.PropertyType != typeof(string)))
+                {
+                    var itemType = property.PropertyType.GetGenericArguments()[0];
+                    var comparerType = typeof(GenericEqualityComparer<>).MakeGenericType(itemType);
+                    dynamic comparer = Activator.CreateInstance(comparerType);
+
+                    var itemsX = ((IEnumerable)valueX).Cast<object>();
+                    var itemsY = ((IEnumerable)valueY).Cast<object>();
+
+                    if (itemsX.Count() != itemsY.Count())
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < itemsX.Count(); i++)
+                        {
+                            dynamic itemX = itemsX.ElementAt(i);
+                            dynamic itemY = itemsY.ElementAt(i);
+
+                            if (!comparer.Equals(itemX, itemY))
+                            {
+                                return false;
+                            }
+                        }
                     }
                 }
                 else if (property.PropertyType.IsClass && (property.PropertyType != typeof(string)))
