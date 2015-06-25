@@ -16,7 +16,21 @@
         /// </summary>
         /// <param name="useHttps">A value indicating whether the client should use HTTPS.</param>
         public InMemoryServer(bool useHttps = false)
+            : this(new Uri((useHttps ? Uri.UriSchemeHttps : Uri.UriSchemeHttp) + "://www.test.com/"))
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InMemoryServer"/> class.
+        /// </summary>
+        /// <param name="baseAddress">The base address.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="baseAddress"/> is <see langword="null"/>.
+        /// </exception>
+        public InMemoryServer(Uri baseAddress)
+        {
+            baseAddress.AssertNotNull("baseAddress");
+
             this.Configuration = new HttpConfiguration()
             {
                 IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always
@@ -26,7 +40,7 @@
 
             this.Client = new HttpClient(new InMemoryHttpContentSerializationHandler(server), true)
             {
-                BaseAddress = new Uri((useHttps ? Uri.UriSchemeHttps : Uri.UriSchemeHttp) + "://www.test.com/")
+                BaseAddress = baseAddress
             };
         }
 
