@@ -44,49 +44,53 @@
                 return false;
             }
 
-            foreach (var property in this.properties)
+            var type = typeof(T);
+            var enumerableType = (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ?
+                type :
+                type.GetInterfaces().SingleOrDefault(
+                    i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+
+            if ((type == typeof(string)) || type.IsValueType)
             {
-                dynamic valueX = property.GetValue(x);
-                dynamic valueY = property.GetValue(y);
+                // If dealing with strings or value types (including enums), compare them directly.
+                return x.Equals(y);
+            }
+            else if (enumerableType != null)
+            {
+                // If dealing with enumerables, compare their items taking the order into account.
+                var itemType = enumerableType.GetGenericArguments()[0];
+                var comparerType = typeof(GenericEqualityComparer<>).MakeGenericType(itemType);
+                dynamic comparer = Activator.CreateInstance(comparerType);
 
-                if ((valueX == null) || (valueY == null))
+                var itemsX = ((IEnumerable)x).Cast<object>();
+                var itemsY = ((IEnumerable)y).Cast<object>();
+
+                if (itemsX.Count() != itemsY.Count())
                 {
-                    if (valueX != valueY)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-                else if (property.PropertyType.IsGenericType
-                    && property.PropertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-                    && (property.PropertyType != typeof(string)))
+                else
                 {
-                    var itemType = property.PropertyType.GetGenericArguments()[0];
-                    var comparerType = typeof(GenericEqualityComparer<>).MakeGenericType(itemType);
-                    dynamic comparer = Activator.CreateInstance(comparerType);
-
-                    var itemsX = ((IEnumerable)valueX).Cast<object>();
-                    var itemsY = ((IEnumerable)valueY).Cast<object>();
-
-                    if (itemsX.Count() != itemsY.Count())
+                    for (int i = 0; i < itemsX.Count(); i++)
                     {
-                        return false;
-                    }
-                    else
-                    {
-                        for (int i = 0; i < itemsX.Count(); i++)
+                        dynamic itemX = itemsX.ElementAt(i);
+                        dynamic itemY = itemsY.ElementAt(i);
+
+                        if (!comparer.Equals(itemX, itemY))
                         {
-                            dynamic itemX = itemsX.ElementAt(i);
-                            dynamic itemY = itemsY.ElementAt(i);
-
-                            if (!comparer.Equals(itemX, itemY))
-                            {
-                                return false;
-                            }
+                            return false;
                         }
                     }
                 }
-                else if (property.PropertyType.IsClass && (property.PropertyType != typeof(string)))
+            }
+            else
+            {
+                // For all other classes, compare their properties.
+                foreach (var property in this.properties)
                 {
+                    dynamic valueX = property.GetValue(x);
+                    dynamic valueY = property.GetValue(y);
+
                     var comparerType = typeof(GenericEqualityComparer<>).MakeGenericType(property.PropertyType);
                     dynamic comparer = Activator.CreateInstance(comparerType);
 
@@ -94,10 +98,6 @@
                     {
                         return false;
                     }
-                }
-                else if (!valueX.Equals(valueY))
-                {
-                    return false;
                 }
             }
 
