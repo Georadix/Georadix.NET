@@ -41,6 +41,148 @@
             Third
         }
 
+        public static IEnumerable<object[]> EqualsWithEnumerableStringsScenarios
+        {
+            get
+            {
+                return new object[][]
+                {
+                    new object[]
+                    {
+                        new string[] { "a", "b", "c" },
+                        new string[] { "a", "b", "c" },
+                        true
+                    },
+                    new object[]
+                    {
+                        new string[] { "a", "b", "c" },
+                        new string[] { "c", "b", "a" },
+                        false
+                    },
+                    new object[]
+                    {
+                        new string[] { "a", "b", "c" },
+                        new string[] { "a", "b", "c", "d" },
+                        false
+                    },
+                    new object[]
+                    {
+                        new string[] { "a", "b", "c" },
+                        new string[] { "a", "b" },
+                        false
+                    }
+                };
+            }
+        }
+
+        public static IEnumerable<object[]> EqualsWithEnumerableSubModelsScenarios
+        {
+            get
+            {
+                return new object[][]
+                {
+                    new object[]
+                    {
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel(),
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1)
+                        },
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel(),
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1)
+                        },
+                        true
+                    },
+                    new object[]
+                    {
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel(),
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1)
+                        },
+                        new SubModel[]
+                        {
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1),
+                            new SubModel(),
+                            sampleSubModel
+                        },
+                        false
+                    },
+                    new object[]
+                    {
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel(),
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1)
+                        },
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel(),
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1),
+                            new SubModel()
+                        },
+                        false
+                    },
+                    new object[]
+                    {
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel(),
+                            new SubModel(dateTimeProp: new DateTime(123456), intProp: 1)
+                        },
+                        new SubModel[]
+                        {
+                            sampleSubModel,
+                            new SubModel()
+                        },
+                        false
+                    }
+                };
+            }
+        }
+
+        public static IEnumerable<object[]> EqualsWithListsScenarios
+        {
+            get
+            {
+                return new object[][]
+                {
+                    new object[]
+                    {
+                        new List<int>(new int[] { 1, 2, 3 }),
+                        new List<int>(new int[] { 1, 2, 3 }),
+                        true
+                    },
+                    new object[]
+                    {
+                        new List<int>(new int[] { 1, 2, 3 }),
+                        new List<int>(new int[] { 3, 2, 1 }),
+                        false
+                    },
+                    new object[]
+                    {
+                        new List<int>(new int[] { 1, 2, 3 }),
+                        new List<int>(new int[] { 1, 2, 3, 4 }),
+                        false
+                    },
+                    new object[]
+                    {
+                        new List<int>(new int[] { 1, 2, 3 }),
+                        new List<int>(new int[] { 1, 2 }),
+                        false
+                    }
+                };
+            }
+        }
+
         public static IEnumerable<object[]> EqualsWithModelsScenarios
         {
             get
@@ -228,10 +370,70 @@
         }
 
         [Theory]
+        [PropertyData("EqualsWithEnumerableStringsScenarios")]
+        public void EqualsWithEnumerableStringsReturnsExpectedResult(
+            IEnumerable<string> x, IEnumerable<string> y, bool expected)
+        {
+            var sut = new GenericEqualityComparer<IEnumerable<string>>();
+
+            Assert.Equal(expected, sut.Equals(x, y));
+        }
+
+        [Theory]
+        [PropertyData("EqualsWithEnumerableSubModelsScenarios")]
+        public void EqualsWithEnumerableSubModelsReturnsExpectedResult(
+            IEnumerable<SubModel> x, IEnumerable<SubModel> y, bool expected)
+        {
+            var sut = new GenericEqualityComparer<IEnumerable<SubModel>>();
+
+            Assert.Equal(expected, sut.Equals(x, y));
+        }
+
+        [Theory]
+        [InlineData(Enum.Second, Enum.Second, true)]
+        [InlineData(Enum.Third, Enum.First, false)]
+        public void EqualsWithEnumsReturnsExpectedResult(Enum x, Enum y, bool expected)
+        {
+            var sut = new GenericEqualityComparer<Enum>();
+
+            Assert.Equal(expected, sut.Equals(x, y));
+        }
+
+        [Theory]
+        [InlineData(3, 3, true)]
+        [InlineData(0, 1, false)]
+        public void EqualsWithIntsReturnsExpectedResult(int x, int y, bool expected)
+        {
+            var sut = new GenericEqualityComparer<int>();
+
+            Assert.Equal(expected, sut.Equals(x, y));
+        }
+
+        [Theory]
+        [PropertyData("EqualsWithListsScenarios")]
+        public void EqualsWithListsReturnsExpectedResult(List<int> x, List<int> y, bool expected)
+        {
+            var sut = new GenericEqualityComparer<List<int>>();
+
+            Assert.Equal(expected, sut.Equals(x, y));
+        }
+
+        [Theory]
         [PropertyData("EqualsWithModelsScenarios")]
         public void EqualsWithModelsReturnsExpectedResult(Model x, Model y, bool expected)
         {
             var sut = new GenericEqualityComparer<Model>();
+
+            Assert.Equal(expected, sut.Equals(x, y));
+        }
+
+        [Theory]
+        [InlineData("abc", "abc", true)]
+        [InlineData("def", "DEF", false)]
+        [InlineData("", null, false)]
+        public void EqualsWithStringsReturnsExpectedResult(string x, string y, bool expected)
+        {
+            var sut = new GenericEqualityComparer<string>();
 
             Assert.Equal(expected, sut.Equals(x, y));
         }
@@ -265,10 +467,6 @@
         public class Model
         {
             private List<SubModel> list = new List<SubModel>();
-
-            public Model()
-            {
-            }
 
             public Model(
                 DateTime? dateTimeProp = null,
@@ -312,10 +510,6 @@
 
         public class SubModel
         {
-            public SubModel()
-            {
-            }
-
             public SubModel(
                 DateTime dateTimeProp = new DateTime(),
                 Enum? enumProp = null,
