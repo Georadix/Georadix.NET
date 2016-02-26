@@ -50,7 +50,7 @@
         }
 
         [Theory]
-        [PropertyData("Scenarios")]
+        [MemberData("Scenarios")]
         public async Task ExecuteActionReturnsExpectedResult(
             HttpMethod httpMethod, bool useHttps, HttpStatusCode expectedStatusCode)
         {

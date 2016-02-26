@@ -16,8 +16,8 @@
                     new object[]
                     {
                         "Name",
-                        new OrderByExpression[] 
-                        { 
+                        new OrderByExpression[]
+                        {
                             new OrderByExpression("Name", SortDirection.Ascending)
                         }
                     },
@@ -26,8 +26,8 @@
                     new object[]
                     {
                         "Name desc",
-                        new OrderByExpression[] 
-                        { 
+                        new OrderByExpression[]
+                        {
                             new OrderByExpression("Name", SortDirection.Descending)
                         }
                     },
@@ -82,7 +82,19 @@
         }
 
         [Theory]
-        [PropertyData("GetValidTryParseOrderByExpressionsScenarios")]
+        [InlineData("Name as")]
+        [InlineData("N@me")]
+        [InlineData("Name,,Date")]
+        public void TryParseOrderByExpressionsWithInvalidSourceReturnsFalse(string orderBy)
+        {
+            OrderByExpression[] expressions = null;
+            var result = orderBy.TryParseOrderByExpressions(out expressions);
+
+            Assert.False(result);
+        }
+
+        [Theory]
+        [MemberData("GetValidTryParseOrderByExpressionsScenarios")]
         public void TryParseOrderByExpressionsWithValidSourceReturnsExpressions(
             string orderBy, OrderByExpression[] expectedExpressions)
         {
@@ -100,18 +112,6 @@
                 (OrderByExpression obj) => { return obj.GetHashCode(); });
 
             Assert.Equal(expectedExpressions, expressions, comparer);
-        }
-
-        [Theory]
-        [InlineData("Name as")]
-        [InlineData("N@me")]
-        [InlineData("Name,,Date")]
-        public void TryParseOrderByExpressionsWithInvalidSourceReturnsFalse(string orderBy)
-        {
-            OrderByExpression[] expressions = null;
-            var result = orderBy.TryParseOrderByExpressions(out expressions);
-
-            Assert.False(result);
         }
     }
 }

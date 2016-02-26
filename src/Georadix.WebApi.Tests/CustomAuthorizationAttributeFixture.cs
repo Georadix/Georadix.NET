@@ -92,19 +92,8 @@
             }
         }
 
-        [Fact]
-        public async Task GetProtectedResourceWithNullPrincipalReturnsUnauthorized()
-        {
-            using (var server = this.CreateServer(() => null))
-            {
-                var response = await server.Client.GetAsync(ProtectedResource);
-
-                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-            }
-        }
-
         [Theory]
-        [PropertyData("AuthenticatedPrincipals")]
+        [MemberData("AuthenticatedPrincipals")]
         public async Task GetProtectedResourceWithAuthenticatedPrincipalReturnsIt(IPrincipal authenticatedPrincipal)
         {
             using (var server = this.CreateServer(() => authenticatedPrincipal))
@@ -119,8 +108,19 @@
             }
         }
 
+        [Fact]
+        public async Task GetProtectedResourceWithNullPrincipalReturnsUnauthorized()
+        {
+            using (var server = this.CreateServer(() => null))
+            {
+                var response = await server.Client.GetAsync(ProtectedResource);
+
+                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            }
+        }
+
         [Theory]
-        [PropertyData("Principals")]
+        [MemberData("Principals")]
         public async Task GetPublicResourceWithAnyPrincipalReturnsIt(IPrincipal principal)
         {
             using (var server = this.CreateServer(() => principal))

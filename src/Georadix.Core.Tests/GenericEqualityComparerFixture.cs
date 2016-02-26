@@ -370,7 +370,7 @@
         }
 
         [Theory]
-        [PropertyData("EqualsWithEnumerableStringsScenarios")]
+        [MemberData("EqualsWithEnumerableStringsScenarios")]
         public void EqualsWithEnumerableStringsReturnsExpectedResult(
             IEnumerable<string> x, IEnumerable<string> y, bool expected)
         {
@@ -380,7 +380,7 @@
         }
 
         [Theory]
-        [PropertyData("EqualsWithEnumerableSubModelsScenarios")]
+        [MemberData("EqualsWithEnumerableSubModelsScenarios")]
         public void EqualsWithEnumerableSubModelsReturnsExpectedResult(
             IEnumerable<SubModel> x, IEnumerable<SubModel> y, bool expected)
         {
@@ -410,7 +410,7 @@
         }
 
         [Theory]
-        [PropertyData("EqualsWithListsScenarios")]
+        [MemberData("EqualsWithListsScenarios")]
         public void EqualsWithListsReturnsExpectedResult(List<int> x, List<int> y, bool expected)
         {
             var sut = new GenericEqualityComparer<List<int>>();
@@ -419,7 +419,7 @@
         }
 
         [Theory]
-        [PropertyData("EqualsWithModelsScenarios")]
+        [MemberData("EqualsWithModelsScenarios")]
         public void EqualsWithModelsReturnsExpectedResult(Model x, Model y, bool expected)
         {
             var sut = new GenericEqualityComparer<Model>();
@@ -439,7 +439,7 @@
         }
 
         [Theory]
-        [PropertyData("EqualsWithSubModelsScenarios")]
+        [MemberData("EqualsWithSubModelsScenarios")]
         public void EqualsWithSubModelsReturnsExpectedResult(SubModel x, SubModel y, bool expected)
         {
             var sut = new GenericEqualityComparer<SubModel>();
