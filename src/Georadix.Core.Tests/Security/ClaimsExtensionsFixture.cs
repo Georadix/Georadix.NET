@@ -84,7 +84,7 @@
         }
 
         [Theory]
-        [PropertyData("HasClaimsScenarios")]
+        [MemberData("HasClaimsScenarios")]
         public void HasClaimsReturnsExpectedResult(IEnumerable<Claim> claims, bool expected)
         {
             var principalClaims = new List<Claim>
@@ -126,7 +126,7 @@
         }
 
         [Theory]
-        [PropertyData("HasClaimTypesScenarios")]
+        [MemberData("HasClaimTypesScenarios")]
         public void HasClaimTypesReturnsExpectedResult(IEnumerable<string> claimTypes, bool expected)
         {
             var principalClaims = new List<Claim>

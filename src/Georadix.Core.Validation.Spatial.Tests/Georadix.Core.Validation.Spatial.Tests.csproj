@@ -6,17 +6,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9974AA0C-041E-47C9-8999-209E0F5CCA94}</ProjectGuid>
+    <ProjectGuid>{48E35F0D-B80D-449A-99AB-597ED1F7490B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.Core</RootNamespace>
-    <AssemblyName>Georadix.Core.Tests</AssemblyName>
+    <RootNamespace>Georadix.Core.Validation.Spatial</RootNamespace>
+    <AssemblyName>Georadix.Core.Validation.Spatial.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <NuGetPackageImportStamp>dd801cdf</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>e7f0a88f</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +42,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
       <Private>True</Private>
@@ -63,33 +68,17 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ArgumentExtensionsFixture.cs" />
-    <Compile Include="EnumHelperFixture.cs" />
-    <Compile Include="GenericEqualityComparerFixture.cs" />
-    <Compile Include="NetExtensionsFixture.cs" />
-    <Compile Include="Security\ClaimsExtensionsFixture.cs" />
-    <Compile Include="Security\Rfc2898EncryptedValueFixture.cs" />
-    <Compile Include="Validation\DataAnnotationExtensionsFixture.cs" />
-    <Compile Include="IntervalFixture.cs" />
-    <Compile Include="Data\EntityNotFoundExceptionFixture.cs" />
-    <Compile Include="Data\EntityUniqueConstraintExceptionFixture.cs" />
-    <Compile Include="Data\OrderByExpressionFixture.cs" />
-    <Compile Include="Data\StringExtensionsFixture.cs" />
-    <Compile Include="DelegateEqualityComparerFixture.cs" />
-    <Compile Include="LinqExtensionsFixture.cs" />
-    <Compile Include="MathHelperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SequentialGuidFixture.cs" />
-    <Compile Include="SystemExtensionsFixture.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
-      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
-      <Name>Georadix.Core</Name>
-    </ProjectReference>
+    <Compile Include="WktGeometryAttributeFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Georadix.Core.Validation.Spatial\Georadix.Core.Validation.Spatial.csproj">
+      <Project>{6b32b718-75ea-40d4-89e0-68829c80bb23}</Project>
+      <Name>Georadix.Core.Validation.Spatial</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -100,8 +89,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
-    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props'))" />
+    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets'))" />
   </Target>
   <Import Project="..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.50.0\build\StyleCop.MSBuild.Targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

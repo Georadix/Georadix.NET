@@ -823,7 +823,7 @@
         }
 
         [Theory]
-        [PropertyData("AbutsScenarios")]
+        [MemberData("AbutsScenarios")]
         public void AbutsReturnsExpectedResult(Interval<double> sut, Interval<double> other, bool expected)
         {
             Assert.Equal(expected, sut.Abuts(other));
@@ -841,7 +841,7 @@
         }
 
         [Theory]
-        [PropertyData("BoundedIntScenarios")]
+        [MemberData("BoundedIntScenarios")]
         public void BoundedIntReturnsExpectedResult(
             int left, bool isLeftClosed, int right, bool isRightClosed, Interval<int> expected)
         {
@@ -851,7 +851,7 @@
         }
 
         [Theory]
-        [PropertyData("BoundedLongScenarios")]
+        [MemberData("BoundedLongScenarios")]
         public void BoundedLongReturnsExpectedResult(
             long left, bool isLeftClosed, long right, bool isRightClosed, Interval<long> expected)
         {
@@ -876,7 +876,7 @@
         }
 
         [Theory]
-        [PropertyData("BoundedShortScenarios")]
+        [MemberData("BoundedShortScenarios")]
         public void BoundedShortReturnsExpectedResult(
             short left, bool isLeftClosed, short right, bool isRightClosed, Interval<short> expected)
         {
@@ -886,7 +886,7 @@
         }
 
         [Theory]
-        [PropertyData("BoundedEmptyIntervalScenarios")]
+        [MemberData("BoundedEmptyIntervalScenarios")]
         public void BoundedWithEmptyIntervalThrowsArgumentException(
             double left, bool isLeftClosed, double right, bool isRightClosed)
         {
@@ -921,14 +921,14 @@
         }
 
         [Theory]
-        [PropertyData("CombineScenarios")]
+        [MemberData("CombineScenarios")]
         public void CombineReturnsExpectedResult(IEnumerable<Interval<double>> intervals, Interval<double> expected)
         {
             Assert.Equal(expected, Interval<double>.Combine(intervals));
         }
 
         [Theory]
-        [PropertyData("CompareToScenarios")]
+        [MemberData("CompareToScenarios")]
         public void CompareToReturnsExpectedResult(Interval<double> sut, Interval<double> other, int expected)
         {
             Assert.Equal(expected, sut.CompareTo(other));
@@ -940,7 +940,7 @@
         }
 
         [Theory]
-        [PropertyData("EqualsScenarios")]
+        [MemberData("EqualsScenarios")]
         public void EqualsReturnsExpectedResult(Interval<double> sut, Interval<double> other, bool expected)
         {
             Assert.Equal(expected, sut.Equals(other));
@@ -950,7 +950,7 @@
         }
 
         [Theory]
-        [PropertyData("GapScenarios")]
+        [MemberData("GapScenarios")]
         public void GapReturnsExpectedResult(Interval<double> sut, Interval<double> other, Interval<double> expected)
         {
             Assert.Equal(expected, sut.Gap(other));
@@ -968,14 +968,14 @@
         }
 
         [Theory]
-        [PropertyData("GetHashCodeScenarios")]
+        [MemberData("GetHashCodeScenarios")]
         public void GetHashCodeReturnsExpectedResult(Interval<double> sut, int expected)
         {
             Assert.Equal(expected, sut.GetHashCode());
         }
 
         [Theory]
-        [PropertyData("HasOverlapScenarios")]
+        [MemberData("HasOverlapScenarios")]
         public void HasOverlapReturnsExpectedResult(IEnumerable<Interval<double>> intervals, bool expected)
         {
             Assert.Equal(expected, Interval<double>.HasOverlap(intervals));
@@ -992,7 +992,7 @@
         }
 
         [Theory]
-        [PropertyData("IncludesIntervalScenarios")]
+        [MemberData("IncludesIntervalScenarios")]
         public void IncludesIntervalReturnsExpectedResult(
             Interval<double> sut, Interval<double> other, bool expected)
         {
@@ -1000,14 +1000,14 @@
         }
 
         [Theory]
-        [PropertyData("IncludesValueScenarios")]
+        [MemberData("IncludesValueScenarios")]
         public void IncludesValueReturnsExpectedResult(Interval<double> sut, double value, bool expected)
         {
             Assert.Equal(expected, sut.Includes(value));
         }
 
         [Theory]
-        [PropertyData("IsContiguousScenarios")]
+        [MemberData("IsContiguousScenarios")]
         public void IsContiguousReturnsExpectedResult(IEnumerable<Interval<double>> intervals, bool expected)
         {
             Assert.Equal(expected, Interval<double>.IsContiguous(intervals));
@@ -1024,7 +1024,7 @@
         }
 
         [Theory]
-        [PropertyData("IsEmptyScenarios")]
+        [MemberData("IsEmptyScenarios")]
         public void IsEmptyReturnsExpectedResult(
             double left, bool isLeftClosed, double right, bool isRightClosed, bool expected)
         {
@@ -1043,7 +1043,7 @@
         }
 
         [Theory]
-        [PropertyData("IsPartitionedByScenarios")]
+        [MemberData("IsPartitionedByScenarios")]
         public void IsPartitionedByReturnsExpectedResult(
             Interval<double> sut, IEnumerable<Interval<double>> intervals, bool expected)
         {
@@ -1064,7 +1064,7 @@
         }
 
         [Theory]
-        [PropertyData("OverlapsScenarios")]
+        [MemberData("OverlapsScenarios")]
         public void OverlapsReturnsExpectedResult(Interval<double> sut, Interval<double> other, bool expected)
         {
             Assert.Equal(expected, sut.Overlaps(other));
@@ -1084,7 +1084,7 @@
         }
 
         [Theory]
-        [PropertyData("ToStringScenarios")]
+        [MemberData("ToStringScenarios")]
         public void ToStringReturnsExpectedResult(Interval<double> sut, string expected)
         {
             Assert.Equal(expected, sut.ToString());
