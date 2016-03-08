@@ -2,6 +2,7 @@
 {
     using log4net;
     using System;
+    using System.Text;
     using System.Web.Http;
     using System.Web.Http.Filters;
 
@@ -39,7 +40,16 @@
                 var logger = this.loggerFactory(
                     actionExecutedContext.ActionContext.ControllerContext.Controller.GetType());
 
-                logger.Error(baseException.Message, baseException);
+                var builder = new StringBuilder();
+                builder.Append(baseException.Message);
+
+                foreach (var key in baseException.Data.Keys)
+                {
+                    builder.AppendLine();
+                    builder.Append(string.Format("{0}: {1}", key, baseException.Data[key]));
+                }
+
+                logger.Error(builder.ToString(), baseException);
             }
         }
     }
