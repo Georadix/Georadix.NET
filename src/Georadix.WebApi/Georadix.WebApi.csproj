@@ -52,6 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Tokens.Jwt">
@@ -89,6 +90,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InvariantStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Routing\EmailRouteConstraint.cs" />
     <Compile Include="SimpleInjectorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
