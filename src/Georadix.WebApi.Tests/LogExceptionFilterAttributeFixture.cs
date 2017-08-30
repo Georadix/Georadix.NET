@@ -35,9 +35,11 @@
                 Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
                 Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
+                var exception = LogExceptionFilterAttributeFixtureController.Exception;
+
                 this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
-                    LogExceptionFilterAttributeFixtureController.Exception.Message,
-                    LogExceptionFilterAttributeFixtureController.Exception));
+                    It.Is<string>(m => m.StartsWith(exception.Message) && m.Contains("Principal:")),
+                    exception));
             }
         }
 
@@ -51,9 +53,11 @@
                 Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
                 Assert.True(this.loggerMocks.ContainsKey(typeof(LogExceptionFilterAttributeFixtureController)));
 
+                var exception = LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException();
+
                 this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
-                    LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException().Message,
-                    LogExceptionFilterAttributeFixtureController.NestedException.GetBaseException()));
+                    It.Is<string>(m => m.StartsWith(exception.Message) && m.Contains("Principal:")),
+                    exception));
             }
         }
 
@@ -76,7 +80,7 @@
 
                 this.loggerMocks[typeof(LogExceptionFilterAttributeFixtureController)].Verify(l => l.Error(
                     It.Is<string>(m => m.StartsWith(exception.Message) && keyValueStrings.All(s => m.Contains(s))),
-                    LogExceptionFilterAttributeFixtureController.ExceptionWithData));
+                    exception));
             }
         }
 
