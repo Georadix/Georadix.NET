@@ -2,6 +2,7 @@
 {
     using log4net;
     using System;
+    using System.Security.Claims;
     using System.Text;
     using System.Web.Http;
     using System.Web.Http.Filters;
@@ -41,12 +42,31 @@
                     actionExecutedContext.ActionContext.ControllerContext.Controller.GetType());
 
                 var builder = new StringBuilder();
-                builder.Append(baseException.Message);
+                builder.AppendLine(baseException.Message);
 
                 foreach (var key in baseException.Data.Keys)
                 {
-                    builder.AppendLine();
-                    builder.Append(string.Format("{0}: {1}", key, baseException.Data[key]));
+                    builder.AppendLine(string.Format("{0}: {1}", key, baseException.Data[key]));
+                }
+
+                var principal = actionExecutedContext.ActionContext.RequestContext.Principal;
+
+                if (principal != null)
+                {
+                    builder.AppendLine("Principal:");
+
+                    if (principal.Identity != null)
+                    {
+                        builder.AppendLine(string.Format("Name: {0}", principal.Identity.Name));
+                    }
+
+                    if (principal is ClaimsPrincipal)
+                    {
+                        foreach (var claim in ((ClaimsPrincipal)principal).Claims)
+                        {
+                            builder.AppendLine(string.Format("{0}: {1}", claim.Type, claim.Value));
+                        }
+                    }
                 }
 
                 logger.Error(builder.ToString(), baseException);

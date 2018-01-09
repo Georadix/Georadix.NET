@@ -9,7 +9,7 @@
         /// Determines whether an IP address is in the private IP address space.
         /// </summary>
         /// <remarks>
-        /// http://en.wikipedia.org/wiki/Private_network
+        /// <c>http://en.wikipedia.org/wiki/Private_network</c>
         /// The private IP addresses are:
         ///  24-bit block: 10.0.0.0 through 10.255.255.255
         ///  20-bit block: 172.16.0.0 through 172.31.255.255

@@ -1,13 +1,16 @@
 <Project ToolsVersion="12.0" DefaultTargets="Transform" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- Initial default value -->
-    <PublishingTasks>$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v12.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
+    <PublishingTasks>$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v15.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
     <!-- If explicit VS version, override default -->
     <PublishingTasks Condition="'$(VisualStudioVersion)' != ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
     <!-- Cascading probing if file not found -->
     <PublishingTasks Condition="!Exists('$(PublishingTasks)')">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
     <PublishingTasks Condition="!Exists('$(PublishingTasks)')">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
     <PublishingTasks Condition="!Exists('$(PublishingTasks)')">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v12.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
+	<PublishingTasks Condition="!Exists('$(PublishingTasks)')">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v13.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
+	<PublishingTasks Condition="!Exists('$(PublishingTasks)')">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v14.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
+	<PublishingTasks Condition="!Exists('$(PublishingTasks)')">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v15.0\Web\Microsoft.Web.Publishing.Tasks.dll</PublishingTasks>
   </PropertyGroup>
   
   <UsingTask TaskName="TransformXml" AssemblyFile="$(PublishingTasks)"/>
