@@ -84,10 +84,6 @@
       <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
       <Name>Georadix.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Georadix.WebApi\Georadix.WebApi.csproj">
-      <Project>{86092299-8592-4b54-826d-1dd79bb37bee}</Project>
-      <Name>Georadix.WebApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
