@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Core", "Georadix.Core\Georadix.Core.csproj", "{4E2F8D9A-7ADF-404F-B043-5D7136013F97}"
 EndProject
@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 		Settings.StyleCop = Settings.StyleCop
 		TestRunner.xml = TestRunner.xml
+		..\tools\TransformXml.proj = ..\tools\TransformXml.proj
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AE56A347-2089-4D09-A7EF-3F15C35600CB}"
@@ -119,5 +120,8 @@ Global
 		{53079145-969E-4148-9A7A-538695731031} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{6792A3FC-8240-47B4-8A5C-38125839BA6D} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{48E35F0D-B80D-449A-99AB-597ED1F7490B} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A87E1B4-6251-42CD-BEF8-6E421D62C750}
 	EndGlobalSection
 EndGlobal
