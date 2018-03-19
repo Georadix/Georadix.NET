@@ -1,11 +1,12 @@
-﻿namespace Georadix.Cqs
+namespace Georadix.Cqs
 {
     /// <summary>
     /// Defines a generic query handler.
     /// </summary>
     /// <typeparam name="TQuery">The type of query.</typeparam>
     /// <typeparam name="TResult">The type of result.</typeparam>
-    public interface IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
+    public interface IQueryHandler<TQuery, TResult>
+        where TQuery : IQuery<TResult>
     {
         /// <summary>
         /// Handles the specified query.

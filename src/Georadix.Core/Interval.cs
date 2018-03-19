@@ -1,4 +1,4 @@
-﻿namespace Georadix.Core
+namespace Georadix.Core
 {
     using System;
     using System.Collections.Generic;
@@ -30,8 +30,8 @@
     /// Represents a set of values.
     /// </summary>
     /// <typeparam name="T">The type of value in the interval.</typeparam>
-    public class Interval<T>
-        : IComparable, IComparable<Interval<T>>, IEquatable<Interval<T>> where T : struct, IComparable<T>
+    public class Interval<T> : IComparable, IComparable<Interval<T>>, IEquatable<Interval<T>>
+        where T : struct, IComparable<T>
     {
         private int endpoints;
         private T? left;
@@ -414,11 +414,11 @@
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to this instance.
+        /// Determines whether the specified <see cref="object"/> is equal to this instance.
         /// </summary>
-        /// <param name="obj">The <see cref="Object"/> to compare with this instance.</param>
+        /// <param name="obj">The <see cref="object"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="Object"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -563,9 +563,9 @@
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents the current <see cref="Interval{T}"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="Interval{T}"/>.
         /// </summary>
-        /// <returns>A <see cref="String"/> that represents the current <see cref="Interval{T}"/>.</returns>
+        /// <returns>A <see cref="string"/> that represents the current <see cref="Interval{T}"/>.</returns>
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();

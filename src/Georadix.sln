@@ -1,13 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Core", "Georadix.Core\Georadix.Core.csproj", "{4E2F8D9A-7ADF-404F-B043-5D7136013F97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Georadix.Core", "Georadix.Core\Georadix.Core.csproj", "{4E2F8D9A-7ADF-404F-B043-5D7136013F97}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8AB85438-1174-4D3F-B3A4-620D36F3C9FE}"
 	ProjectSection(SolutionItems) = preProject
+		..\appveyor.yml = ..\appveyor.yml
+		CodeAnalysis.ruleset = CodeAnalysis.ruleset
 		CodeCoverage.runsettings = CodeCoverage.runsettings
+		CodeMaid.config = CodeMaid.config
 		Common.nuspec = Common.nuspec
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 		Settings.StyleCop = Settings.StyleCop
@@ -34,10 +37,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Cqs", "Georadix.Cq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Cqs.Tests", "Georadix.Cqs.Tests\Georadix.Cqs.Tests.csproj", "{463F4807-F7C1-46E2-B095-BFE3097ED112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.EF.Testing", "Georadix.EF.Testing\Georadix.EF.Testing.csproj", "{D9E4FF22-3765-419D-B939-BE29BA994106}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.EF.Testing.Tests", "Georadix.EF.Testing.Tests\Georadix.EF.Testing.Tests.csproj", "{53079145-969E-4148-9A7A-538695731031}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Web", "Georadix.Web\Georadix.Web.csproj", "{96A15FE8-AE39-467D-AC9C-F22655C74028}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Web.Tests", "Georadix.Web.Tests\Georadix.Web.Tests.csproj", "{6792A3FC-8240-47B4-8A5C-38125839BA6D}"
@@ -45,6 +44,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Core.Validation.Spatial", "Georadix.Core.Validation.Spatial\Georadix.Core.Validation.Spatial.csproj", "{6B32B718-75EA-40D4-89E0-68829C80BB23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.Core.Validation.Spatial.Tests", "Georadix.Core.Validation.Spatial.Tests\Georadix.Core.Validation.Spatial.Tests.csproj", "{48E35F0D-B80D-449A-99AB-597ED1F7490B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.EF.Testing", "Georadix.EF.Testing\Georadix.EF.Testing.csproj", "{D9E4FF22-3765-419D-B939-BE29BA994106}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Georadix.EF.Testing.Tests", "Georadix.EF.Testing.Tests\Georadix.EF.Testing.Tests.csproj", "{53079145-969E-4148-9A7A-538695731031}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,14 +87,6 @@ Global
 		{463F4807-F7C1-46E2-B095-BFE3097ED112}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{463F4807-F7C1-46E2-B095-BFE3097ED112}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{463F4807-F7C1-46E2-B095-BFE3097ED112}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9E4FF22-3765-419D-B939-BE29BA994106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9E4FF22-3765-419D-B939-BE29BA994106}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9E4FF22-3765-419D-B939-BE29BA994106}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9E4FF22-3765-419D-B939-BE29BA994106}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53079145-969E-4148-9A7A-538695731031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53079145-969E-4148-9A7A-538695731031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53079145-969E-4148-9A7A-538695731031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53079145-969E-4148-9A7A-538695731031}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96A15FE8-AE39-467D-AC9C-F22655C74028}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -108,6 +103,14 @@ Global
 		{48E35F0D-B80D-449A-99AB-597ED1F7490B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48E35F0D-B80D-449A-99AB-597ED1F7490B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48E35F0D-B80D-449A-99AB-597ED1F7490B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9E4FF22-3765-419D-B939-BE29BA994106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9E4FF22-3765-419D-B939-BE29BA994106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9E4FF22-3765-419D-B939-BE29BA994106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9E4FF22-3765-419D-B939-BE29BA994106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53079145-969E-4148-9A7A-538695731031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53079145-969E-4148-9A7A-538695731031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53079145-969E-4148-9A7A-538695731031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53079145-969E-4148-9A7A-538695731031}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,9 +120,9 @@ Global
 		{599B2B0F-9A48-4261-B2CC-37FB76FBDCBD} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{F94E1837-D217-42A9-B3F0-8A018A432EAA} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{463F4807-F7C1-46E2-B095-BFE3097ED112} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
-		{53079145-969E-4148-9A7A-538695731031} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{6792A3FC-8240-47B4-8A5C-38125839BA6D} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 		{48E35F0D-B80D-449A-99AB-597ED1F7490B} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
+		{53079145-969E-4148-9A7A-538695731031} = {AE56A347-2089-4D09-A7EF-3F15C35600CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A87E1B4-6251-42CD-BEF8-6E421D62C750}

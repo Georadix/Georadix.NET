@@ -30,7 +30,7 @@
                     select method).SingleOrDefault();
         }
 
-        #endregion
+        #endregion Types
 
         #region Numeric Types
 
@@ -120,7 +120,7 @@
         }
 
         /// <summary>
-        /// Returns a value indicating whether this instance and a specified <see cref="Single"/> represent the same
+        /// Returns a value indicating whether this instance and a specified <see cref="float"/> represent the same
         /// value based on a specified tolerance.
         /// </summary>
         /// <param name="instance">The instance.</param>
@@ -133,7 +133,7 @@
         }
 
         /// <summary>
-        /// Returns a value indicating whether this instance and a specified <see cref="Double"/> represent the same
+        /// Returns a value indicating whether this instance and a specified <see cref="double"/> represent the same
         /// value based on a specified tolerance.
         /// </summary>
         /// <param name="instance">The instance.</param>
@@ -156,10 +156,7 @@
         /// <param name="sender">The source of the event.</param>
         public static void Raise(this EventHandler handler, object sender)
         {
-            if (handler != null)
-            {
-                handler(sender, EventArgs.Empty);
-            }
+            handler?.Invoke(sender, EventArgs.Empty);
         }
 
         /// <summary>
@@ -172,10 +169,7 @@
         public static void Raise<T>(this EventHandler<T> handler, object sender, T e)
             where T : EventArgs
         {
-            if (handler != null)
-            {
-                handler(sender, e);
-            }
+            handler?.Invoke(sender, e);
         }
 
         #endregion Event Handler Types

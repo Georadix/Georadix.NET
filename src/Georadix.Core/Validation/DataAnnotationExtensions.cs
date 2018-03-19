@@ -90,9 +90,7 @@
                     continue;
                 }
 
-                var asEnumerable = value as IEnumerable;
-
-                if (asEnumerable != null)
+                if (value is IEnumerable asEnumerable)
                 {
                     int index = 0;
 

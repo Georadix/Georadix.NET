@@ -9,13 +9,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Georadix.WebApi</RootNamespace>
     <AssemblyName>Georadix.WebApi</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\Georadix.WebApi.XML</DocumentationFile>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\Georadix.WebApi.XML</DocumentationFile>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -94,15 +97,11 @@
     <Compile Include="SimpleInjectorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Georadix.WebApi.nutrans" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
-      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
-      <Name>Georadix.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\InvariantStrings.resx">
@@ -110,12 +109,19 @@
       <LastGenOutput>InvariantStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
+      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
+      <Name>Georadix.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   -->
+  <!--
   <Target Name="AfterBuild">
     <PropertyGroup>
       <Source>$(SolutionDir)Common.nuspec</Source>
@@ -125,6 +131,7 @@
     <MSBuild Projects="$(SolutionDir)..\tools\TransformXml.proj" Properties="Source=$(Source);Transform=$(Transform);Destination=$(Destination)" />
     <Exec Condition="'$(BuildingInsideVisualStudio)' == 'true'" WorkingDirectory="$(SolutionDir)" Command="..\tools\NuGet\nuget.exe pack $(ProjectPath) -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive" />
   </Target>
+  -->
   <Import Project="..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

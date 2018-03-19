@@ -1,4 +1,4 @@
-﻿namespace System.Net.Http
+namespace System.Net.Http
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -37,8 +37,7 @@
             // Get a list of public IP addresses in the X-Forwarded-For header.
             var publicForwardingIps = forwardedFor.Where(ip =>
                 {
-                    IPAddress parsedId;
-                    return IPAddress.TryParse(ip, out parsedId) ? !parsedId.IsPrivate() : false;
+                    return IPAddress.TryParse(ip, out IPAddress parsedId) ? !parsedId.IsPrivate() : false;
                 });
 
             // If we find any, return the first one. Otherwise, return the user host address.

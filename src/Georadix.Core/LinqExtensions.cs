@@ -199,7 +199,7 @@
         /// <param name="source">A sequence of values to order.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
-        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the 
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in ascending order according to the
         /// property.
         /// </returns>
         public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
@@ -244,7 +244,7 @@
         /// <param name="source">A sequence of values to order.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
-        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the 
+        /// An <see cref="IOrderedQueryable{T}"/> whose elements are sorted in descending order according to the
         /// property.
         /// </returns>
         public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, string propertyName)

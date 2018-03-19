@@ -9,13 +9,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Georadix.WebApi.Testing</RootNamespace>
     <AssemblyName>Georadix.WebApi.Testing</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\Georadix.WebApi.Testing.XML</DocumentationFile>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\Georadix.WebApi.Testing.XML</DocumentationFile>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -91,6 +94,7 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
+  <!--
   <Target Name="AfterBuild">
     <PropertyGroup>
       <Source>$(SolutionDir)Common.nuspec</Source>
@@ -100,6 +104,7 @@
     <MSBuild Projects="$(SolutionDir)..\tools\TransformXml.proj" Properties="Source=$(Source);Transform=$(Transform);Destination=$(Destination)" />
     <Exec Condition="'$(BuildingInsideVisualStudio)' == 'true'" WorkingDirectory="$(SolutionDir)" Command="..\tools\NuGet\nuget.exe pack $(ProjectPath) -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive" />
   </Target>
+  -->
   <Import Project="..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,4 +1,4 @@
-﻿namespace Georadix.WebApi.Routing
+namespace Georadix.WebApi.Routing
 {
     using System;
     using System.Collections.Generic;
@@ -30,9 +30,7 @@
             IDictionary<string, object> values,
             HttpRouteDirection routeDirection)
         {
-            object value;
-
-            if (values.TryGetValue(parameterName, out value) && value != null)
+            if (values.TryGetValue(parameterName, out object value) && value != null)
             {
                 var valueString = Convert.ToString(value, CultureInfo.InvariantCulture);
 

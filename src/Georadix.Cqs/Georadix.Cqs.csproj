@@ -1,97 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E7F9B0DE-3BC7-4175-9330-9B412CF44866}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Georadix.Cqs</RootNamespace>
-    <AssemblyName>Georadix.Cqs</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Georadix.Cqs.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Georadix.Cqs.XML</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>Properties\CommonAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Command.cs" />
-    <Compile Include="CommandProcessor.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandHandler.cs" />
-    <Compile Include="ICommandProcessor.cs" />
-    <Compile Include="IQuery.cs" />
-    <Compile Include="IQueryHandler.cs" />
-    <Compile Include="IQueryProcessor.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryProcessor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Georadix.Cqs.nutrans" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj">
-      <Project>{4e2f8d9a-7adf-404f-b043-5d7136013f97}</Project>
-      <Name>Georadix.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  -->
-  <Target Name="AfterBuild">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <Source>$(SolutionDir)Common.nuspec</Source>
-      <Transform>$(ProjectDir)$(ProjectName).nutrans</Transform>
-      <Destination>$(ProjectDir)$(ProjectName).nuspec</Destination>
+        <TargetFrameworks>netstandard2.0</TargetFrameworks>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <CodeAnalysisRuleSet>..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+        <PackageProjectUrl>https://github.com/Georadix/Georadix.NET</PackageProjectUrl>
+        <PackageLicenseUrl>https://raw.github.com/Georadix/Georadix.NET/master/LICENSE</PackageLicenseUrl>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors />
     </PropertyGroup>
-    <MSBuild Projects="$(SolutionDir)..\tools\TransformXml.proj" Properties="Source=$(Source);Transform=$(Transform);Destination=$(Destination)" />
-    <Exec Condition="'$(BuildingInsideVisualStudio)' == 'true'" WorkingDirectory="$(SolutionDir)" Command="..\tools\NuGet\nuget.exe pack $(ProjectPath) -OutputDirectory ..\LocalNuGetFeed -IncludeReferencedProjects -Symbols -NonInteractive" />
-  </Target>
-  <Import Project="..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets" Condition="Exists('..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+        <DocumentationFile>bin\Debug\netstandard2.0\Georadix.Cqs.xml</DocumentationFile>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.5.0.0\build\StyleCop.MSBuild.targets'))" />
-  </Target>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+        <DocumentationFile>bin\Release\netstandard2.0\Georadix.Cqs.xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="..\CommonAssemblyInfo.cs" Link="Properties\CommonAssemblyInfo.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Georadix.Core\Georadix.Core.csproj" />
+    </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Condition="'$(BuildingInsideVisualStudio)' == 'true'" Command="dotnet pack $(ProjectPath) --no-build -o $(SolutionDir)..\LocalNuGetFeed --include-symbols" />
+    </Target>
 </Project>

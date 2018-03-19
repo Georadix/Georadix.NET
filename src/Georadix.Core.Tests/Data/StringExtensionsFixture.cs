@@ -1,4 +1,4 @@
-﻿namespace Georadix.Core.Data
+namespace Georadix.Core.Data
 {
     using System.Collections.Generic;
     using Xunit;
@@ -87,8 +87,7 @@
         [InlineData("Name,,Date")]
         public void TryParseOrderByExpressionsWithInvalidSourceReturnsFalse(string orderBy)
         {
-            OrderByExpression[] expressions = null;
-            var result = orderBy.TryParseOrderByExpressions(out expressions);
+            var result = orderBy.TryParseOrderByExpressions(out OrderByExpression[] expressions);
 
             Assert.False(result);
         }
@@ -98,9 +97,7 @@
         public void TryParseOrderByExpressionsWithValidSourceReturnsExpressions(
             string orderBy, OrderByExpression[] expectedExpressions)
         {
-            OrderByExpression[] expressions = null;
-
-            var result = orderBy.TryParseOrderByExpressions(out expressions);
+            var result = orderBy.TryParseOrderByExpressions(out OrderByExpression[] expressions);
 
             Assert.True(result);
 
